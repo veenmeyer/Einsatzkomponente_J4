@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+        <field name="id" type="text" default="0" label="COM_EINSATZKOMPONENTE_FORM_LBL_ALARMIERUNGSART_ID"
+               readonly="true" class="readonly"
+               description="JGLOBAL_FIELD_ID_DESC" /> 
+       <field name="title" type="text"
+              label="COM_EINSATZKOMPONENTE_FORM_LBL_ALARMIERUNGSART_TITLE"
+              description="COM_EINSATZKOMPONENTE_FORM_DESC_ALARMIERUNGSART_TITLE" 
+              class="eiko_alarmierungsarten_title"
+              filter="safehtml"
+              size="100"
+              maxlength="100" /> 
+       <field name="image" type="media"
+              label="COM_EINSATZKOMPONENTE_FORM_LBL_ALARMIERUNGSART_IMAGE"
+              description="COM_EINSATZKOMPONENTE_FORM_DESC_ALARMIERUNGSART_IMAGE" 
+	          preview="true"
+			  preview_height="80px"
+			  hide_none="1"
+			  id="alarmierungsart_image_klein"
+              directory="com_einsatzkomponente/images/alert" /> 
+       <field name="created_by" type="createdby" default="" 
+              label="COM_EINSATZKOMPONENTE_FORM_LBL_ALARMIERUNGSART_CREATED_BY"
+              description="COM_EINSATZKOMPONENTE_FORM_DESC_ALARMIERUNGSART_CREATED_BY"  /> 
+       <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field> 
+ </fieldset> 
+ <fieldset 
+                        name="accesscontrol">
+                       <field name="asset_id" type="hidden" filter="unset" />
+                       <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_einsatzkomponente"
+                            section="alarmierungsart"
+                        />
+	</fieldset>
+</form>

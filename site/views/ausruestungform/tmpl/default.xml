@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="Ausrüstung anlegen" option="View">
+        <message>
+                        <![CDATA[]]>
+        </message>
+    </layout>
+    <fields name="params">
+        <fieldset 
+            name="basic"
+            label="COM_EINSATZKOMPONENTE_FIELDSET_ITEM_ID_SELECT_LABEL">
+            <field
+                name="item_id"
+                query="SELECT 0 as id UNION SELECT id FROM #__eiko_ausruestung ORDER BY id"
+                type="sql"
+                key_field="id" 
+                value_field="id"
+                label="Wähle die ID zu bearbeitende ID aus (0 für Neuanlage)"
+                require="true"
+                description="JGLOBAL_SHOW_TITLE_DESC">
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

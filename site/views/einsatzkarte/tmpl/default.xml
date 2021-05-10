@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Einsatzkarte" option="View">
+	</layout>
+	<fields name="params">
+		<fieldset 
+            name="basic"
+			label="Parametereinstellungen">
+			
+<field name="note22" 
+type="note" 
+class="alert alert-info" 
+label="Eigene Layouts verwenden" 
+description="In der Einsatzkomponente V3 ist es möglich auch eigene Layouts zu verwenden, die bei einem Update nicht überschrieben werden. Weitere Informationen hierzu gibt es im Forum http://www.einsatzkomponente.de" 
+/>
+
+		 <field name="note_gmap_layout" 
+		  type="note" 
+		  class="alert alert-grey"
+		  label="Auswahl des Layout für die Einsatzübersicht :" 
+		  description="Hier können Sie jetzt das Aussehen der Einsatzübericht festlegen. Die Option Layout 4, 5 und 6 sind für eigene Layouts reserviert. Nähere Informationen darüber gibt es im Forum."
+		  />	
+
+			
+			<field name="gmap_layout" 
+			type="list" 
+			default="gmap_layout_1.php" 
+			label="Bitte wählen Sie ein Layout für die Einsatzübersicht aus :" 
+			description="Layout 4+5+6 sind in der Standard-Installation nicht enthalten und für eigene Layout reseveriert !!">
+  				<option value="gmap_layout_1.php">gmap_layout_1</option>
+  				<option value="gmap_layout_2.php">gmap_layout_2</option>
+				<option value="gmap_layout_3.php">gmap_layout_3</option>
+				<option value="gmap_layout_4.php">gmap_layout_4</option>
+				<option value="gmap_layout_5.php">gmap_layout_5</option>
+				<option value="gmap_layout_6.php">gmap_layout_6</option>
+			</field>			
+			
+		<field
+			name="spacer1"
+			type="spacer"
+			hr="true"
+		/>
+		
+		 <field name="note_detail_layout" 
+		  type="note" 
+		  class="alert alert-grey"
+		  label="Auswahl des Layout für die Detailansicht :" 
+		  description="Hier können Sie jetzt das Aussehen der Detailansicht festlegen. Die Option Layout 5 und 6 ist für ein eigenes Layout reserviert. Nähere Informationen darüber gibt es im Forum."
+		  />	
+		
+			<field name="detail_layout" 
+			type="list" 
+			default="detail_layout_1.php" 
+			label="Bitte wählen Sie ein Layout für die Detailansicht aus :" 
+			description="Layout 5 und sind in der Standard-Installation nicht enthalten und für ein eigenes Layout reseveriert !!">
+  				<option value="detail_layout_1.php">detail_layout_1</option>
+  				<option value="detail_layout_2.php">detail_layout_2</option>
+				<option value="detail_layout_3.php">detail_layout_3</option>
+				<option value="detail_layout_4.php">detail_layout_4</option>
+				<option value="detail_layout_5.php">detail_layout_5</option>
+				<option value="detail_layout_6.php">detail_layout_6</option>
+			</field>			
+			
+		<field
+			name="spacer12"
+			type="spacer"
+			hr="true"
+		/>
+<field
+		name="show_all"
+		type="radio"
+		class="btn-group"
+		default="true"
+		label="Einsätze anzeigen : "
+		description="">
+			<option	value="true">nur aktuelles Jahr</option>
+			<option	value="false">alle Einsätze</option>
+</field>
+<field
+		name="spacer10"
+		type="spacer"
+		hr="true"
+/>
+
+
+		</fieldset>
+	</fields>
+</metadata>

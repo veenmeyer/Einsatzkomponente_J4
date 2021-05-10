@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Einsatzarchiv" option="View">
+        <message>
+                        <![CDATA[(*Übersicht aller Einsatzberichte* Layout und Filtereinstellungen auswählbar)]]>
+        </message>
+	</layout>
+
+	<fields name="params">
+		<fieldset 
+            name="basic"
+			label="Filter">
+
+			
+			
+<field name="note_filter_auswahl" 
+		  type="note" 
+		  class="alert alert-grey"
+		  label="Auswahl filtern nach :" 
+		  description="Hier können Sie die Filter voreinstellen."
+		  />	
+	
+<field
+		name="show_filter"
+		type="radio"
+		class="btn-group"
+		default="1"
+		label="Filter (allgemein) :"
+		description="">
+			<option	value="0">aus</option>
+			<option	value="1">an</option>
+</field>
+<field
+		name="spacer10"
+		type="spacer"
+		hr="true"
+/>
+
+	
+<field
+		name="show_filter_auswahl_orga"
+		type="radio"
+		class="btn-group"
+		default="1"
+		label="Filter Organisation :"
+		description="">
+			<option	value="0">verstecken</option>
+			<option	value="1">anzeigen</option>
+</field>
+ <field name="filter_auswahl_orga" 
+		type="sql" 
+		class="inputbox" 
+		label = "Filter Organisation :"
+		query="SELECT id, name FROM #__eiko_organisationen" 
+		key_field="id" 
+		multiple = "multiple"
+		value_field="name"/>  
+<field
+		name="spacer1"
+		type="spacer"
+		hr="true"
+/>
+ 
+<field
+		name="show_filter_alerting"
+		type="radio"
+		class="btn-group"
+		default="1"
+		label="Filter Alarmierungsart :"
+		description="">
+			<option	value="0">verstecken</option>
+			<option	value="1">anzeigen</option>
+</field>
+ <field name="filter_alerting" 
+		type="sql" 
+		class="inputbox"   
+        label = "Alarmierungsart :"		
+		query="SELECT '' AS id, '- alle anzeigen -' AS title UNION SELECT id, title FROM #__eiko_alarmierungsarten" 
+		key_field="id" 
+		value_field="title"/> 
+
+<field
+		name="spacer2"
+		type="spacer"
+		hr="true"
+/>
+
+<field
+		name="show_filter_tickerkat"
+		type="radio"
+		class="btn-group"
+		default="1"
+		label="Filter Einsatzkategorie :"
+		description="">
+			<option	value="0">verstecken</option>
+			<option	value="1">anzeigen</option>
+</field>
+ <field name="filter_tickerkat" 
+		type="sql" 	
+		class="inputbox"    
+        label = "Einsatzkategorie :"			
+		query="SELECT '' AS id, '- alle anzeigen -' AS title UNION SELECT id, title FROM #__eiko_tickerkat" 
+		key_field="id" 
+		value_field="title"/> 
+
+<field
+		name="spacer7"
+		type="spacer"
+		hr="true"
+/>
+<field
+		name="show_filter_data1"
+		type="radio"
+		class="btn-group"
+		default="1"
+		label="Filter Einsatzart :"
+		description="">
+			<option	value="0">verstecken</option>
+			<option	value="1">anzeigen</option>
+</field>
+ <field name="filter_data1" 
+		type="sql" 
+		class="inputbox" 
+        label = "Einsatzart :"	        
+		query="SELECT '' AS id, '- alle anzeigen -' AS title UNION SELECT id, title FROM #__eiko_einsatzarten" 
+		key_field="id" 
+		value_field="title"/> 
+
+<field
+		name="spacer3"
+		type="spacer"
+		hr="true"
+/>
+<field
+		name="show_filter_vehicles"
+		type="radio"
+		class="btn-group"
+		default="1"
+		label="Filter Fahrzeug :"
+		description="">
+			<option	value="0">verstecken</option>
+			<option	value="1">anzeigen</option>
+</field>
+ <field name="filter_vehicles" 
+		type="sql" 
+		class="inputbox" 
+        label = "Fahrzeug :"			
+		query="SELECT '' AS id, '- alle anzeigen -' AS name UNION SELECT id, name FROM #__eiko_fahrzeuge" 
+		key_field="id" 
+		value_field="name"/> 
+
+<field
+		name="spacer4"
+		type="spacer"
+		hr="true"
+/>
+	
+<field
+		name="show_filter_year"
+		type="radio"
+		class="btn-group"
+		default="1"
+		label="Filter Jahr :"
+		description="">
+			<option	value="0">verstecken</option>
+			<option	value="1">anzeigen</option>
+</field>
+
+ <field name="filter_year" 
+		type="sql" 
+		class="inputbox" 
+		label="Jahr :"
+        query="SELECT '' AS id, '- alle anzeigen -' AS title UNION SELECT Year(date1) as id, Year(date1) as title FROM #__eiko_einsatzberichte WHERE (state='1' OR state = '2') GROUP BY title ORDER BY title DESC" 
+		key_field="id" 
+		value_field="title"/> 
+
+
+<field
+		name="spacer5"
+		type="spacer"
+		hr="true"
+/>
+
+<field
+		name="show_filter_search"
+		type="radio"
+		class="btn-group"
+		default="1"
+		label="Inputfeld Suchen :"
+		description="">
+			<option	value="0">verstecken</option>
+			<option	value="1">anzeigen</option>
+</field>
+
+<field
+		name="spacer34"
+		type="spacer"
+		hr="true"
+/>
+
+<field
+		name="show_filter_linebreak"
+		type="radio"
+		class="btn-group"
+		default="0"
+		label="Linebreak pro Filter:"
+		description="">
+			<option	value="0">aus</option>
+			<option	value="1">an</option>
+</field>
+
+		</fieldset>
+		
+		<fieldset 
+            name="advanced"
+			label="Layout">
+			
+<field name="note22" 
+type="note" 
+class="alert alert-info" 
+label="Eigene Layouts verwenden" 
+description="In der Einsatzkomponente V3 ist es möglich auch eigene Layouts zu verwenden, die bei einem Update nicht überschrieben werden. Weitere Informationen hierzu gibt es im Forum http://www.einsatzkomponente.de" 
+/>
+
+		 <field name="note_main_layout" 
+		  type="note" 
+		  class="alert alert-grey"
+		  label="Auswahl des Layout für die Einsatzübersicht :" 
+		  description="Hier können Sie jetzt das Aussehen der Einsatzübericht festlegen. Die Option Layout 5 und 6 sind für eigene Layouts reserviert. Nähere Informationen darüber gibt es im Forum."
+		  />	
+
+			
+			<field name="main_layout" 
+			type="list" 
+			default="main_layout_1.php" 
+			label="Bitte wählen Sie ein Layout für die Einsatzübersicht aus :" 
+			description="Layout 5+6 sind in der Standard-Installation nicht enthalten und für eigene Layout reseveriert !!">
+  				<option value="main_layout_1.php">main_layout_1</option>
+  				<option value="main_layout_2.php">main_layout_2</option>
+				<option value="main_layout_3.php">main_layout_3</option>
+				<option value="main_layout_4.php">main_layout_4</option>
+				<option value="main_layout_5.php">main_layout_5</option>
+				<option value="main_layout_6.php">main_layout_6</option>
+			</field>			
+			
+		<field
+			name="spacer1"
+			type="spacer"
+			hr="true"
+		/>
+		
+		 <field name="note_detail_layout" 
+		  type="note" 
+		  class="alert alert-grey"
+		  label="Auswahl des Layout für die Detailansicht :" 
+		  description="Hier können Sie jetzt das Aussehen der Detailansicht festlegen. Die Option Layout 5 und 6 ist für ein eigenes Layout reserviert. Nähere Informationen darüber gibt es im Forum."
+		  />	
+		
+			<field name="detail_layout" 
+			type="list" 
+			default="detail_layout_1.php" 
+			label="Bitte wählen Sie ein Layout für die Detailansicht aus :" 
+			description="Layout 5 und sind in der Standard-Installation nicht enthalten und für ein eigenes Layout reseveriert !!">
+  				<option value="detail_layout_1.php">detail_layout_1</option>
+  				<option value="detail_layout_2.php">detail_layout_2</option>
+				<option value="detail_layout_3.php">detail_layout_3</option>
+				<option value="detail_layout_4.php">detail_layout_4</option>
+				<option value="detail_layout_5.php">detail_layout_5</option>
+				<option value="detail_layout_6.php">detail_layout_6</option>
+			</field>			
+			
+		<field
+			name="spacer12"
+			type="spacer"
+			hr="true"
+		/>
+		
+		
+		
+		
+
+
+			
+			
+		</fieldset>
+			
+	</fields>
+
+</metadata>

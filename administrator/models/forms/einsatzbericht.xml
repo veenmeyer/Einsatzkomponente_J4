@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+	
+       <field name="id" type="text" default="0" label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+			
+              <field name="tickerkat" type="sql"
+			class="eiko_tickerkat"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_KATEGORIE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_KATEGORIE" 
+            required="true" 
+            filter="raw"
+            query="SELECT * FROM #__eiko_tickerkat WHERE state ='1' ORDER BY ordering ASC"
+            key_field="id"
+            value_field="title" />
+
+       <field name="filter_tickerkat" type="sql" class="inputbox"
+            onchange="this.form.submit();"
+            query="SELECT 0 AS id, '- alle Einsatzkategorien -' AS val UNION SELECT id, title AS val FROM #__eiko_tickerkat order by val" key_field="id" value_field="val"
+             /> 
+
+       <field name="data1" type="sql"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATA1"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATA1" 
+            required="true" 
+            filter="raw"
+            query="SELECT * FROM #__eiko_einsatzarten WHERE state ='1' ORDER BY ordering ASC"
+            key_field="id"
+            value_field="title" />
+
+       <field name="filter_data1" type="sql" class="inputbox"
+            onchange="this.form.submit();"
+            query="SELECT 0 AS id, '- alle Einsatzarten -' AS val UNION SELECT id, title AS val FROM #__eiko_einsatzarten order by val" key_field="id" value_field="val"
+             /> 
+
+			
+       <field name="alerting" type="sql"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_ALERTING" 
+            required="true" 
+            filter="raw"
+            query="SELECT * FROM #__eiko_alarmierungsarten WHERE state ='1' ORDER BY ordering ASC"
+            key_field="id"
+            value_field="title" /> 
+			
+       <field name="filter_alerting" type="sql" class="inputbox"
+            onchange="this.form.submit();"
+            query="SELECT 0 AS id, '- alle Alarmierungsarten -' AS val UNION SELECT id, title AS val FROM #__eiko_alarmierungsarten order by val" key_field="id" value_field="val"
+             /> 
+
+
+			 
+       <field name="image" type="media"
+            label="Titelbild"
+            description="Weitere Bilder können Sie über den Mehrfachbild-Uploader hinzufügen" 
+		    preview="true"
+			id="einsatzbericht_image_klein"
+            directory="com_einsatzkomponente/einsatzbilder" />   
+       <field name="address" type="einsatzort"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ADDRESS"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_ADDRESS" 
+            class="eiko_address"
+            filter="safehtml"
+            size="60"
+            maxlength="100" /> 
+			
+       <field name="watermark_image" type="media"
+			label="COM_EINSATZKOMPONENTE_OPTION_WASSERZEICHEN_WAEHLEN" 
+			description="Sie können Wasserzeichen hinzufügen. Die Datei muss zwingend eine PNG-Datei sein !!" 
+		    preview="true"
+			default ="images/com_einsatzkomponente/watermark/watermark.png"
+            directory="com_einsatzkomponente/watermark" />   
+
+	<field
+			name="gmap"
+			type="radio"
+			class="btn-group"
+			default="1"
+			label="Einsatzort auf Karte :"
+			description="Hier können Sie einstellen, ob die Einsatzort-Markierung in diesem Einsatzbericht angezeigt werden soll.">
+				<option
+					value="0">Verbergen</option>
+				<option
+					value="1">Anzeigen</option>
+	   </field>
+		
+    <field name="date1" 
+			default="NOW" 
+			class="inputbox" 
+			format="%Y-%m-%d %H:%M:00" 
+			timeformat="24" 
+			showtime="true" 
+			singleheader="true" 
+			todaybutton="true" 
+			weeknumbers="true" 
+			filltable="true" 
+			type="calendar" 
+			required="true" 
+			message="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE1" 
+			label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE1" 
+			description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE1" 
+			hint="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE1"
+			filter="safehtml"
+/>
+
+    <field name="date2" 
+			class="inputbox" 
+			format="%Y-%m-%d %H:%M:00" 
+            default="0000-00-00 00:00:00" 
+			timeformat="24" 
+			showtime="true" 
+			singleheader="true" 
+			todaybutton="true" 
+			weeknumbers="true" 
+			filltable="true" 
+			type="calendar" 
+			required="false" 
+			message="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE2" 
+			label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE2" 
+			description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE2" 
+			hint="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE2"
+			filter="safehtml"
+/>
+		 
+    <field name="date3" 
+			class="inputbox" 
+            default="0000-00-00 00:00:00" 
+			timeformat="24" 
+			format="%Y-%m-%d %H:%M:00" 
+			showtime="true" 
+			singleheader="true" 
+			todaybutton="true" 
+			weeknumbers="true" 
+			filltable="true" 
+			type="calendar" 
+			required="false" 
+			message="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE3" 
+			label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE3" 
+			description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE3" 
+			hint="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE3"
+			filter="safehtml"
+/>
+		
+       <field name="summary" type="summary"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_SUMMARY"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_SUMMARY" 
+            required="false" 
+            class="eiko_summary"
+            filter="string"
+            size="60"
+            maxlength="500" /> 
+       <field name="boss" type="einsatzleiter"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_BOSS" 
+            class="eiko_einsatzleiter"
+            filter="safehtml"
+            size="60"
+            maxlength="100" /> 
+       <field name="boss2" type="einsatzfuehrer"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_BOSS2" 
+            class="eiko_einsatzführer"
+            filter="safehtml"
+            size="60"
+            maxlength="100" /> 
+       <field name="people" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PEOPLE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PEOPLE" 
+            class="eiko_people"
+            filter="safehtml"
+            size="50"
+            maxlength="100" /> 
+       <field name="department" type="text" size="40" class="inputbox"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DEPARTMENT"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DEPARTMENT" 
+            filter="safehtml" /> 
+       <field name="desc" type="editor"
+            label="ausführlicher Einsatzbericht"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DESC" 
+            width="60%"
+            height="350px"
+			buttons="true"
+			hide="readmore,pagebreak"
+            filter="raw" /> 
+       <field name="gmap_report_latitude" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP_REPORT_LATITUDE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_GMAP_REPORT_LATITUDE" 
+            default="0"
+            class="eiko_gmap_report_latitude"
+            filter="raw"
+            size="100"
+            maxlength="100" /> 
+       <field name="gmap_report_longitude" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP_REPORT_LONGITUDE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_GMAP_REPORT_LONGITUDE" 
+            default="0"
+            class="eiko_gmap_report_longitude"
+            filter="raw"
+            size="100"
+            maxlength="100" /> 
+       <field name="presse_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE_LABEL" 
+            class="eiko_presse1_label"
+			default ="Presselink"
+            filter="safehtml"
+            size="100"
+            maxlength="500" /> 
+       <field name="presse" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE" 
+            class="eiko_presse1"
+            filter="url"
+            size="100"
+            maxlength="500" /> 
+       <field name="presse2_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE2_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE2_LABEL" 
+            class="eiko_presse2_label"
+			default ="Presselink"
+            filter="safehtml"
+            size="100"
+            maxlength="500" /> 
+       <field name="presse2" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE2"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE2" 
+            class="eiko_presse2"
+            filter="url"
+            size="100"
+            maxlength="500" /> 
+       <field name="presse3_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE3_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE3_LABEL" 
+            class="eiko_presse3_label"
+			default ="Presselink"
+            filter="safehtml"
+            size="100"
+            maxlength="500" /> 
+       <field name="presse3" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE3"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE3" 
+            class="eiko_presse3"
+            filter="url"
+            size="100"
+            maxlength="500" /> 
+       <field name="einsatzticker" type="hidden"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZTICKER"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_EINSATZTICKER" 
+            default="0"
+            class="eiko_einsatzticker"
+            filter="safehtml" /> 
+       <field name="notrufticker" type="hidden"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_NOTRUFTICKER"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_NOTRUFTICKER" 
+            default="0"
+            class="eiko_notrufticker"
+            filter="safehtml" /> 
+			
+       <field name="auswahl_orga" type="sql" class="inputbox"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSWAHLORGA"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_AUSWAHLORGA" 
+            required="true" 
+            query="SELECT id, name FROM #__eiko_organisationen WHERE state='1' ORDER BY ordering ASC"
+			key_field="id"       		
+			value_field="name"
+			multiple="multiple"
+         /> 
+
+       <field name="filter_auswahl_orga" type="sql" class="inputbox"
+            onchange="this.form.submit();"
+            query="SELECT 0 AS id, '- alle Organisationen -' AS val UNION SELECT id, name AS val FROM #__eiko_organisationen order by val" key_field="id" value_field="val"
+             /> 
+
+
+			 <field name="vehicles" type="optgroup" class="inputbox"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLES"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_VEHICLES" 
+         /> 
+		 
+       <field name="ausruestung" type="sql" class="inputbox"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSRUESTUNG"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_AUSRUESTUNG" 
+            required="false" 
+            query="SELECT id, name FROM #__eiko_ausruestung WHERE state='1' ORDER BY ordering ASC"
+			key_field="id"       		
+			value_field="name"
+			multiple="multiple"
+         /> 
+
+       <field name="ausruestung" type="sql" class="inputbox"
+            onchange="this.form.submit();"
+            query="SELECT 0 AS id, '- Ausrüstung -' AS val UNION SELECT id, name AS val FROM #__eiko_ausruestung" key_field="id" value_field="val"
+             /> 
+		 
+       <field name="article_id" 
+	   label = "COM_EINSATZKOMPONENTE_ARTIKEL_JOOMLA_LINK"
+       description="Bitte frei lassen, wenn kein Joomla-Artikel verlinkt werden soll." 
+	   default="0"
+	   type="sql" class="inputbox"
+            query="SELECT 0 AS id, 'Nein' AS title UNION SELECT id, title FROM #__content ORDER BY id DESC" 
+			key_field="id" 
+			value_field="title"
+             /> 
+			      	
+			<field
+        	name="status_fb"
+        	type="radio"
+        	class="btn-group"
+        	default="1"
+        	label="Anzeige Buttons sozialer Netzwerke:"
+        	description="Hier können Sie einstellen, ob Links zu den sozialen Netzwerken im Detailbericht angezeigt werden sollen. Bei einigen Einsätzen sicherlich ganz nützlich ... (Wenn die Buttons angezeigt werden sollen, muss aber auch die entsprechende Einstellung unter OPTIONEN aktiviert sein.)">
+            	<option
+                	value="0">Verbergen</option>
+            	<option
+                	value="1">Anzeigen</option>
+   			</field>
+
+		 
+       <field name="status" type="list"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_STATUS"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_STATUS" 
+            default="0"
+            disabled="1"
+            class="eiko_status"
+            filter="raw"
+            multiple="false">
+                <option value="0">Einsatzbericht</option>
+                <option value="1">Vorlage</option>
+        </field> 
+       <field name="created_by" type="createdby" default="" 
+            label="Erstellt von"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_CREATED_BY"  /> 
+ 
+		<field name="filter_created_by" 
+		     type="user" 
+			 onchange="this.form.submit();" /> 
+			 
+       <field name="modified_by" type="modifiedby" default="" 
+            label="Bearbeitet von"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_MODIFIED_BY"  /> 
+ 
+		<field name="filter_modified_by" 
+		     type="user" 
+			 onchange="this.form.submit();" /> 
+			 
+			 
+       <field name="updatedate" type="timeupdated" default="" 
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_UPDATEDATE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_UPDATEDATE"  /> 
+			
+       <field name="createdate" type="timecreated" default="" 
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_CREATEDATE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_CREATEDATE"  /> 
+			
+       <field name="counter" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_COUNTER"
+            description="Dieses Feld ist nur für Admins sichtbar ! Hier können Sie den Zähler der Einsatzberichte ändern." 
+            default="0"
+            readonly="false"
+            class="eiko_counter"
+            filter="int"
+            size="20" /> 
+        <field name="state"
+             type="list"
+             label="JSTATUS"
+             description="JFIELD_PUBLISHED_DESC"
+             class="inputbox"
+             size="1"
+             default="1">
+                <option value="1">JPUBLISHED</option>
+                <option value="0">JUNPUBLISHED</option>
+       </field> 
+	   
+
+       <field name="automail_off" type="list"
+            label="Automailfunktion"
+			description="Schaltet einmalig für das Abspeichern die automaitsche Emailfunktion aus." 
+            default="0"
+            disabled="0"
+            class="eiko_status"
+            filter="raw"
+            multiple="false">
+                <option value="0">an</option>
+                <option value="1">aus</option>
+        </field> 
+
+       <field name="emailtext" type="editor"
+			label="Emailtext" 
+			description="Optionaler Emailinfotext bei Emailbenachrichtigung" 
+            width="80%"
+            height="100px"
+			buttons="false"
+            filter="raw" /> 
+
+	   
+ </fieldset> 
+ <fieldset 
+                        name="accesscontrol">
+                       <field name="asset_id" type="hidden" filter="unset" />
+                       <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_einsatzkomponente"
+                            section="einsatzbericht"
+                        />
+	</fieldset>
+</form>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+  <fieldset>
+    <field name="id" type="text" default="0" label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" />
+    <field name="name" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_NAME"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_NAME" 
+            required="true" 
+            class="eiko_fahrzeuge_name"
+            filter="safehtml"
+            size="100"
+            maxlength="200" />
+			
+    <field name="detail1_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL1_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL1_LABEL" 
+            required="false" 
+            class="eiko_fahrzeuge_detail1_label"
+            filter="safehtml"
+			default ="Detail1"
+            size="100"
+            maxlength="500" />
+    <field name="detail1" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL1"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL1" 
+            required="false" 
+            class="eiko_fahrzeuge_detail1"
+            filter="safehtml"
+            size="100"
+            maxlength="500" />
+			
+    <field name="detail2_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL2_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL2_LABEL" 
+            required="false" 
+            class="eiko_fahrzeuge_detail2_label"
+            filter="safehtml"
+			default ="Detail2"
+            size="100"
+            maxlength="500" />
+    <field name="detail2" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL2"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL2" 
+            class="eiko_fahrzeuge_detail2"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+			
+    <field name="detail3_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL3_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL3_LABEL" 
+            required="false" 
+            class="eiko_fahrzeuge_detail3_label"
+            filter="safehtml"
+			default ="Detail3"
+            size="100"
+            maxlength="500" />
+    <field name="detail3" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL3"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL3" 
+            class="eiko_fahrzeuge_detail3"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+    <field name="detail4_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL4_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL4_LABEL" 
+            required="false" 
+            class="eiko_fahrzeuge_detail4_label"
+            filter="safehtml"
+			default ="Detail4"
+            size="100"
+            maxlength="500" />
+    <field name="detail4" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL4"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL4" 
+            class="eiko_fahrzeuge_detail4"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+	
+    <field name="detail5_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL5_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL5_LABEL" 
+            required="false" 
+            class="eiko_fahrzeuge_detail5_label"
+            filter="safehtml"
+			default ="Detail5"
+            size="100"
+            maxlength="500" />
+    <field name="detail5" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL5"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL5" 
+            class="eiko_fahrzeuge_detail5"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+			
+    <field name="detail6_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL6_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL6_LABEL" 
+            required="false" 
+            class="eiko_fahrzeuge_detail6_label"
+            filter="safehtml"
+			default ="Detail6"
+            size="100"
+            maxlength="500" />
+    <field name="detail6" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL6"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL6" 
+            class="eiko_fahrzeuge_detail6"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+	
+    <field name="detail7_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL7_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL7_LABEL" 
+            required="false" 
+            class="eiko_fahrzeuge_detail7_label"
+            filter="safehtml"
+			default ="Detail7"
+            size="100"
+            maxlength="500" />
+    <field name="detail7" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DETAIL7"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DETAIL7" 
+            class="eiko_fahrzeuge_detail7"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+			
+			
+			
+    <field name="department" type="sql"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DEPARTMENT"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DEPARTMENT" 
+            filter="safehtml"
+            query="SELECT name FROM #__eiko_organisationen WHERE state = '1' ORDER BY ordering ASC"
+            key_field="name"
+            value_field="name" />
+
+       <field name="ausruestung" type="sql" class="inputbox"
+            label="Beladung / Ausrüstung"
+            description="" 
+            required="false" 
+            query="SELECT id, name FROM #__eiko_ausruestung WHERE state='1' ORDER BY ordering ASC"
+			key_field="id"       		
+			value_field="name"
+			multiple="multiple"
+         /> 
+
+       <field name="ausruestung" type="sql" class="inputbox"
+            onchange="this.form.submit();"
+            query="SELECT 0 AS id, '- Ausrüstung -' AS val UNION SELECT id, name AS val FROM #__eiko_ausruestung" key_field="id" value_field="val"
+             /> 
+			
+			
+    <field name="link" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_LINK"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_LINK" 
+            class="eiko_fahrzeuge_link"
+            filter="url"
+            size="100"
+            maxlength="100" />
+    <field name="image" type="media"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_IMAGE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_IMAGE" 
+			preview="true"
+            directory="/media/com_einsatzkomponente/images/vehicles" />
+    <field name="desc" type="editor"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_DESC"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_DESC" 
+            width="60%"
+            height="350px"
+            filter="raw" />
+    <field name="created_by" type="createdby" default="" 
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZFAHRZEUG_CREATED_BY"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZFAHRZEUG_CREATED_BY"  />
+    <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+      <option value="1">JPUBLISHED</option>
+      <option value="0">JUNPUBLISHED</option>
+    </field>
+  </fieldset>
+  <fieldset 
+                        name="accesscontrol">
+    <field name="asset_id" type="hidden" filter="unset" />
+    <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_einsatzkomponente"
+                            section="einsatzfahrzeug"
+                        />
+  </fieldset>
+</form>

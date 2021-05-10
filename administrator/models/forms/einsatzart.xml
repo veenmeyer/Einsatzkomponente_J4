@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+            <field name="id" type="text" default="0" label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZART_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+       <field name="title" type="text"
+                
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZART_TITLE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZART_TITLE" 
+            required="true" 
+            class="eiko_einsatzarten"
+            filter="safehtml"
+            size="100"
+            maxlength="100" /> 
+       <field
+            name="marker"
+            type="color"
+    	    label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZART_MARKER"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZART_MARKER"
+            default="#ff0000"
+	        required ="required" />
+       <field name="beschr" type="media"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZART_BESCHR"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZART_BESCHR" 
+            required="true" 
+			hide_none="1"
+			preview ="true"
+			preview_height="80px"
+			id="einsatzart_logo"
+            directory="com_einsatzkomponente/images/mission" /> 
+       <field name="icon" type="media"
+                
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZART_ICON"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZART_ICON" 
+			preview ="true"
+			preview_height="80px"
+			hide_none="1"
+			id="einsatzart_icon"
+            directory="com_einsatzkomponente/images/map/icons" /> 
+       <field name="list_icon" type="media"
+                
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZART_LIST_ICON"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZART_LIST_ICON" 
+			preview ="true"
+			preview_height="80px"
+			hide_none="1"
+			id="einsatzart_list"
+            directory="com_einsatzkomponente/images/list" /> 
+       <field name="created_by" type="createdby" default="" 
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZART_CREATED_BY"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZART_CREATED_BY"  /> 
+		
+       <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field> 
+ </fieldset> 
+ <fieldset 
+                        name="accesscontrol">
+                       <field name="asset_id" type="hidden" filter="unset" />
+                       <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_einsatzkomponente"
+                            section="einsatzart"
+                        />
+	</fieldset>
+</form>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+              <field name="id" 
+			  	type="text" 
+				default="0" 
+				label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBILDERBEARBEITEN_ID"
+            	readonly="true" class="readonly"
+            	description="JGLOBAL_FIELD_ID_DESC" /> 
+				
+       		<field 
+				name="report_id" 
+				type="text" 
+				size="40" 
+				class="inputbox"
+           	 	label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBILDERBEARBEITEN_REPORT_ID"
+            	description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBILDERBEARBEITEN_REPORT_ID" 
+         		default="0" 
+         		required="true" 
+        		filter="safehtml" /> 
+       		<field name="image" type="media"
+            	label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBILDERBEARBEITEN_IMAGE"
+            	description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBILDERBEARBEITEN_IMAGE" 
+                required="true" 
+			    id="einsatzbildbearbeiten_image_gross"
+				preview="true"
+            	directory="/images/com_einsatzkomponente/einsatzbilder" /> 
+       		<field name="thumb" type="media"
+            	label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBILDERBEARBEITEN_THUMB"
+            	description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBILDERBEARBEITEN_THUMB" 
+                required="false" 
+			    id="einsatzbildbearbeiten_image_klein"
+				preview="true"
+            	directory="/images/com_einsatzkomponente/einsatzbilder/thumbs" /> 
+       		<field name="comment" type="editor"
+            	label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBILDERBEARBEITEN_COMMENT"
+            	description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBILDERBEARBEITEN_COMMENT" 
+				width="60%"
+                height="350px"
+            	filter="raw" /> 
+       		<field name="created_by" type="createdby" default="" 
+            	label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBILDERBEARBEITEN_CREATED_BY"
+            	description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBILDERBEARBEITEN_CREATED_BY"  /> 
+				
+         	<field
+        		name="state"
+        		type="list"
+        		label="JSTATUS"
+        		description="JFIELD_PUBLISHED_DESC"
+        		class="inputbox"
+        		size="1"
+        		default="1">
+        		<option value="1">JPUBLISHED</option>
+        		<option value="0">JUNPUBLISHED</option>
+    		</field> 
+ 	</fieldset> 
+ 	<fieldset name="accesscontrol">
+	
+            <field 
+				name="asset_id" 
+				type="hidden" 
+				filter="unset" />
+				
+            <field name="rules"
+                type="rules"
+                label="JFIELD_RULES_LABEL"
+                translate_label="false"
+                filter="rules"
+                validate="rules"
+                class="inputbox"
+                component="com_einsatzkomponente"
+                section="einsatzbilderbearbeiten" />
+	</fieldset>
+</form>

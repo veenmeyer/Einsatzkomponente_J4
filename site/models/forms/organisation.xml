@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+        <field name="id" type="text" default="0" label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_ID"
+               readonly="true" class="readonly"
+               description="JGLOBAL_FIELD_ID_DESC" /> 
+			   
+        <field name="name" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_NAME"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_NAME" 
+            required="true" 
+            class="eiko_organisation_name"
+            filter="safehtml"
+            size="100"
+            maxlength="100" /> 
+       <field name="gmap_icon_orga" type="media"
+                
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZART_ICON"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZART_ICON" 
+			preview ="true"
+			hide_none="1"
+			id="organisation_icon"
+            directory="com_einsatzkomponente/images/map/icons" /> 
+    <field name="detail1_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL1_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL1_LABEL" 
+            required="false" 
+            class="eiko_organisation_detail1_label"
+            filter="safehtml"
+			default ="Detail1"
+            size="100"
+            maxlength="500" />
+    <field name="detail1" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL1"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL1" 
+            required="false" 
+            class="eiko_organisation_detail1"
+            filter="safehtml"
+            size="100"
+            maxlength="500" />
+			
+    <field name="detail2_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL2_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL2_LABEL" 
+            required="false" 
+            class="eiko_organisation_detail2_label"
+            filter="safehtml"
+			default ="Detail2"
+            size="100"
+            maxlength="500" />
+    <field name="detail2" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL2"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL2" 
+            class="eiko_organisation_detail2"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+			
+    <field name="detail3_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL3_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL3_LABEL" 
+            required="false" 
+            class="eiko_organisation_detail3_label"
+            filter="safehtml"
+			default ="Detail3"
+            size="100"
+            maxlength="500" />
+    <field name="detail3" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL3"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL3" 
+            class="eiko_organisation_detail3"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+    <field name="detail4_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL4_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL4_LABEL" 
+            required="false" 
+            class="eiko_organisation_detail4_label"
+            filter="safehtml"
+			default ="Detail4"
+            size="100"
+            maxlength="500" />
+    <field name="detail4" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL4"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL4" 
+            class="eiko_organisation_detail4"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+	
+    <field name="detail5_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL5_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL5_LABEL" 
+            required="false" 
+            class="eiko_organisation_detail5_label"
+            filter="safehtml"
+			default ="Detail5"
+            size="100"
+            maxlength="500" />
+    <field name="detail5" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL5"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL5" 
+            class="eiko_organisation_detail5"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+			
+    <field name="detail6_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL6_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL6_LABEL" 
+            required="false" 
+            class="eiko_organisation_detail6_label"
+            filter="safehtml"
+			default ="Detail6"
+            size="100"
+            maxlength="500" />
+    <field name="detail6" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL6"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL6" 
+            class="eiko_organisation_detail6"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+	
+    <field name="detail7_label" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL7_LABEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL7_LABEL" 
+            required="false" 
+            class="eiko_organisation_detail7_label"
+            filter="safehtml"
+			default ="Detail7"
+            size="100"
+            maxlength="500" />
+    <field name="detail7" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DETAIL7"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DETAIL7" 
+            class="eiko_organisation_detail7"
+            filter="safehtml"
+            size="100"
+            maxlength="100" />
+			
+			
+       <field name="link" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_LINK"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_LINK" 
+            class="eiko_organisation_link"
+            filter="url"
+            size="100"
+            maxlength="200" /> 
+       
+	   <field name="gmap_latitude" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LATITUDE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_GMAP_LATITUDE" 
+            default="0"
+            class="eiko_organisation_coords"
+            filter="safehtml"
+            size="100"
+            maxlength="100" /> 
+	   
+	   <field name="gmap_longitude" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LONGITUDE"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_GMAP_LONGITUDE" 
+            default="0"
+            class="eiko_organisation_coords"
+            filter="safehtml"
+            size="100"
+            maxlength="100" /> 
+       
+	   <field name="ffw" type="list"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_FFW"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_FFW" 
+            default="0"
+            class="eiko_organisation_standard"
+            filter="raw"
+            multiple="false">
+                <option value="1">Ja</option>
+                <option value="0">Nein</option>
+        </field> 
+  
+    <field name="desc" type="editor"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DESC"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_DESC" 
+            width="60%"
+            height="350px"
+            filter="raw" />
+       
+	   <field name="created_by" type="createdby" default="" 
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_CREATED_BY"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_ORGANISATION_CREATED_BY"  /> 
+       
+	   <field
+        	name="state"
+        	type="list"
+        	label="JSTATUS"
+        	description="JFIELD_PUBLISHED_DESC"
+        	class="inputbox"
+        	size="1"
+        	default="1">
+        		<option value="1">JPUBLISHED</option>
+        		<option value="0">JUNPUBLISHED</option>
+       </field> 
+	   
+ </fieldset> 
+ 
+ 
+ <fieldset 
+                        name="accesscontrol">
+                       <field name="asset_id" type="hidden" filter="unset" />
+                       <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_einsatzkomponente"
+                            section="organisation"
+                        />
+	</fieldset>
+</form>

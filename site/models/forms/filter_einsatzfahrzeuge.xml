@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field name="search" type="text" hint="COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT"
+               label="COM_USERS_FILTER_SEARCH_DESC"
+               class="js-stools-search-string" />
+
+        <field name="department" type="sql" class="inputbox" onchange="this.form.submit();"
+                                    query="SELECT '' AS id, '- Please select department -' AS name UNION SELECT id, name FROM #__eiko_organisationen" key_field="id" value_field="name"/> 
+
+ <field name="ausruestung" type="sql" class="inputbox" onchange="this.form.submit();"
+                                    query="SELECT '' AS id, '- Please select ausruestung -' AS name UNION SELECT id, name FROM #__eiko_ausruestung" key_field="id" value_field="name"/>
+
+    </fields>
+</form>

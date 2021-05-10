@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Ausrüstungs-Übersicht" option="View">
+        <message>
+                        <![CDATA[(*NeueVersion mit neuen Filtern* Layout und Filtereinstellungen auswählbar)]]>
+        </message>
+	</layout>
+
+	<fields name="params">
+		<fieldset 
+            name="basic"
+			label="Filter">
+
+			
+			
+<field name="note_filter_auswahl" 
+		  type="note" 
+		  class="alert alert-grey"
+		  label="Auswahl filtern nach :" 
+		  description="Hier können Sie die Filter voreinstellen."
+		  />	
+
+
+		
+<field
+		name="spacer10"
+		type="spacer"
+		hr="true"
+/>
+
+       <field name="filter_ausruestung" type="sql" class="inputbox"
+            label="Ausrüstungen"
+            description="" 
+            required="false" 
+            query="SELECT id, name FROM #__eiko_ausruestung WHERE state='1' ORDER BY ordering ASC"
+			key_field="id"       		
+			value_field="name"
+			multiple="multiple"
+         /> 
+
+
+
+<field
+		name="spacer65"
+		type="spacer"
+		hr="true"
+/>
+
+
+		</fieldset>
+		
+		<fieldset 
+            name="advanced"
+			label="Layout">
+			
+<field name="note22" 
+type="note" 
+class="alert alert-info" 
+label="Eigene Layouts verwenden" 
+description="In der Einsatzkomponente V3 ist es möglich auch eigene Layouts zu verwenden, die bei einem Update nicht überschrieben werden. Weitere Informationen hierzu gibt es im Forum http://www.einsatzkomponente.de" 
+/>
+
+		 <field name="note_main_layout" 
+		  type="note" 
+		  class="alert alert-grey"
+		  label="Auswahl des Layout für die Ausrüstungsübersicht :" 
+		  description="Hier können Sie jetzt das Aussehen der Ausrüstungsübersicht festlegen. Die Option Layout 5 und 6 sind für eigene Layouts reserviert. Nähere Informationen darüber gibt es im Forum."
+		  />	
+
+			
+			<field name="ausruestungen_layout" 
+			type="list" 
+			default="ausruestungen_layout_1.php" 
+			label="Bitte wählen Sie ein Layout für die Ausrüstungsübersicht aus :" 
+			description="Layout 5+6 sind in der Standard-Installation nicht enthalten und für eigene Layout reseveriert !!">
+  				<option value="ausruestungen_layout_1.php">ausruestungen_layout_1</option>
+  				<option value="ausruestungen_layout_2.php">ausruestungen_layout_2</option>
+				<option value="ausruestungen_layout_3.php">ausruestungen_layout_3</option>
+				<option value="ausruestungen_layout_4.php">ausruestungen_layout_4</option>
+				<option value="ausruestungen_layout_5.php">ausruestungen_layout_5</option>
+				<option value="ausruestungen_layout_6.php">ausruestungen_layout_6</option>
+			</field>			
+			
+		<field
+			name="spacer1"
+			type="spacer"
+			hr="true"
+		/>
+		
+		 <field name="note_detail_layout" 
+		  type="note" 
+		  class="alert alert-grey"
+		  label="Auswahl des Layout für die Detailansicht :" 
+		  description="Hier können Sie jetzt das Aussehen der Detailansicht festlegen. Die Option Layout 5 und 6 ist für ein eigenes Layout reserviert. Nähere Informationen darüber gibt es im Forum."
+		  />	
+		
+			<field name="ausruestung_detail_layout" 
+			type="list" 
+			default="ausruestung_layout_1.php" 
+			label="Bitte wählen Sie ein Layout für die Detailansicht aus :" 
+			description="Layout 5 und sind in der Standard-Installation nicht enthalten und für ein eigenes Layout reseveriert !!">
+  				<option value="ausruestung_layout_1.php">ausruestung_layout_1</option>
+  				<option value="ausruestung_layout_2.php">ausruestung_layout_2</option>
+				<option value="ausruestung_layout_3.php">ausruestung_layout_3</option>
+				<option value="ausruestung_layout_4.php">ausruestung_layout_4</option>
+				<option value="ausruestung_layout_5.php">ausruestung_layout_5</option>
+				<option value="ausruestung_layout_6.php">ausruestung_layout_6</option>
+			</field>			
+			
+		<field
+			name="spacer12"
+			type="spacer"
+			hr="true"
+		/>
+		
+	
+
+
+		 <field name="note_detail_layout_short" 
+		  type="note" 
+		  class="alert alert-grey"
+		  label="Einstellungen für die Ausrüstung-Detailansicht (Kurzinfo) :" 
+		  description=""
+		  />	
+
+<field
+		name="show_ausruestung_beschreibung"
+		type="radio"
+		class="btn-group"
+		default="0"
+		label="Nur Feld Beschreibung anzeigen :"
+		description="">
+			<option	value="0">Nein</option>
+			<option	value="1">JA</option>
+</field>
+
+
+
+		</fieldset>
+			
+	</fields>
+
+</metadata>

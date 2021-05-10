@@ -1,0 +1,25 @@
+
+
+/*  #Mobile (Portrait)
+================================================== */
+
+    /* Note: Design for a width of 320px */
+
+.mobile_show_320 {display:none;}
+
+
+ @media only screen and (max-width: 765px) {
+	
+.mobile_hide_480 {display: none;} 
+.eiko_td_buttons_main_1 {float:right;}
+.eiko_address_main_1 {float:left;}
+}
+
+ @media only screen and (max-width: 764px) {
+	
+.mobile_hide_320  {display: none;} 
+.eiko_td_buttons_main_1 {float:right;}
+.eiko_address_main_1 {float:left;}
+.mobile_show_320 {display:inline;}
+}
+

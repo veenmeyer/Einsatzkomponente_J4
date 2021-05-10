@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+        <field name="id" type="text" default="0" label="COM_EINSATZKOMPONENTE_FORM_LBL_GMAPKONFIGURATION_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="gmap_zoom_level" type="text"
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_GMAPKONFIGURATION_GMAP_ZOOM_LEVEL"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_GMAPKONFIGURATION_GMAP_ZOOM_LEVEL" 
+            required="true" 
+            filter="raw"
+            maxlength="255" /> 
+
+		<field
+			name="gmap_onload"
+			type="list"
+			label="COM_EINSATZKOMPONENTE_KARTENTYP"
+			description="Normal: zeigt die normale Standard-2D-Karte / Satellite: zeigt Luftaufnahmen des Geländes an / Hybrid: zeigt eine Mischung aus Satellite und Normal an (Luftaufnahme mit hinterlegten Straßen- Städtenamen) usw."
+			default="ROADMAP"
+            required="true" 
+			class="inputbox">
+			
+    	   <option value="ROADMAP">COM_EINSATZKOMPONENTE_STRASSENKARTE</option>
+      	   <option value="HYBRID">COM_EINSATZKOMPONENTE_HYBRIDKARTE_SATELLITORTSNAMEN</option>
+           <option value="SATELLITE">COM_EINSATZKOMPONENTE_SATELLITENKARTE</option>
+	  </field>
+
+
+       <field name="gmap_alarmarea" type="textarea"
+                
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_GMAPKONFIGURATION_GMAP_ALARMAREA"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_GMAPKONFIGURATION_GMAP_ALARMAREA" 
+            required="true" 
+            cols="100"
+            rows="8"
+            filter="raw" /> 
+
+       <field name="start_lat" type="text"
+                
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_GMAPKONFIGURATION_START_LAT"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_GMAPKONFIGURATION_START_LAT" 
+            required="true" 
+            filter="raw" /> 
+
+       <field name="start_lang" type="text"
+                
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_GMAPKONFIGURATION_START_LANG"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_GMAPKONFIGURATION_START_LANG" 
+            required="true" 
+            filter="raw" /> 
+
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_EINSATZKOMPONENTE_FORM_LBL_GMAPKONFIGURATION_CREATED_BY"
+            description="COM_EINSATZKOMPONENTE_FORM_DESC_GMAPKONFIGURATION_CREATED_BY"  /> 
+
+         <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field> 
+
+ </fieldset> 
+
+ <fieldset 
+                        name="accesscontrol">
+                       <field name="asset_id" type="hidden" filter="unset" />
+                       <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_einsatzkomponente"
+                            section="gmapkonfiguration"
+                        />
+
+	</fieldset>
+
+</form>

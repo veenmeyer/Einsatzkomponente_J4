@@ -1,0 +1,87 @@
+/*CSS-Anpassungen für J2.5*/
+#jformauswahlorga, #jform_vehicles {
+	height:300px !important; 
+} 
+/*CSS-Anpassungen für J2.5  ENDE*/
+
+#jform_einsatzart_logo_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_einsatzart_icon_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_einsatzart_list_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_einsatzbericht_image_klein_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_alarmierungsart_image_klein_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_einsatzbildbearbeiten_image_klein_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+
+#jform_einsatzbildbearbeiten_image_gross_preview {
+	height:200px !important; 
+} 
+.thumbnail {
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+    display: block;
+    line-height: 18px;
+    padding: 4px;
+	margin-right:5px !important;
+    transition: all 0.2s ease-in-out 0s;
+	text-decoration:none !important;
+}
+
+
+    .front-end-edit ul {
+        padding: 0 !important;
+    }
+    .front-end-edit li {
+        list-style: none;
+        margin-bottom: 6px !important;
+    }
+    .front-end-edit label {
+        margin-right: 10px;
+        display: block;
+        float: left;
+        width: 200px !important;
+    }
+    .front-end-edit .radio label {
+        display: inline;
+        float: none;
+    }
+    .front-end-edit .readonly {
+        border: none !important;
+        color: #666;
+    }    
+    .front-end-edit #editor-xtd-buttons {
+        height: 50px;
+        width: 600px;
+        float: left;
+    }
+    .front-end-edit .toggle-editor {
+        height: 50px;
+        width: 120px;
+        float: right;
+        
+    }
+	
+#jform_tickerkat_chzn {width:380px!important;}
+#jform_address {width:380px!important;}
+#jformauswahlorga_chzn {width:380px!important;}
+#jform_vehicles_chzn {width:380px!important;}
+#jform_data1_chzn {width:380px!important;}
+#jform_alerting_chzn {width:380px!important;}
+#adresse_chzn {width:380px!important;}
+#kurzbericht_chzn {width:380px!important;}
+#jform_summary  {width:380px!important;}
+
+
+
+

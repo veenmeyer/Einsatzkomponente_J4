@@ -1,0 +1,737 @@
+/*CSS-Anpassungen für J2.5*/
+#jformauswahlorga, #jform_vehicles {
+	height:300px !important; 
+} 
+/*CSS-Anpassungen für J2.5  ENDE*/
+
+
+
+.eiko_counter_detail {float:right;margin-bottom:5px;}
+
+.thumbnail {
+}
+
+.eiko_back_button {
+	float:right;
+	}
+.btn-details { 
+	color:#cccccc !important; 
+}
+.btn-details:hover { 
+	color:#000000 !important; 
+}
+
+.btn-home, a .btn-home, input .btn-home, button .btn-home { 
+	font-size: 11px !important; 
+	border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25) !important;
+    -moz-border-bottom-colors: none !important;
+    -moz-border-left-colors: none !important;
+    -moz-border-right-colors: none !important;
+    -moz-border-top-colors: none !important;
+    background-color: #F5F5F5 !important;
+    background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6) !important;
+    background-repeat: repeat-x !important;
+    border-color: #BBBBBB #BBBBBB #A2A2A2 !important;
+    border-image: none !important;
+    border-radius: 4px !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    color: #333333 !important;
+    cursor: pointer !important;
+    display: inline-block !important;
+    line-height: 15px !important;
+    margin-bottom: 0 !important;
+    padding: 4px 14px !important;
+    text-align: center !important;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75) !important;
+    vertical-align: middle !important;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	
+}
+
+.fahrzeug_box_1 { 
+	background: #e3e3e3 !important; 
+	min-width:240px; max-width:300px !important;
+	margin-left: 5px !important; 
+	float: left !important; 
+	border-spacing: 1px !important;
+	margin-right:20px !important;
+	margin-bottom:40px !important;
+	float:left !important;
+}
+.fahrzeug_box_2 { 
+	background: #c00c00 !important; 
+	color: #ffffff !important; 
+	border-spacing: 1px !important;
+	font-size:smaller !important; 
+	text-align:left !important;
+	padding-left: 10px !important;
+	padding-top: 10px !important;
+	padding-right: 10px !important;
+	padding-bottom: 10px !important;
+}
+.fahrzeug_box_3 {
+	background-color:#FFFFFF !important;
+	font-size:smaller !important; 
+	line-height:14px !important;
+	border: 1px solid !important;
+	margin-left: 10px !important;
+	margin-top: 10px !important;
+	margin-right: 10px !important;
+	margin-bottom: 10px !important;
+}
+.fahrzeug_4 {
+	background-color:#c00c00 !important;
+}
+.fahrzeug_5 {
+	background-color:#c00c00 !important;
+}
+.fahrzeug_box_6 { 
+	background: #c00c00 !important; 
+	border-spacing: 1px !important;
+	text-align:left !important;
+	padding-left: 10px !important;
+	padding-top: 10px !important;
+	padding-right: 10px !important;
+	padding-bottom: 10px !important;
+	}
+
+
+.fahrzeug_box_7 {
+	
+	}
+
+.fahrzeug_box_title { 
+	color:#FFFFFF !important; 
+	font-size:16px !important;
+	font-weight:bold !important; 
+	text-align:left !important;
+}
+.fahrzeug_box_detail1 { 
+	color:#FFFFFF !important; 
+	font-size:14px !important;
+	font-weight:bold !important;
+	text-align:left !important;
+}
+.organisation_box_1 { 
+	background: #e3e3e3 !important; 
+	width: 100% !important;
+	min-width:240px; max-width:300px !important;
+	margin-left: 5px !important; 
+	float: left !important; 
+	border-spacing: 1px !important;
+	margin-right:20px !important;
+}
+.organisation_box_2 { 
+	background: #c00c00 !important; 
+	color: #ffffff !important; 
+	border-spacing: 1px !important;
+	font-size:smaller !important; 
+	line-height:10px !important;
+	text-align:left !important;
+}
+.organisation_box_3 {
+	background-color:#FFFFFF !important;
+	font-size:smaller !important; 
+	line-height:10px !important;
+}
+.organisation_4 {
+	background-color:#c00c00 !important;
+}
+.organisation_5 {
+	background-color:#c00c00 !important;
+}
+.organisation_box_6 { 
+	background: #c00c00 !important; 
+	border-spacing: 1px !important;
+	text-align:left !important;
+}
+.organisation_box_title { 
+	color:#FFFFFF !important; 
+	font-size:16px !important;
+	font-weight:bold !important; 
+	text-align:left !important;
+}
+.organisation_box_detail1 { 
+	color:#FFFFFF !important; 
+	font-size:14px !important;
+	font-weight:bold !important;
+	text-align:left !important;
+}
+/*DIV-Container für "Einsatz eintragen"*/
+.eiko_neu {
+	margin-bottom: 10px;
+	float: right;
+}
+ /*CSS-Design Einsatz-Übersicht Copyright*/
+.copyright { 
+	/*color:#cccccc !important;*/ 
+	font-size:9px !important;
+	text-align:left !important;
+}
+.copyright_link { 
+	/*color:#cccccc !important;*/ 
+	font-size:9px !important;
+	text-align:right !important;
+}
+ /*CSS-Design Einsatz-Übersicht Copyright ENDE*/
+ /*CSS-Design Einsatz-Detailansicht Navigations-Buttons*/
+#map-canvas img {
+    max-width: none;
+}
+ /*CSS-Design Einsatz-Detailansicht Headlines ENDE*/
+ 
+ /*CSS-Design Einsatz-Detailansicht Layout: layout2*/
+.einsatzdetails_detailbox_layout2 { 
+	border: 1px solid #cecece !important; 
+	padding: 5px !important; 
+	background-color:#ededed !important;  
+	margin: 0 0 10px 0 !important;
+	line-height:14px !important;
+	font-size:smaller !important;
+}
+
+.detail_image_layout2 {
+	margin-left:40px !important;
+	/*padding-left:20px !important;*/
+	}
+/*.btn {
+	background:#666;
+	margin: 5px 5px 5px 5px !important ;
+	padding: 5px 5px 5px 5px !important ;}
+}*/
+
+ /*CSS-Design Einsatz-Detailansicht Layout: layout2 ENDE*/
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+/*h1 {
+    color: #383838;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 1.2em;
+    margin: 0px 0px 15px 0px;
+    
+}
+
+h2 {
+    color: #aa0b08;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1.2em;
+    margin: 0px 0px 8px 0px;
+}
+
+h3 {
+    color: #6b6b6b;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 15px;
+    margin: 0px 0px 10px 0px;
+}
+
+h4, h5 {
+    color: #ce0b07;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.2em;
+    margin: 0px 0px 10px 0px;
+}
+*/
+
+.clear {
+    clear: both;
+}
+
+.distance {
+    clear: both;
+    line-height: 50px;
+}
+
+.distance5 {
+    clear: both;
+    line-height: 5px;
+}
+
+.distance10 {
+    clear: both;
+    line-height: 10px;
+}
+
+.distance20 {
+    clear: both;
+    line-height: 20px;
+}
+
+.distance50 {
+    clear: both;
+    line-height: 50px;
+}
+
+.distance100 {
+    width: 100%;
+    overflow: auto;
+    border-bottom: 1px dotted #CCCCCC;
+    margin-bottom: 15px;
+    padding-top: 0px;
+}
+
+.news_titel_single {
+	font-size:larger;
+	font-weight:bold;}
+
+
+
+
+
+.detail_footer {
+	background-color: #F2F2F2;
+}
+
+
+/*Kalenderblatt CSS*/
+.home_cal_icon {
+       width:50px;
+       margin:0px;
+       padding:0px;
+       float: left;
+       margin-right: 15px;
+	   margin-left: 15px;
+	   margin-top:5px;
+
+    }
+.home_cal_monat {
+       border-top: 1px solid black;
+       border-left: 1px solid black;
+       border-right: 1px solid black;
+       background: #F00;
+       padding: 3px 0px;
+       color: white;
+       font-size: 14px;
+       text-align: center; 
+       border-radius: 8px 8px 0px 0px;
+       text-shadow: rgba(0, 0, 0, .4) 0px 1px 0px; 
+      background: -webkit-gradient(linear, left top, left bottom, from(#65A9D7), to(#f00));
+      background: -moz-linear-gradient(top, #65A9D7, #f00);
+    }
+.home_cal_tag {
+       border-left: 1px solid black;
+       border-right: 1px solid black;
+       background-color: white;
+       padding: 1px 0px;
+       color: black;
+       font-size: 24px;
+       vertical-align: middle;
+       text-align: center;
+       box-shadow: inset 0px 3px 3px rgba(0, 0, 0, 0.5);
+    }
+.home_cal_jahr {
+       border-bottom: 1px solid black;
+       border-left: 1px solid black;
+       border-right: 1px solid black;
+       background-color: white;
+       padding: 1px 0px;
+       color: black;
+       font-size: 8px;
+       vertical-align: middle;
+       text-align: center;
+       border-radius: 0px 0px 8px 8px;
+	   margin-top:-5px;
+	   padding-top:-5px;
+    }
+
+/*Einsatzübericht Layout_1*/	
+.eiko_sidepicture_layout1 {
+	float: right;
+	padding: 0px 0px 0px 10px;
+	margin: 5px 0px 10px 10px;
+}
+/*Einsatzübericht Layout_1   ENDE    */	
+
+/*Frontend-Pagination  */	
+.limit { float:right !important;}
+.pagination { display:block;}
+.first {}
+.previous {}
+.next {}
+.last {}
+.inputbox input-mini {}
+.counter {}
+/*Frontend-Pagination  ENDE */	
+
+/* Facebook Like Button  */
+.fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style] {
+	/*width: 100% !important;*/
+	 vertical-align: top!important;;
+}
+
+
+.eiko_clearfix {*zoom:1}
+.eiko_clearfix:before,.eiko_clearfix:after{display:table;line-height:0;content:""}
+.eiko_clearfix:after{clear:both}
+
+
+
+ /* ################################################## */
+ /* ##########  CSS - Detail - Layout 2   ############ */
+ /* ################################################## */
+
+ /*CSS-Design Einsatz-Detailansicht Socialbar*/
+.eiko_socialbar_2 {
+	}
+.eiko_social_2 {
+	margin-left:-25px;	 
+	}
+ /*CSS-Design Einsatz-Detailansicht Socialbar ENDE*/
+ 
+ /*CSS-Design Einsatz-Detailansicht Navigation */
+.eiko_navbar_2 {
+}
+.eiko_btn_2 { 
+	color:#cccccc !important; 
+	margin-left:3px;
+}
+.eiko_btn_2:hover { 
+	color:#000000 !important; 
+}
+ /*CSS-Design Einsatz-Detailansicht Navigations-Buttons ENDE*/
+
+.eiko_headline_2 { 
+}
+
+.eiko_img-rounded_2 {
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	border-radius:6px;
+	} 
+	
+.eiko_list_icon_2 {
+	float:left; 
+	margin-right:5px; 
+	padding-right:5px; 
+	margin-bottom:2px; 
+	padding-bottom:2px;
+	}
+
+.eiko_kurzbericht_2 {
+}
+
+.eiko_einsatzkategorie_2 {
+	color:# 333 !important; 
+	font-weight:bold !important;  	
+}
+
+.eiko_einsatzkarte_2 {
+	width:100%; 
+}
+
+.eiko_detailbox_2 { 
+	border: 1px solid #cecece !important; 
+	padding: 5px !important; 
+	background-color:#ededed !important;  
+	margin: 0 0 10px 0 !important;
+	line-height:18px !important;
+}
+
+.eiko_content_2 { 
+}
+
+.eiko_table1_2 {
+	width:100%;
+	}
+
+.eiko_table2_2 {
+	width:100%;
+	}
+	
+.eiko_table3_2 {
+	}
+
+.eiko_td_spalte1_2 {
+	vertical-align: top;
+	}
+
+.eiko_td_spalte2_2 {
+	vertical-align: top;
+	border-left: 1px solid #cecece; 
+	padding: 0 0 0 10px;	
+	}
+
+.eiko_td1_2 {
+	vertical-align: top;
+	}
+
+.eiko_td2_2 {
+	vertical-align: top;
+	}
+.eiko_td3_2 {
+	vertical-align: top;
+	}
+.eiko_td4_2 {
+	vertical-align: top;
+	}
+
+
+.eiko_einsatzort_label_2, .eiko_date1_label_2, .eiko_date1_time_label_2,
+.eiko_date3_label_2, .eiko_alarmart_label_2, .eiko_boss2_label_2,
+.eiko_boss_label_2, .eiko_people_label_2 {
+	}
+.eiko_einsatzort_value_2, .eiko_date1_value_2, .eiko_date1_time_value_2,
+.eiko_date3_value_2, .eiko_alarmart_value_2, .eiko_boss2_value_2,
+.eiko_boss_value_2, .eiko_people_value_2, .eiko_einsatzdauer_value_2 {
+	color: #b10000 !important;
+	}
+	
+.eiko_fahrzeugaufgebot_2 {
+	}
+.eiko_fahrzeugaufgebot_2 a {
+	text-decoration: none !important;
+	}
+	
+.eiko_detail_image_2 {
+	margin-left:40px !important;
+	float:right;
+	width:50%; 
+	max-width:300px; 
+	min-width:200px;
+	}
+
+.eiko_einsatzbericht_2 {
+	}
+	
+.eiko_distance5_2 {
+    clear: both;
+    line-height: 5px;
+    border-bottom: 1px dotted #CCCCCC;
+	width:100%;
+}
+
+.eiko_distance10_2 {
+    clear: both;
+    line-height: 10px;
+}
+
+.eiko_distance20_2 {
+    clear: both;
+    line-height: 20px;
+}
+
+.eiko_distance50_2 {
+    clear: both;
+    line-height: 50px;
+}
+
+.eiko_distance100_2 {
+    width: 100%;
+    overflow: auto;
+    border-bottom: 1px dotted #CCCCCC;
+    margin-bottom: 15px;
+    padding-top: 0px;
+}
+
+.eiko_sonstige_info_2 {
+	}
+
+.eiko_einsatzbilder_headline_2 {
+	}
+
+.eiko_thumbnails_2 li {
+    display: block;
+}
+
+.eiko_thumbnail_2 {
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.eiko_thumbs_2 { 
+	}
+	
+.eiko_presselinks_headeline_2 {
+	}
+
+.eiko_table_presselinks_2 {
+	}
+	
+.eiko_td_presselinks_2 {
+	vertical-align: top;
+	}
+	
+.eiko_detail_footer_2 {
+	background-color: #F2F2F2;
+}
+
+.eiko_keine_daten_2 {
+	color:#F00;
+	}
+	
+.eiko_image_fahrzeugaufgebot {
+	max-height:50px;
+	width:50px;
+	}
+	
+.eiko_gmap_map {
+	width: 100%;
+	}
+	
+.eiko_gmap_month_select {
+	width: 90px;
+	}
+	
+.eiko_gmap_year_select {
+	width: 70px;
+	}
+	
+.eiko_gmap_toolbar {
+	font-size:8px !important;
+	float:left;
+	}
+.eiko_gmap_toolbar_button {
+	margin-left:5px;	
+	}
+.eiko_gmap_toolbar_icon {
+	width:12px;	
+	height:12px;
+	}
+.eiko_gmap_count {
+	margin-left:10px;
+	font-weight:bold;
+	}
+.eiko_gmap_sidebar {
+	font-size:12px;
+	padding-left:10px;
+	margin-left:10px; 
+	width:99%; 
+	overflow:auto;
+	line-height:14px;
+	}
+.eiko_gmap_sidebar_link {  
+	}
+.eiko_gmap_sidebar_div {  
+	}
+.eiko_gmap_sidebar_icon {  
+width: 16px;
+height:16px;
+margin-left:5px;
+padding-left:5px;
+margin-right:5px;
+padding-right:5px;
+	}
+
+.eiko_gmap_checkbox {
+	visibility: hidden;
+	}
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+
+
+.btn.active,
+.btn:active {
+  border-color: #FF080D !important; 
+}  
+
+#map img { max-width:none; }
+
+.mod_eiko1 div {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+.mod_eiko2 div {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+
+ 
+/* CSS main_layout_1 */
+.eiko_rss_main_1 {float:right;}
+.eiko_rss_icon_main_1 {width:24px;}
+.eiko_header_main_1 {}
+.eiko_select_jahr_main_1 {}
+.eiko_select_einsatzart_main_1 {}
+.eiko_select_organisation_main_1 {}
+.eiko_table_main_1 {}
+.eiko_th_einsatznummer_main_1 {}
+.eiko_th_alarmierungsart_main_1 {}
+.eiko_th_datum_main_1 {}
+.eiko_th_einsatzart_main_1 {}
+.eiko_th_kurzbericht_main_1 {}
+.eiko_th_organisationen_main_1 {}
+.eiko_th_einsatzbild_main_1 {}
+.eiko_tr_main_1 {}
+.eiko_td_marker_main_1 {text-align:center;color:#000000;font-weight:bold;font-size:larger;}
+.eiko_img_alarmierungsart_main_1 {width:50px; height:50px;margin-right:2px;}
+.eiko_td_alarmierungsart_main_1 {text-align:center;}
+.eiko_td_kalender_main_1 {}
+.eiko_td_datum_main_1 {padding-left:5px;}
+.eiko_td_einsatzart_main_1 {}
+.eiko_img_einsatzart_main_1 {width:50px; height:50px;margin-right:2px;}
+.eiko_td_kurzbericht_main_1 {}
+.eiko_td_organisationen_main_1 {}
+.eiko_td_einsatzbild_main_1 {}
+.eiko_img_einsatzbild_main_1 {}
+.eiko_tr_zusatz_main_1 {}
+.eiko_td_zusatz_main_1 {}
+.eiko_td_gmap_main_1 {}
+.eiko_td_buttons_main_1 {white-space: nowrap;}
+
+.eiko_icon {width:32px;}
+.eiko_icon_3 {width:24px;}
+.eiko_nowrap {white-space: nowrap;}
+.eiko_data1 {font-size:24px;}
+
+.eiko_einsatzarchiv_jahr_tr {background-color:#dddddd;color:#000000;font-size:24px !important;font-weight:bold !important;margin-top:50px !important;}
+.eiko_einsatzarchiv_monat_tr {background-color:#cccccc;color:#000000;}eiko_einsatzarchiv_monat_div {color:#ffffff !important;}
+.eiko_span_marker_main_1 {color:#ffffff!important;}
+
+.eiko_distance_road {font-size:smaller;padding-bottom:2em;}
+
+.eiko_ausruestung {margin-top: 10px;}
+
+.eiko_table_ausruestung {width: 100%;}
+
+.icon-first::before {
+    content: "" !important;
+}
+
+.icon-previous::before , .icon-backward::before {
+    content: "" !important;
+}
+.icon-next::before, .icon-forward::before {
+    content: "" !important;
+}
+
+
+
+.eiko_detail_image_3 {
+	width:50%; 
+	max-width:300px; 
+	min-width:200px;
+	}
+.alignleft_detail_3 {
+
+    display: block;
+    margin-right: 15px;
+    float: left;
+
+}
+
+.detail_layout_3_p {margin-top: -35px;}
+

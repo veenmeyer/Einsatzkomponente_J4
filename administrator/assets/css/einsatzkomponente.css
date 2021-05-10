@@ -1,0 +1,120 @@
+
+
+.controls input {width:380px!important;}
+
+.div_side_filter {margin-left:15px;}
+
+#jform_einsatzart_logo_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_einsatzart_icon_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_einsatzart_list_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_einsatzbericht_image_klein_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_alarmierungsart_image_klein_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+#jform_einsatzbildbearbeiten_image_klein_preview {
+	max-height:100px !important; max-width:400px !important; 
+} 
+
+#jform_einsatzbildbearbeiten_image_gross_preview {
+	max-height:200px !important; 
+} 
+.thumbnail {
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+    display: block;
+    line-height: 18px;
+    padding: 4px;
+	margin-right:5px !important;
+    transition: all 0.2s ease-in-out 0s;
+	text-decoration:none !important;
+}
+.icon-48-einsatzberichte {
+      background-image: url(../images/l_einsatzberichte.png);
+      padding-left:60px!important;
+}
+.icon-48-einsatzbericht {
+      background-image: url(../images/l_einsatzberichte.png);
+      padding-left:60px!important;
+}
+.icon-48-einsatzarten {
+      background-image: url(../images/l_einsatzarten.png);
+      padding-left:60px!important;
+}
+.icon-48-einsatzart {
+      background-image: url(../images/l_einsatzarten.png);
+      padding-left:60px!important;
+}
+.icon-48-organisationen {
+      background-image: url(../images/l_organisationen.png);
+      padding-left:60px!important;
+}
+.icon-48-organisation {
+      background-image: url(../images/l_organisationen.png);
+      padding-left:60px!important;
+}
+.icon-48-einsatzfahrzeuge {
+      background-image: url(../images/l_einsatzfahrzeuge.png);
+      padding-left:60px!important;
+}
+.icon-48-einsatzfahrzeug {
+      background-image: url(../images/l_einsatzfahrzeuge.png);
+      padding-left:60px!important;
+}
+.icon-48-alarmierungsarten {
+      background-image: url(../images/l_alarmierungsarten.png);
+      padding-left:60px!important;
+}
+.icon-48-alarmierungsart {
+      background-image: url(../images/l_alarmierungsarten.png);
+      padding-left:60px!important;
+}
+.icon-48-einsatzbildmanager {
+      background-image: url(../images/l_einsatzbildmanager.png);
+      padding-left:60px!important;
+}
+.icon-48-einsatzbilderbearbeiten {
+      background-image: url(../images/l_einsatzbildmanager.png);
+      padding-left:60px!important;
+}
+.icon-48-gmapkonfigurationen {
+      background-image: url(../images/l_gmapkonfigurationen.png);
+      padding-left:60px!important;
+}
+.icon-48-gmapkonfiguration {
+      background-image: url(../images/l_gmapkonfigurationen.png);
+      padding-left:60px!important;
+}
+
+.icon-48-ausruestungen {
+      background-image: url(../images/l_einsatzarten.png);
+      padding-left:60px!important;
+}
+
+.icon-48-ausruestung {
+      background-image: url(../images/l_einsatzarten.png);
+      padding-left:60px!important;
+}
+
+
+
+#jform_tickerkat_chzn {width:380px!important;}
+#adresse_chzn {width:380px!important;}
+#jformauswahlorga_chzn {width:380px!important;}
+#jform_vehicles_chzn {width:380px!important;}
+
+.backend_tickerkat {display:none;}
+.backend_einsatzfoto {display:none;}
+
+.backend_kat_style, .backend_alerting_style, .backend_data_style, .backend_foto_style, .backend_gmap_icon_orga  {width:24px;height:100%;}
+
+.backend_foto_style {border:1px solid #000000;}
+
