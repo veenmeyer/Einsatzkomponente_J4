@@ -8,13 +8,17 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 jimport('joomla.application.component.view');
 JLoader::import('helpers.einsatzkomponente', JPATH_SITE.'/administrator/components/com_einsatzkomponente');
 JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatzkomponente'); 
 /**
  * View to edit
  */
-class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
+class EinsatzkomponenteViewEinsatzbericht extends HtmlView {
     protected $state;
     protected $item;
     protected $form;
@@ -38,10 +42,10 @@ class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
         
 		$this->next_id[0]= new stdClass();
 		
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$selectedOrga = $app->getUserStateFromRequest( "com_einsatzkomponente.selectedOrga", 'selectedOrga', 'alle Organisationen' );
 		//echo $selectedOrga;
-        $user		= JFactory::getUser();
+        $user		= Factory::getUser();
 		//$id = $app->input->get(id); 
         $this->state = $this->get('State');
         $this->item = $this->get('Data');
@@ -59,7 +63,7 @@ class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
 		$this->einsatzdauer = EinsatzkomponenteHelper::getEinsatzdauer($this->item->date1,$this->item->date3);
 		$this->einsatznummer = EinsatzkomponenteHelper::ermittle_einsatz_nummer(strtotime($this->item->date1),$this->item->data1);
 		// Get active menu
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$menus	= $app->getMenu();
 		$this->menu = $menus->getActive();
 		//print_r ($this->menu);
@@ -68,7 +72,7 @@ class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
 
 
 		// Import CSS + JS 
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');	
 		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/responsive.css');
 		$document->addScript('components/com_einsatzkomponente/assets/highslide/highslide-with-gallery.js');
@@ -85,7 +89,7 @@ class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
 //		@$sef_rewrite = $conf[sef_rewrite]; 
 		
 		//if ($sef_rewrite) :
-		@$this->navbar = EinsatzkomponenteHelper::getNavbar($this->params,$this->prev_id['0']->id,$this->next_id['0']->id,$this->item->id,$this->menu->link.'&Itemid='.$this->menu->id);	
+		@$this->navbar = EinsatzkomponenteHelper::getNavbar($this->params,$this->prev_id['0']->id,$this->next_id['0']->id,$this->item->id,$this->menu->link.'&Itemid='.$this->menu->id,$this->menu->id);	
 		//endif;	
 		//if (!$sef_rewrite) :
 		//@$this->navbar = EinsatzkomponenteHelper::getNavbar($this->params,$this->prev_id['0']->id,$this->next_id['0']->id,$this->item->id,$this->menu->link.'&Itemid='.$this->params->get('homelink','').'');	
@@ -214,16 +218,16 @@ class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
 		
 		
 		// Bootstrap laden
-		JHtml::_('behavior.framework', true);
+		//HTMLHelper::_('behavior.framework', true);
 		
 		if ($this->params->get('display_home_bootstrap','0') == '1') :
-		JHtml::_('bootstrap.framework');
-		$document->addStyleSheet($this->baseurl . '/media/jui/css/bootstrap.min.css');
-		$document->addStyleSheet($this->baseurl.'/media/jui/css/icomoon.css');
+		//HTMLHelper::_('bootstrap.framework');
+		//$document->addStyleSheet($this->baseurl . '/media/jui/css/bootstrap.min.css');
+		//$document->addStyleSheet($this->baseurl.'/media/jui/css/icomoon.css');
 		endif;
 		if ($this->params->get('display_home_bootstrap','0') == '2') :
-		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css');
-		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css');
+		//$document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css');
+		//$document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css');
 		endif;
 		
 		// Import CSS aus Optionen
@@ -266,31 +270,37 @@ class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
 		endif;
 		//$opengraph .= '<meta property="article:publisher" content="https://www.einsatzkomponente.de" />';
 		
-			if ($this->params->get('standard_share_image','')) : 
-			$fileName_image = str_replace(' ', '%20', $this->params->get('standard_share_image',''));  
-			$size = @getimagesize($fileName_image);
-			$opengraph .= '<meta property="og:image" content="'.JURI::base().$fileName_image.'"/>';
-			$opengraph .= '<meta property="og:image:width" content="'.$size[0].'"/>';
-			$opengraph .= '<meta property="og:image:height" content="'.$size[1].'"/>';
-		endif;
 
+        if ($this->params->get('standard_share_image','')) :
+        $fileName_image = str_replace(' ', '%20', $this->params->get('standard_share_image',''));
+        $size = @getimagesize($fileName_image);
+        if ($size !== false) {
+            $opengraph .= '<meta property="og:image" content="'.JURI::base().$fileName_image.'"/>';
+            $opengraph .= '<meta property="og:image:width" content="'.$size[0].'"/>';
+            $opengraph .= '<meta property="og:image:height" content="'.$size[1].'"/>';
+        }
+        endif;
+		
 		if( $this->item->image ) :
 			$fileName_image = str_replace(' ', '%20', $this->item->image);  
 			$size = @getimagesize($fileName_image);
-			$opengraph .= '<meta property="og:image" content="'.JURI::base().$fileName_image.'"/>';
-			$opengraph .= '<meta property="og:image:width" content="'.$size[0].'"/>';
-			$opengraph .= '<meta property="og:image:height" content="'.$size[1].'"/>';
-		endif;
+		if ($size !== false) {
+                $opengraph .= '<meta property="og:image" content="'.JURI::base().$fileName_image.'"/>';
+                $opengraph .= '<meta property="og:image:width" content="'.$size[0].'"/>';
+                $opengraph .= '<meta property="og:image:height" content="'.$size[1].'"/>';
+            }		endif;
 
 		if ($this->images) :
-			for ($i = 0;$i < count($this->images);++$i) { 
-			$fileName_image = str_replace(' ', '%20', $this->images[$i]->image);  
-			$size = @getimagesize($fileName_image);
-			$opengraph .= '<meta property="og:image" content="'.JURI::base().$fileName_image.'"/>';
-			$opengraph .= '<meta property="og:image:width" content="'.$size[0].'"/>';
-			$opengraph .= '<meta property="og:image:height" content="'.$size[1].'"/>';
-			} 
-	   endif;
+		for ($i = 0;$i < count($this->images);++$i) {
+                $fileName_image = str_replace(' ', '%20', $this->images[$i]->image);
+                $size = @getimagesize($fileName_image);
+                if ($size !== false) {
+                    $opengraph .= '<meta property="og:image" content="'.JURI::base().$fileName_image.'"/>';
+                    $opengraph .= '<meta property="og:image:width" content="'.$size[0].'"/>';
+                    $opengraph .= '<meta property="og:image:height" content="'.$size[1].'"/>';
+                }
+			}
+			endif;
 	   
 	   
 	   
@@ -320,13 +330,13 @@ class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
             
             $authorised = $user->authorise('core.create', 'com_einsatzkomponente');
             if ($authorised !== true) {
-                throw new Exception(JText::_('ALERTNOAUTHOR'));
+                throw new Exception(Text::_('ALERTNOAUTHOR'));
             }
         }
         $authorised = $user->authorise('core.create', 'com_einsatzkomponente');
-        if($this->item->state === '0' AND !$authorised) : throw new Exception(JText::_('ALERTNOAUTHOR'),'0'); endif;
-        if($this->item->state === '2') : throw new Exception(JText::_('ALERTNOAUTHOR'),'2'); endif;
-        if($this->item->state === '-2') : throw new Exception(JText::_('ALERTNOAUTHOR'),'-2'); endif;
+        if($this->item->state === '0' AND !$authorised) : throw new Exception(Text::_('ALERTNOAUTHOR'),'0'); endif;
+        if($this->item->state === '2') : throw new Exception(Text::_('ALERTNOAUTHOR'),'2'); endif;
+        if($this->item->state === '-2') : throw new Exception(Text::_('ALERTNOAUTHOR'),'-2'); endif;
         
 			// Increment the hit counter of the event.
 			$model = $this->getModel();
@@ -340,9 +350,9 @@ class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
 	 */
 	protected function _prepareDocument()
 	{
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$menus	= $app->getMenu();
 		$title	= null;
 		// Because the application sets a default page title,
@@ -352,17 +362,17 @@ class EinsatzkomponenteViewEinsatzbericht extends JViewLegacy {
 		{
 			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
 		} else {
-			$this->params->def('page_heading', JText::_('com_einsatzkomponente_DEFAULT_PAGE_TITLE'));
+			$this->params->def('page_heading', Text::_('com_einsatzkomponente_DEFAULT_PAGE_TITLE'));
 		}
 		$title = $this->params->get('page_title', '');
 		if (empty($title)) {
 			$title = $app->getCfg('sitename');
 		}
 		elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
+			$title = Text::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
 		}
 		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = JText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
+			$title = Text::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
 		}
 		$this->document->setTitle($title);
 		

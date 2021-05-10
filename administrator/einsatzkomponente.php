@@ -9,27 +9,30 @@
  
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
 
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.manage', 'com_einsatzkomponente')) 
+if (!Factory::getUser()->authorise('core.manage', 'com_einsatzkomponente')) 
 {
-	throw new Exception(JText::_('ALERTNOAUTHOR'));
+	throw new Exception(Text::_('ALERTNOAUTHOR'));
 }
 
 // Require specific controller if requested
-if($controller = JFactory::getApplication()->input->getWord('controller')) {
+if($controller = Factory::getApplication()->input->getWord('controller')) {
     $classname	= 'EinsatzkomponenteController'.$controller;
 	$path = JPATH_COMPONENT.'/controllers/'.$controller.'.php';
         require_once $path;
 	$classname	= 'EinsatzkomponenteController'.$controller;
 	$controller = new $classname( );
-    $controller->execute(JFactory::getApplication()->input->get('task'));
+    $controller->execute(Factory::getApplication()->input->get('task'));
 	$controller->redirect();
 }
 
 // Include dependancies
 jimport('joomla.application.component.controller');
-$controller	= JControllerLegacy::getInstance('Einsatzkomponente');
-$controller->execute(JFactory::getApplication()->input->get('task'));
+$controller	= BaseController::getInstance('Einsatzkomponente');
+$controller->execute(Factory::getApplication()->input->get('task'));
 $controller->redirect();

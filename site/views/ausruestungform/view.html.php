@@ -9,13 +9,17 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.view');
 
 /**
  * View to edit
  */
-class EinsatzkomponenteViewAusruestungform extends JViewLegacy {
+class EinsatzkomponenteViewAusruestungform extends HtmlView {
 
     protected $state;
     protected $item;
@@ -27,8 +31,8 @@ class EinsatzkomponenteViewAusruestungform extends JViewLegacy {
      */
     public function display($tpl = null) {
 
-        $app = JFactory::getApplication();
-        $user = JFactory::getUser();
+        $app = Factory::getApplication();
+        $user = Factory::getUser();
 
         $this->state = $this->get('State');
         $this->item = $this->get('Data');
@@ -37,15 +41,15 @@ class EinsatzkomponenteViewAusruestungform extends JViewLegacy {
 
 		
 		// Import CSS + JS 
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');	
 		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/responsive.css');
 
 		// Bootstrap laden
-		JHtml::_('behavior.framework', true);
+		HTMLHelper::_('behavior.framework', true);
 		
 		if ($this->params->get('display_ausruestung_bootstrap','0') == '1') :
-		JHtml::_('bootstrap.framework');
+		HTMLHelper::_('bootstrap.framework');
 		$document->addStyleSheet($this->baseurl . '/media/jui/css/bootstrap.min.css');
 		$document->addStyleSheet($this->baseurl.'/media/jui/css/icomoon.css');
 		endif;
@@ -74,7 +78,7 @@ class EinsatzkomponenteViewAusruestungform extends JViewLegacy {
      * Prepares the document
      */
     protected function _prepareDocument() {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $menus = $app->getMenu();
         $title = null;
 
@@ -84,15 +88,15 @@ class EinsatzkomponenteViewAusruestungform extends JViewLegacy {
         if ($menu) {
             $this->params->def('page_heading', $this->params->get('page_title', $menu->title));
         } else {
-            $this->params->def('page_heading', JText::_('COM_EINSATZKOMPONENTE_DEFAULT_PAGE_TITLE'));
+            $this->params->def('page_heading', Text::_('COM_EINSATZKOMPONENTE_DEFAULT_PAGE_TITLE'));
         }
         $title = $this->params->get('page_title', '');
         if (empty($title)) {
             $title = $app->getCfg('sitename');
         } elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
-            $title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
+            $title = Text::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
         } elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-            $title = JText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
+            $title = Text::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
         }
         $this->document->setTitle($title);
 

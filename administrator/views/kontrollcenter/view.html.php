@@ -8,11 +8,15 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 jimport('joomla.application.component.view');
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewKontrollcenter extends JViewLegacy
+class EinsatzkomponenteViewKontrollcenter extends HtmlView
 {
 	protected $items;
 	protected $pagination;
@@ -26,7 +30,7 @@ class EinsatzkomponenteViewKontrollcenter extends JViewLegacy
 		$this->state		= $this->get('State');
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
-		$this->params = JComponentHelper::getParams('com_einsatzkomponente');
+		$this->params = ComponentHelper::getParams('com_einsatzkomponente');
 		
 		//$this->gmap_config = EinsatzkomponenteHelper::load_gmap_config(); // GMap-Config aus helper laden 
 		
@@ -51,7 +55,7 @@ class EinsatzkomponenteViewKontrollcenter extends JViewLegacy
 	protected function addToolbar()
 	{
 		require_once JPATH_COMPONENT.'/helpers/einsatzkomponente.php';
-		JToolBarHelper::title(JText::_('COM_EINSATZKOMPONENTE_TITLE_KONTROLLCENTER'), 'organisationen.png');
+		JToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_KONTROLLCENTER'), 'organisationen.png');
 		JToolBarHelper::preferences('com_einsatzkomponente');
         
         //Set sidebar action - New in 3.0

@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="3.2.0" method="upgrade">
+<extension type="component" method="upgrade">
     <name>com_einsatzkomponente</name>
-    <creationDate>2021-01-03</creationDate>
-    <copyright>Copyright (C) 2020 by Ralf Meyer. All rights reserved.</copyright>
+    <creationDate>2021-03-27</creationDate>
+    <copyright>Copyright (C) 2021 by Ralf Meyer. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later</license>
     <author>Ralf Meyer</author>
     <authorEmail>ralf.meyer@mail.de</authorEmail>
     <authorUrl>https://einsatzkomponente.de</authorUrl>
-    <version>3.44.0</version> 
+    <version>4.0.01</version> 
 	
     <description>
             <![CDATA[
 			<h1>Einsatzkomponente</h1><h3>für das Joomla-CMS</h3>
 			<div style="clear: both;"></div>
-			<p>Copyright (C) 2020 Ralf Meyer</p>
+			<p>Copyright (C) 2021 Ralf Meyer</p>
 			<p>Website: <a href='https://www.einsatzkomponente.de'>www.einsatzkomponente.de</a></p>
 			<p><a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HDFKVJSKSEFY"><span style="float:right;">Dieses Projekt jetzt unterstützen: <img border=0  src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" /></span></a>
 <p><small><span style="float:left;"></br>Alternativ können Sie die Kontodaten per <a href="mailto:validate@einsatzkomponente.de?Subject=Spende%20Einsatzkomponente%20J3.x" target="_top">Email </a>anfordern.</span></small></p>
 </p>
 			]]>
 	</description>
- 
+	
+	<namespace path="src">EinsatzkomponenteNamespace\Component\Einsatzkomponente</namespace>
+	
 	<!-- Runs on install/uninstall/update; New in Joomla 2.5 -->  
 	<scriptfile>file.script.php</scriptfile> 
 	
@@ -62,17 +64,123 @@
 	</media>
 	
     <administration>
-        <menu img="components/com_einsatzkomponente/assets/images/s_com_einsatzkomponente.png" >COM_EINSATZKOMPONENTE_MENU</menu>
+        <menu img="components/com_einsatzkomponente/assets/images/s_com_einsatzkomponente.png" >COM_EINSATZKOMPONENTE_MENU
+		<params>
+				<dashboard>einsatzkomponente</dashboard>
+			</params>
+			</menu>
+			
         <submenu> 
-			<menu link="option=com_einsatzkomponente&amp;view=kontrollcenter" view="kontrollcenter" img="components/com_einsatzkomponente/assets/images/s_com_einsatzkomponente.png" alt="Einsatzkomponente/Kontrollcenter">COM_EINSATZKOMPONENTE_TITLE_KONTROLLCENTER</menu>
-			<menu link="option=com_einsatzkomponente&amp;view=einsatzberichte" view="einsatzberichte" img="components/com_einsatzkomponente/assets/images/s_einsatzberichte.png" alt="Einsatzkomponente/Einsatzberichte">COM_EINSATZKOMPONENTE_TITLE_EINSATZBERICHTE</menu>
-			<menu link="option=com_einsatzkomponente&amp;view=kategorien" view="kategorien" img="components/com_einsatzkomponente/assets/images/s_kategorien.png" alt="Einsatzkomponente/Kategorien">COM_EINSATZKOMPONENTE_TITLE_KATEGORIEN</menu>
-			<menu link="option=com_einsatzkomponente&amp;view=einsatzarten" view="einsatzarten" img="components/com_einsatzkomponente/assets/images/s_einsatzarten.png" alt="Einsatzkomponente/Einsatzarten">COM_EINSATZKOMPONENTE_TITLE_EINSATZARTEN</menu>
-			<menu link="option=com_einsatzkomponente&amp;view=alarmierungsarten" view="alarmierungsarten" img="components/com_einsatzkomponente/assets/images/s_alarmierungsarten.png" alt="Einsatzkomponente/Alarmierungsarten">COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSARTEN</menu>
-			<menu link="option=com_einsatzkomponente&amp;view=einsatzfahrzeuge" view="einsatzfahrzeuge" img="components/com_einsatzkomponente/assets/images/s_einsatzfahrzeuge.png" alt="Einsatzkomponente/Einsatzfahrzeuge">COM_EINSATZKOMPONENTE_TITLE_EINSATZFAHRZEUGE</menu>
-			<menu link="option=com_einsatzkomponente&amp;view=organisationen" view="organisationen" img="components/com_einsatzkomponente/assets/images/s_organisationen.png" alt="Einsatzkomponente/Organisationen">COM_EINSATZKOMPONENTE_TITLE_ORGANISATIONEN</menu>
-			<menu link="option=com_einsatzkomponente&amp;view=einsatzbildmanager" view="einsatzbildmanager" img="components/com_einsatzkomponente/assets/images/s_einsatzbildmanager.png" alt="Einsatzkomponente/Einsatzbildmanager">COM_EINSATZKOMPONENTE_TITLE_EINSATZBILDMANAGER</menu>
-			<menu link="option=com_einsatzkomponente&amp;view=gmapkonfigurationen" view="gmapkonfigurationen" img="components/com_einsatzkomponente/assets/images/s_gmapkonfigurationen.png" alt="Einsatzkomponente/Gmapkonfigurationen">COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATIONEN</menu>
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=kontrollcenter" 
+				view="kontrollcenter" 
+				img="components/com_einsatzkomponente/assets/images/s_com_einsatzkomponente.png" 
+				alt="Einsatzkomponente/Kontrollcenter">
+				COM_EINSATZKOMPONENTE_TITLE_KONTROLLCENTER
+				</menu>
+			
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=einsatzberichte" 
+				view="einsatzberichte" 
+				img="components/com_einsatzkomponente/assets/images/s_einsatzberichte.png" alt="Einsatzkomponente/Einsatzberichte">
+				COM_EINSATZKOMPONENTE_TITLE_EINSATZBERICHTE
+				<params>
+					<menu-quicktask-title>Neu</menu-quicktask-title>
+					<menu-quicktask>index.php?option=com_einsatzkomponente&amp;view=einsatzbericht&amp;layout=edit</menu-quicktask>
+				</params>				
+				</menu>
+				
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=kategorien" 
+				view="kategorien" 
+				img="components/com_einsatzkomponente/assets/images/s_kategorien.png" 
+				alt="Einsatzkomponente/Kategorien">
+				COM_EINSATZKOMPONENTE_TITLE_KATEGORIEN
+				<params>
+					<menu-quicktask-title>Neu</menu-quicktask-title>
+					<menu-quicktask>index.php?option=com_einsatzkomponente&amp;view=kategorie&amp;layout=edit</menu-quicktask>
+				</params>				
+				</menu>
+				
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=einsatzarten" 
+				view="einsatzarten" 
+				img="components/com_einsatzkomponente/assets/images/s_einsatzarten.png" 
+				alt="Einsatzkomponente/Einsatzarten">
+				COM_EINSATZKOMPONENTE_TITLE_EINSATZARTEN
+				<params>
+					<menu-quicktask-title>Neu</menu-quicktask-title>
+					<menu-quicktask>index.php?option=com_einsatzkomponente&amp;view=einsatzart&amp;layout=edit</menu-quicktask>
+				</params>				
+				</menu>
+				
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=alarmierungsarten" 
+				view="alarmierungsarten" 
+				img="components/com_einsatzkomponente/assets/images/s_alarmierungsarten.png" 
+				alt="Einsatzkomponente/Alarmierungsarten">
+				COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSARTEN
+				<params>
+					<menu-quicktask-title>Neu</menu-quicktask-title>
+					<menu-quicktask>index.php?option=com_einsatzkomponente&amp;view=alarmierungsart&amp;layout=edit</menu-quicktask>
+				</params>				
+				</menu>
+				
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=einsatzfahrzeuge" 
+				view="einsatzfahrzeuge" 
+				img="components/com_einsatzkomponente/assets/images/s_einsatzfahrzeuge.png" 
+				alt="Einsatzkomponente/Einsatzfahrzeuge">
+				COM_EINSATZKOMPONENTE_TITLE_EINSATZFAHRZEUGE
+				<params>
+					<menu-quicktask-title>Neu</menu-quicktask-title>
+					<menu-quicktask>index.php?option=com_einsatzkomponente&amp;view=einsatzfahrzeug&amp;layout=edit</menu-quicktask>
+				</params>				
+				</menu>
+				
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=organisationen" 
+				view="organisationen" 
+				img="components/com_einsatzkomponente/assets/images/s_organisationen.png" 
+				alt="Einsatzkomponente/Organisationen">
+				COM_EINSATZKOMPONENTE_TITLE_ORGANISATIONEN
+				<params>
+					<menu-quicktask-title>Neu</menu-quicktask-title>
+					<menu-quicktask>index.php?option=com_einsatzkomponente&amp;view=organisation&amp;layout=edit</menu-quicktask>
+				</params>				
+				</menu>
+				
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=ausruestungen" 
+				view="ausruestungen" 
+				img="components/com_einsatzkomponente/assets/images/s_ausruestungen.png" 
+				alt="Einsatzkomponente/Ausruestungen">
+				COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNGEN
+				<params>
+					<menu-quicktask-title>Neu</menu-quicktask-title>
+					<menu-quicktask>index.php?option=com_einsatzkomponente&amp;view=ausruestung&amp;layout=edit</menu-quicktask>
+				</params>				
+				</menu>
+				
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=einsatzbildmanager" 
+				view="einsatzbildmanager" 
+				img="components/com_einsatzkomponente/assets/images/s_einsatzbildmanager.png" 
+				alt="Einsatzkomponente/Einsatzbildmanager">COM_EINSATZKOMPONENTE_TITLE_EINSATZBILDMANAGER
+				<params>
+					<menu-quicktask-title>Neu</menu-quicktask-title>
+					<menu-quicktask>index.php?option=com_einsatzkomponente&amp;view=einsatzbilderbearbeiten&amp;layout=edit</menu-quicktask>
+				</params>				
+				</menu>
+				
+			<menu 
+				link="option=com_einsatzkomponente&amp;view=gmapkonfigurationen" 
+				view="gmapkonfigurationen" 
+				img="components/com_einsatzkomponente/assets/images/s_gmapkonfigurationen.png" 
+				alt="Einsatzkomponente/Gmapkonfigurationen">
+				COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATIONEN
+				</menu>
+				
         </submenu>
 		
         <files folder="administrator">
@@ -104,9 +212,20 @@
 		
     </administration>
 	
+		<api>
+				<files folder="api/components/com_einsatzkomponente">
+					<folder>src</folder>
+				</files>
+			</api>
+			
+	<changelogurl>https://www.w3schools.com/xml/note.xml</changelogurl>			
+	
 <!-- UPDATESERVER DEFINITION -->
 	<updateservers>
 		<!-- Note: No spaces or linebreaks allowed between the server tags -->
 		<server type="extension" priority="1" name="Einsatzkomponente">https://einsatzkomponente.joomla100.com/update/com_einsatzkomponente-update.xml</server>
 	</updateservers>
+	
+	<dlid prefix="key=" suffix="einsatzkomponente.zip" />
+
 </extension>

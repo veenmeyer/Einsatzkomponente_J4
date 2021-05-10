@@ -8,8 +8,11 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 jimport('joomla.application.component.view');
-class EinsatzkomponenteViewInstallation extends JViewLegacy
+class EinsatzkomponenteViewInstallation extends HtmlView
 {
   function display($tpl = null) 
   {
@@ -21,8 +24,8 @@ class EinsatzkomponenteViewInstallation extends JViewLegacy
         
 	protected function addToolbar()
 	{
-		JFactory::getApplication()->input->set('hidemainmenu', true);
-		JToolBarHelper::title(JText::_('Installationsmanager'), 'upload');
+		Factory::getApplication()->input->set('hidemainmenu', true);
+		JToolBarHelper::title(Text::_('Installationsmanager'), 'upload');
 	}
 	
 	

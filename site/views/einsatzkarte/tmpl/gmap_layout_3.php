@@ -8,6 +8,7 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\HTML\HTMLHelper;
 
 
 // Mootools laden

@@ -8,17 +8,21 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Version;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('formbehavior.chosen', 'select');
-JHtml::_('behavior.keepalive');
+HTMLHelper::_('bootstrap.tooltip');
+HTMLHelper::_('behavior.formvalidator');
+HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('formbehavior.chosen', 'select');
 
-// Import CSS
-$document = JFactory::getDocument();
-$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 ?>
+
 <script type="text/javascript">
 
     Joomla.submitbutton = function(task)
@@ -33,18 +37,18 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
                 Joomla.submitform(task, document.getElementById('ausruestung-form'));
             }
             else {
-                alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
+                alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
             }
         }
     }
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="ausruestung-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="ausruestung-form" class="form-validate">
 
     <div class="form-horizontal">
-        <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
+        <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
 
-        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG', true)); ?>
+        <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'general', Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG', true)); ?>
         <div class="row-fluid">
             <div class="span10 form-horizontal">
                 <fieldset class="adminform">
@@ -62,14 +66,23 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 				<div class="control-label"><?php echo $this->form->getLabel('beschreibung'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('beschreibung'); ?></div>
 			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('params'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('params'); ?></div>
+			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('checked_out'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('checked_out'); ?></div>
+			</div>
+
 				<?php if(empty($this->item->created_by)){ ?>
-					<input type="hidden" name="jform[created_by]" value="<?php echo JFactory::getUser()->id; ?>" />
+					<input type="hidden" name="jform[created_by]" value="<?php echo Factory::getUser()->id; ?>" />
 
 				<?php } 
 				else{ ?>
 					<input type="hidden" name="jform[created_by]" value="<?php echo $this->item->created_by; ?>" />
 
-				<?php } ?>				<input type="hidden" name="jform[checked_out]" value="<?php echo $this->item->checked_out; ?>" />
+				<?php } ?>				
 				<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item->checked_out_time; ?>" />
 				<input type="hidden" name="jform[ordering]" value="<?php echo $this->item->ordering; ?>" />
 				<input type="hidden" name="jform[state]" value="<?php echo $this->item->state; ?>" />
@@ -78,18 +91,18 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
                 </fieldset>
             </div>
         </div>
-        <?php echo JHtml::_('bootstrap.endTab'); ?>
+        <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
         
-        <?php if (JFactory::getUser()->authorise('core.admin','einsatzkomponente')) : ?>
-	<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_('JGLOBAL_ACTION_PERMISSIONS_LABEL', true)); ?>
+        <?php if (Factory::getUser()->authorise('core.admin','einsatzkomponente')) : ?>
+	<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'permissions', Text::_('JGLOBAL_ACTION_PERMISSIONS_LABEL', true)); ?>
 		<?php echo $this->form->getInput('rules'); ?>
-	<?php echo JHtml::_('bootstrap.endTab'); ?>
+	<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 <?php endif; ?>
 
-        <?php echo JHtml::_('bootstrap.endTabSet'); ?>
+        <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
         <input type="hidden" name="task" value="" />
-        <?php echo JHtml::_('form.token'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
 
     </div>
 </form>

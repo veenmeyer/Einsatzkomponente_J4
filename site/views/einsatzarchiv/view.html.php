@@ -10,36 +10,46 @@
 // No direct access
 defined('_JEXEC') or die;
 
+
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 jimport('joomla.application.component.view');
 JLoader::import('helpers.einsatzkomponente', JPATH_SITE.'/administrator/components/com_einsatzkomponente');
 JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatzkomponente'); 
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
+class EinsatzkomponenteViewEinsatzarchiv extends HtmlView {
 
-    protected $items;
-    protected $pagination;
-    protected $state;
-    protected $params;
-    protected $version;
-	protected $modulepos_1;
-	protected $modulepos_2;
-	protected $gmap_config;
-	protected $einsatzorte;
-	protected $organisationen;
-	protected $einsatzgebiet;
+	protected $items = null;
+	protected $pagination = null;
+    protected $state = null;
+    protected $params = null;
+    protected $version = null;
+	protected $modulepos_1 = null;
+	protected $modulepos_2 = null;
+	protected $gmap_config = array();
+	protected $einsatzorte = array();
+	protected $organisationen = array();
+	protected $einsatzgebiet = array();
 	
 
     /**
      * Display the view
      */
     public function display($tpl = null) {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         $this->state = $this->get('State');
         $this->items = $this->get('Items');
+		
         $this->pagination = $this->get('Pagination');
+		// Flag indicates to not add limitstart=0 to URL
+		$pagination->hideEmptyLimitstart = true;
+
         $this->params = $app->getParams('com_einsatzkomponente');
         $this->filterForm = $this->get('FilterForm');
 		$this->activeFilters = $this->get('ActiveFilters');
@@ -48,26 +58,28 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
 		
 
 		
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
         // Import CSS
 		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/responsive.css');
+		HTMLHelper::_('stylesheet','components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+		HTMLHelper::_('stylesheet','components/com_einsatzkomponente/assets/css/responsive.css');
 
 		// Bootstrap laden
-		JHtml::_('behavior.framework', true);
+		//HTMLHelper::_('behavior.framework', true);
 		
 		if ($this->params->get('display_home_bootstrap','0') == '1') :
-		JHtml::_('bootstrap.framework');
-		$document->addStyleSheet($this->baseurl . '/media/jui/css/bootstrap.min.css');
-		$document->addStyleSheet($this->baseurl.'/media/jui/css/icomoon.css');
+		//HTMLHelper::_('bootstrap.framework');
+		//$document->addStyleSheet($this->baseurl . '/media/jui/css/bootstrap.min.css');
+		//$document->addStyleSheet($this->baseurl.'/media/jui/css/icomoon.css');
 		endif;
 		if ($this->params->get('display_home_bootstrap','0') == '2') :
-		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css');
-		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css');
+		//$document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css');
+		//document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css');
 		endif;
 		
 		// Import CSS aus Optionen
-		$document->addStyleDeclaration($this->params->get('main_css','')); 
+		//$document->addStyleDeclaration($this->params->get('main_css','')); 
 		
 			// GoogleMaps-Karte Daten vorbereiten
 		if ($this->params->get('gmap_action','0') == '1') :
@@ -144,8 +156,11 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
 		$gmap_zoom_level 	= $this->gmap_config->gmap_zoom_level; 
 		$gmap_onload 		= $this->gmap_config->gmap_onload;
 		$zoom_control 		= 'true';
-		$document->addScript('//maps.googleapis.com/maps/api/js?key='.$this->params->get ("gmapkey","AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E"));			
-		$document->addScriptDeclaration( EinsatzkomponenteHelper::getGmap($marker1_title,$marker1_lat,$marker1_lng,$marker1_image,$marker2_title,$marker2_lat,$marker2_lng,$marker2_image,$center_lat,$center_lng,$gmap_zoom_level,$gmap_onload,$zoom_control,$organisationen,$orga_image,$einsatzgebiet,$display_detail_popup,$standort,$display_map_route,$einsatzorte) );		
+
+		HTMLHelper::_('script','//maps.googleapis.com/maps/api/js?key='.$this->params->get ("gmapkey","AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E"));
+		
+		Factory::getDocument()->addScriptDeclaration( EinsatzkomponenteHelper::getGmap($marker1_title,$marker1_lat,$marker1_lng,$marker1_image,$marker2_title,$marker2_lat,$marker2_lng,$marker2_image,$center_lat,$center_lng,$gmap_zoom_level,$gmap_onload,$zoom_control,$organisationen,$orga_image,$einsatzgebiet,$display_detail_popup,$standort,$display_map_route,$einsatzorte) );
+
 		endif;
 
 		// OSM-Karte Daten vorbereiten
@@ -228,7 +243,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
      * Prepares the document
      */
     protected function _prepareDocument() {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $menus = $app->getMenu();
         $title = null;
 
@@ -238,15 +253,15 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
         if ($menu) {
             $this->params->def('page_heading', $this->params->get('page_title', $menu->title));
         } else {
-            $this->params->def('page_heading', JText::_('COM_EINSATZKOMPONENTE_DEFAULT_PAGE_TITLE'));
+            $this->params->def('page_heading', Text::_('COM_EINSATZKOMPONENTE_DEFAULT_PAGE_TITLE'));
         }
         $title = $this->params->get('page_title', '');
         if (empty($title)) {
             $title = $app->getCfg('sitename');
         } elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
-            $title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
+            $title = Text::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
         } elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-            $title = JText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
+            $title = Text::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
         }
         $this->document->setTitle($title);
 

@@ -8,6 +8,11 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('behavior.tooltip');
@@ -16,13 +21,13 @@ JHtml::_('formbehavior.chosen', 'select');
 JHtml::_('behavior.keepalive');
 
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
-$doc = JFactory::getDocument();
-$doc->addScript(JUri::base() . '/components/com_einsatzkomponente/assets/js/form.js');
+$doc = Factory::getDocument();
+$doc->addScript(Uri::base() . '/components/com_einsatzkomponente/assets/js/form.js');
 
 // Import CSS
-$document = JFactory::getDocument();
+$document = Factory::getDocument();
 $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 if ($this->params->get('eiko')) : 
 ?>
@@ -40,18 +45,18 @@ if ($this->params->get('eiko')) :
                 Joomla.submitform(task, document.getElementById('ausruestung-form'));
             }
             else {
-                alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
+                alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
             }
         }
     }
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="ausruestung-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="ausruestung-form" class="form-validate">
 
     <div class="form-horizontal">
-        <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
+        <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
 
-        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG', true)); ?>
+        <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'general', Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG', true)); ?>
         <div class="row-fluid">
             <div class="span10 form-horizontal">
                 <fieldset class="adminform">
@@ -70,7 +75,7 @@ if ($this->params->get('eiko')) :
 				<div class="controls"><?php echo $this->form->getInput('beschreibung'); ?></div>
 			</div>
 				<?php if(empty($this->item->created_by)){ ?>
-					<input type="hidden" name="jform[created_by]" value="<?php echo JFactory::getUser()->id; ?>" />
+					<input type="hidden" name="jform[created_by]" value="<?php echo Factory::getUser()->id; ?>" />
 
 				<?php } 
 				else{ ?>
@@ -85,21 +90,21 @@ if ($this->params->get('eiko')) :
                 </fieldset>
             </div>
         </div>
-        <?php echo JHtml::_('bootstrap.endTab'); ?>
+        <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
         
 
-        <?php echo JHtml::_('bootstrap.endTabSet'); ?>
+        <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="validate btn btn-primary"><?php echo JText::_('JSUBMIT'); ?></button>
-                <a class="btn" href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=ausruestungform.cancel'); ?>" title="<?php echo JText::_('JCANCEL'); ?>"><?php echo JText::_('JCANCEL'); ?></a>
+                <button type="submit" class="validate btn btn-primary"><?php echo Text::_('JSUBMIT'); ?></button>
+                <a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestungform.cancel'); ?>" title="<?php echo Text::_('JCANCEL'); ?>"><?php echo Text::_('JCANCEL'); ?></a>
             </div>
         </div>
         
         <input type="hidden" name="option" value="com_einsatzkomponente" />
         <input type="hidden" name="task" value="ausruestungform.save" />
-        <?php echo JHtml::_('form.token'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
 
     </div>
 </form>

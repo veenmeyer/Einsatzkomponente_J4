@@ -7,11 +7,15 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('JPATH_BASE') or die;
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormHelper;
+
+
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldeinsatzfahrzeuge extends JFormField
+class JFormFieldeinsatzfahrzeuge extends FormField
 {
         /**
          * The form field type.
@@ -31,7 +35,7 @@ class JFormFieldeinsatzfahrzeuge extends JFormField
                 // Initialize variables.
 				$selected = '';
                 $html = array();
-                $db = JFactory::getDBO();
+                $db = Factory::getDBO();
                 $query = 'SELECT id,name from #__eiko_organisationen where state=1 order by ordering ASC';
                 $db->setQuery($query);
                 $orgs = $db->loadObjectList();

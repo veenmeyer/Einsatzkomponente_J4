@@ -7,11 +7,14 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('JPATH_BASE') or die;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Language\Text;
 jimport('joomla.form.formfield');
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldTimecreated extends JFormField
+class FormFieldTimecreated extends FormField
 {
 	/**
 	 * The form field type.
@@ -36,8 +39,8 @@ class JFormFieldTimecreated extends JFormField
 			$time_created = date("Y-m-d H:i:s");
 			$html[] = '<input type="hidden" name="'.$this->name.'" value="'.$time_created.'" />';
 		}
-		$jdate = new JDate($time_created);
-		$pretty_date = $jdate->format(JText::_('DATE_FORMAT_LC2'));
+		$jdate = new Date($time_created);
+		$pretty_date = $jdate->format(Text::_('DATE_FORMAT_LC2'));
 		$html[] = "<div>".$pretty_date."</div>";
         
 		return implode($html);

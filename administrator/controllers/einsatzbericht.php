@@ -8,11 +8,19 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Input\Input;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Router\Route;
 jimport('joomla.application.component.controllerform');
 /**
  * Einsatzbericht controller class.
  */
-class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
+class EinsatzkomponenteControllerEinsatzbericht extends FormController
 {
     function __construct() {
         $this->view_list = 'einsatzberichte';
@@ -20,13 +28,13 @@ class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
     }
     public function pdf() {
     	// Check for request forgeries
-	JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+	Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 	require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 	
-    	$cid = JFactory::getApplication()->input->get('id', array(), 'array');
+    	$cid = Factory::getApplication()->input->get('id', array(), 'array');
     	if (!is_array($cid) || count($cid) < 1)
 	{
-	    JFactory::getApplication()->enqueueMessage(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
+	    Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
 	}
 	else
 	{
@@ -37,35 +45,35 @@ class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
  
     	function save2copy($key = NULL, $urlVar = NULL) {
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 		
 		}
  
     	function save($key = NULL, $urlVar = NULL) {
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to remove from the request.
 		$send = 'false';
-		$cid = JFactory::getApplication()->input->get('id','0');
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$cid = Factory::getApplication()->input->get('id','0');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 
 		if (parent::save()) :
 		
 		// Wasserzeichen speichern
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		// Get the form data
-		$formData = new JInput($input->get('jform', '', 'array'));
+		$formData = new Input($input->get('jform', '', 'array'));
 		// Get any data being able to use default values
 		$watermark_image = $formData->getString('watermark_image');
 
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		// Set new value of param(s)
 		$params->set('watermark_image', $watermark_image);
 
 		// Save the parameters
-		$componentid = JComponentHelper::getComponent('com_einsatzkomponente')->id;
-		$table = JTable::getInstance('extension');
+		$componentid = ComponentHelper::getComponent('com_einsatzkomponente')->id;
+		$table = Table::getInstance('extension');
 		$table->load($componentid);
 		$table->bind(array('params' => $params->toString()));
 
@@ -82,11 +90,11 @@ class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
 		// Wasserzeichen speichern  ENDE
 		
 		// Bilder upload
-		$files        = JFactory::getApplication()->input->files->get('data', '', 'array');
+		$files        = Factory::getApplication()->input->files->get('data', '', 'array');
 		
 		if(!$files['0']['name'] =='') : 
 		if (!$cid) :
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = "SELECT id FROM #__eiko_einsatzberichte ORDER BY id DESC LIMIT 1";
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -100,7 +108,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
 				if ( $params->get('send_mail_auto', '0') ): 
 				if ( !$automail_off ): 
 		if (!$cid) :
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = "SELECT id FROM #__eiko_einsatzberichte ORDER BY id DESC LIMIT 1";
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -118,22 +126,22 @@ class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
 	    function sendMail_auto($cid,$status) {
 
 		
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		// Get the form data
-		$formData = new JInput($input->get('jform', '', 'array'));
+		$formData = new Input($input->get('jform', '', 'array'));
 		// Get any data being able to use default values
 		$emailtext = $formData->getString('emailtext');
 
 		//$model = $this->getModel();
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
-		$user = JFactory::getUser();
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
+		$user = Factory::getUser();
 		$query = 'SELECT * FROM #__eiko_einsatzberichte WHERE id = "'.$cid.'" LIMIT 1';
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$db->setQuery($query);
 		$result = $db->loadObjectList();
 	
-		$mailer = JFactory::getMailer();
-		$config = JFactory::getConfig();
+		$mailer = Factory::getMailer();
+		$config = Factory::getConfig();
 		
 		$sender = array( 
     	$user->email,
@@ -141,14 +149,14 @@ class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
 		
 		$mailer->setSender($sender);
 		
-		$user = JFactory::getUser();
+		$user = Factory::getUser();
 		$recipient = $params->get('mail_empfaenger_auto',$user->email);
 		
 		$recipient 	 = explode( ',', $recipient);
 		
 					$data = array();
 					foreach(explode(',',$result[0]->auswahl_orga) as $value):
-						$db = JFactory::getDbo();
+						$db = Factory::getDbo();
 						$query	= $db->getQuery(true);
 						$query
 							->select('name')
@@ -169,7 +177,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
 		
 		$mailer->setSubject($status.''.$orga[0].'  +++ '.$result[0]->summary.' +++');
 		
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 					$query
 						->select('*')
@@ -178,7 +186,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
 					$db->setQuery($query);
 					$kat = $db->loadObject();
 		
-		$link = JRoute::_( JURI::root() . 'index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.$result[0]->id.'&Itemid='.$params->get('homelink','')); 
+		$link = Route::_( JURI::root() . 'index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.$result[0]->id.'&Itemid='.$params->get('homelink','')); 
 		
 		$body   = '';
 			if ($emailtext) :
@@ -186,7 +194,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends JControllerForm
 			endif;
 		$body	. '<h2>+++ '.$result[0]->summary.' +++</h2>';
 		if ($params->get('send_mail_kat','0')) :	
-		$body   .= '<h4>'.JText::_($kat->title).'</h4>';
+		$body   .= '<h4>'.Text::_($kat->title).'</h4>';
 		endif;
 		if ($params->get('send_mail_orga','0')) :	
 		$body   .= '<span><b>Eingesetzte Kräfte:</b> '.$orgas.'</span>';

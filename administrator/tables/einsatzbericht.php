@@ -8,10 +8,17 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
+use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
+
 /**
  * einsatzbericht Table class
  */
-class EinsatzkomponenteTableeinsatzbericht extends JTable {
+class EinsatzkomponenteTableeinsatzbericht extends Table {
     /**
      * Constructor
      *
@@ -32,7 +39,7 @@ class EinsatzkomponenteTableeinsatzbericht extends JTable {
      */
     public function bind($array, $ignore = '') {
 		
-		$array['updatedate'] = JHtml::date('now', 'Y-m-d H:i:s');
+		$array['updatedate'] = HTMLHelper::date('now', 'Y-m-d H:i:s');
 		
 
 		//Support for multiple or not foreign key field: auswahl_orga
@@ -71,19 +78,19 @@ class EinsatzkomponenteTableeinsatzbericht extends JTable {
 			else {
 				$array['ausruestung'] = ''; }
 			
-		if(!JFactory::getUser()->authorise('core.edit.state','com_einsatzkomponente.einsatzbericht.'.$array['id']) && $array['state'] == 1){
+		if(!Factory::getUser()->authorise('core.edit.state','com_einsatzkomponente.einsatzbericht.'.$array['id']) && $array['state'] == 1){
 			$array['state'] = 0;
 		}
 		 if(!isset($array['modified_by'])) {
-			 $array['modified_by'] = JFactory::getUser()->id;
+			 $array['modified_by'] = Factory::getUser()->id;
 		 }
         if (isset($array['params']) && is_array($array['params'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['params']);
             $array['params'] = (string) $registry;
         }
         if (isset($array['metadata']) && is_array($array['metadata'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['metadata']);
             $array['metadata'] = (string) $registry;
         }
@@ -131,9 +138,9 @@ class EinsatzkomponenteTableeinsatzbericht extends JTable {
 		$this->counter = '0';  }
 		
         if (property_exists($this, 'createdate') && $this->id == 0) {
-		$this->createdate = JHtml::date('now', 'Y-m-d H:i:s');
+		$this->createdate = HTMLHelper::date('now', 'Y-m-d H:i:s');
 		if(!$this->created_by){ 
-			$this->created_by = JFactory::getUser()->id;
+			$this->created_by = Factory::getUser()->id;
 		}
         }
 
@@ -155,7 +162,7 @@ class EinsatzkomponenteTableeinsatzbericht extends JTable {
         // Initialise variables.
         $k = $this->_tbl_key;
         // Sanitize input.
-        JArrayHelper::toInteger($pks);
+        ArrayHelper::toInteger($pks);
         $userId = (int) $userId;
         $state = (int) $state;
         // If there are no primary keys set check to see if the instance key is set.
@@ -165,7 +172,7 @@ class EinsatzkomponenteTableeinsatzbericht extends JTable {
             }
             // Nothing to set publishing state on, return false.
             else {
-                $this->setError(JText::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
+                $this->setError(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
                 return false;
             }
         }
@@ -184,13 +191,18 @@ class EinsatzkomponenteTableeinsatzbericht extends JTable {
                 ' WHERE (' . $where . ')' .
                 $checkin
         );
-        $this->_db->query();
         // Check for a database error.
-        if ($this->_db->getErrorNum()) {
-            $this->setError($this->_db->getErrorMsg());
-            return false;
-        }
-        // If checkin is supported and all rows were adjusted, check them in.
+			try
+			{
+				$this->_db->execute();
+			}
+			catch (\RuntimeException $e)
+			{
+				$this->setError($e->getMessage());
+				return false;
+			}  
+			
+// If checkin is supported and all rows were adjusted, check them in.
         if ($checkin && (count($pks) == $this->_db->getAffectedRows())) {
             // Checkin each row.
             foreach ($pks as $pk) {

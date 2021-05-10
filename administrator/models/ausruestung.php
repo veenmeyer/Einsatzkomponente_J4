@@ -9,13 +9,16 @@
 
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
 
 jimport('joomla.application.component.modeladmin');
 
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModelAusruestung extends JModelAdmin
+class EinsatzkomponenteModelAusruestung extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -35,7 +38,7 @@ class EinsatzkomponenteModelAusruestung extends JModelAdmin
 	 */
 	public function getTable($type = 'Ausruestung', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
-		return JTable::getInstance($type, $prefix, $config);
+		return Table::getInstance($type, $prefix, $config);
 	}
 
 	/**
@@ -49,7 +52,7 @@ class EinsatzkomponenteModelAusruestung extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 
 		// Get the form.
 		$form = $this->loadForm('com_einsatzkomponente.ausruestung', 'ausruestung', array('control' => 'jform', 'load_data' => $loadData));
@@ -71,7 +74,7 @@ class EinsatzkomponenteModelAusruestung extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.ausruestung.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.ausruestung.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -114,7 +117,7 @@ class EinsatzkomponenteModelAusruestung extends JModelAdmin
 
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
-				$db = JFactory::getDbo();
+				$db = Factory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_ausruestung');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;

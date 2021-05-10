@@ -8,11 +8,12 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Controller\FormController;
 jimport('joomla.application.component.controllerform');
 /**
  * Alarmierungsart controller class.
  */
-class EinsatzkomponenteControllerAlarmierungsart extends JControllerForm
+class EinsatzkomponenteControllerAlarmierungsart extends FormController
 {
     function __construct() {
         $this->view_list = 'alarmierungsarten';

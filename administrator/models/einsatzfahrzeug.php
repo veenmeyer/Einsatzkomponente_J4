@@ -8,11 +8,14 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
 jimport('joomla.application.component.modeladmin');
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModeleinsatzfahrzeug extends JModelAdmin
+class EinsatzkomponenteModeleinsatzfahrzeug extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -30,7 +33,7 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends JModelAdmin
 	 */
 	public function getTable($type = 'Einsatzfahrzeug', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
-		return JTable::getInstance($type, $prefix, $config);
+		return Table::getInstance($type, $prefix, $config);
 	}
 	/**
 	 * Method to get the record form.
@@ -43,7 +46,7 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		// Get the form.
 		$form = $this->loadForm('com_einsatzkomponente.einsatzfahrzeug', 'einsatzfahrzeug', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
@@ -60,7 +63,7 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
 			
@@ -102,7 +105,7 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends JModelAdmin
 		if (empty($table->id)) {
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
-				$db = JFactory::getDbo();
+				$db = Factory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM__eiko_fahrzeuge');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
@@ -121,11 +124,18 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends JModelAdmin
  public function delete (&$pks)
     {
 
-        $db =JFactory::getDBO();
+        $db =Factory::getDBO();
         foreach($pks as $id)
         {
             $db->setQuery("DELETE FROM #__eiko_fahrzeuge WHERE id=".$id);
-            $db->query();
+				try
+				{
+					$db->execute();
+				}
+				catch (RuntimeException $e)
+				{
+					throw new Exception($e->getMessage(), 500);
+				}
         }
 		return true;		
     }	

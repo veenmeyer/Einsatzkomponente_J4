@@ -8,17 +8,25 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Version;
+use Joomla\CMS\Router\Route;
+use Joomla\Utilities\ArrayHelper;
+
 jimport('joomla.application.component.controlleradmin');
 /**
  * Alarmierungsarten list controller class.
  */
-class EinsatzkomponenteControllerAlarmierungsarten extends JControllerAdmin
+class EinsatzkomponenteControllerAlarmierungsarten extends AdminController
 {
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function getModel($name = 'alarmierungsart', $prefix = 'EinsatzkomponenteModel')
+	public function getModel($name = 'alarmierungsart', $prefix = 'EinsatzkomponenteModel', $config = [])
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
@@ -35,12 +43,12 @@ class EinsatzkomponenteControllerAlarmierungsarten extends JControllerAdmin
 	public function saveOrderAjax()
 	{
 		// Get the input
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$pks = $input->post->get('cid', array(), 'array');
 		$order = $input->post->get('order', array(), 'array');
 		// Sanitize the input
-		JArrayHelper::toInteger($pks);
-		JArrayHelper::toInteger($order);
+		ArrayHelper::toInteger($pks);
+		ArrayHelper::toInteger($order);
 		// Get the model
 		$model = $this->getModel();
 		// Save the ordering
@@ -50,21 +58,21 @@ class EinsatzkomponenteControllerAlarmierungsarten extends JControllerAdmin
 			echo "1";
 		}
 		// Close the application
-		JFactory::getApplication()->close();
+		Factory::getApplication()->close();
 	}
 	
 	public function delete()
 	{
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to remove from the request.
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'array');
+		$cid = Factory::getApplication()->input->get('cid', array(), 'array');
 		
 
 		if (!is_array($cid) || count($cid) < 1)
 		{
-			JFactory::getApplication()->enqueueMessage(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
+			Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
 		}
 		else
 		{
@@ -72,13 +80,12 @@ class EinsatzkomponenteControllerAlarmierungsarten extends JControllerAdmin
 			$model = $this->getModel();
 
 			// Make sure the item ids are integers
-			jimport('joomla.utilities.arrayhelper');
-			JArrayHelper::toInteger($cid);
+			ArrayHelper::toInteger($cid);
 
 			// Remove the items.
 			if ($model->delete($cid))
 			{
-				$this->setMessage(JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
+				$this->setMessage(Text::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
 			}
 			else
 			{
@@ -86,13 +93,13 @@ class EinsatzkomponenteControllerAlarmierungsarten extends JControllerAdmin
 			}
 		}
 		
-		$version = new JVersion;
+		$version = new Version;
         	if ($version->isCompatible('3.0')) :
 				// Invoke the postDelete method to allow for the child class to access the model.
 				$this->postDeleteHook($model, $cid);
 			endif;
 
-		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
 	}
 
     

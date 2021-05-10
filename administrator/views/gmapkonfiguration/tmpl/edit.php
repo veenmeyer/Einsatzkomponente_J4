@@ -9,36 +9,26 @@
 
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.keepalive');
-
-JHtml::_('formbehavior.chosen', 'select');
+HTMLHelper::_('bootstrap.renderModal', 'a.modal');
+HTMLHelper::_('bootstrap.tooltip');
+HTMLHelper::_('behavior.formvalidator');
+HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('formbehavior.chosen', 'select');
 
 // Import CSS
-$document = JFactory::getDocument();
-$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+
 ?>
-<script type="text/javascript">
-    
-    
-	Joomla.submitbutton = function(task)
-	{
-        
-		if (task == 'gmapkonfiguration.cancel' || document.formvalidator.isValid(document.id('gmapkonfiguration-form'))) {
-			Joomla.submitform(task, document.getElementById('gmapkonfiguration-form'));
-		}
-		else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-		}
-	}
-</script>
 
 
 
 
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="gmapkonfiguration-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="gmapkonfiguration-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -67,14 +57,6 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 				<div class="control-label"><?php echo $this->form->getLabel('start_lang'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('start_lang'); ?></div>
 			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('state'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
-			</div>
 
 				
             </fieldset>
@@ -87,23 +69,30 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 			<fieldset class="panelform">
     		<div class="alert alert-info" style="width: 500px;">
     		<ul>
-    			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_GMAP_1');?></li>
-    			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_GMAP_2');?></li>
+    			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_1');?></li>
+    			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_2');?></li>
+				
+				<li>	<!-- Button to trigger modal -->
+						<button type="button" class="btn-primary" data-bs-toggle="modal" data-bs-target="#eiko-changelog"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_4');?></button>
+				</li>
     		</ul>
    			</div>
+			
 			<?php if ($this->params->get('gmap_action','0') == '1') : ?> 
-            <input class='btn btn-warning' type='button' onclick='clearMap();return false;' value='<?php echo JText::_('COM_EINSATZKOMPONENTE_GMAP_KOORDINATEN_LOESCHEN');?>'/>
-            <input class='btn btn-warning' type='button' onclick='resetarea()' value='<?php echo JText::_('COM_EINSATZKOMPONENTE_GMAP_KOORDINATENLISTE_ZUUECKSETZEN');?>'/>
+            <input class='btn btn-warning' type='button' onclick='clearMap();return false;' value='<?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_KOORDINATEN_LOESCHEN');?>'/>
+            <input class='btn btn-warning' type='button' onclick='resetarea()' value='<?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_KOORDINATENLISTE_ZUUECKSETZEN');?>'/>
 			<?php endif;?>
-						<!-- Button to trigger modal -->
-						<a href="#myModal" role="button" class="btn" data-toggle="modal"><?php echo JText::_('COM_EINSATZKOMPONENTE_GMAP_4');?></a>
-     
+			
+
 						<!-- Modal -->
-						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						<h3 id="myModalLabel"><?php echo JText::_('COM_EINSATZKOMPONENTE_GMAP_5');?></h3>
-						</div>
+						<div class="modal fade" id="eiko-changelog" tabindex="-1" aria-labelledby="eiko-changelogLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<h5 class="modal-title" id="eiko-changelogLabel"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_5');?></h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							  </div>
+							  <div class="modal-body">
 						<div class="modal-body"><br/><br/>
     1. Sucht im Internet nach dem amtlichen Gemeindeschlüssel<br/>
     2. Ruft die Seite overpass-turbo.eu	auf<br/>
@@ -121,18 +110,23 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
     14.Diese Zeile in die Einsatzkompo einfügen und fertig.<br/>
 	<h5>Vielen Dank an Martin Scholtes für diesen Hinweis.</h5>
 						</div>
-						<div class="modal-footer">
-						<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_EINSATZKOMPONENTE_GMAP_6');?></button>
-						<!--<button class="btn btn-primary">Save changes</button> !-->
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_6');?></button>
+							<!--	<button type="button" class="btn btn-primary">Save changes</button> -->
+							  </div>
+							</div>
+						  </div>
 						</div>
-						</div>		
+
+	 <hr>
 				</div>
 			<?php if ($this->params->get('gmap_action','0') == '1') : ?> 
-            <div id="map" style="width: 810px; height: 400px"><?php echo JText::_('COM_EINSATZKOMPONENTE_GMAP_7');?></div>
+            <div id="map" style="width: 810px; height: 400px"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_7');?></div>
 			<?php endif;?>
 
 			<?php if ($this->params->get('gmap_action','0') == '2') : ?> 
-            <div id="map_canvas" style="width: 810px; height: 400px"><?php echo JText::_('COM_EINSATZKOMPONENTE_GMAP_7');?></div>
+            <div id="map_canvas" style="width: 810px; height: 400px"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_7');?></div>
 			<?php OsmHelper::installOsmMap();?>
 			<?php OsmHelper::callOsmMap($this->gmap_config->gmap_zoom_level,$this->gmap_config->start_lat,$this->gmap_config->start_lang); ?>
 			<?php OsmHelper::addRightClickOsmMap(); ?> 
@@ -149,21 +143,9 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
  
 
 
-			<!--Slider für ACL Configuration-->
-<?php if (JFactory::getUser()->authorise('core.admin','einsatzkomponente')): ?>
-	<div class="fltlft" style="width:80%;">
-		<?php echo JHtml::_('sliders.start', 'permissions-sliders-'.$this->item->id, array('startOffset'=>-1)); ?>
-		<?php echo JHtml::_('sliders.panel', JText::_('ACL Configuration'), 'access-rules'); ?>
-		<fieldset class="panelform">
-			<?php echo $this->form->getLabel('rules'); ?>
-			<?php echo $this->form->getInput('rules'); ?>
-		</fieldset>
-		<?php echo JHtml::_('sliders.end'); ?>
-	</div>
-<?php endif; ?>
 
         <input type="hidden" name="task" value="" />
-        <?php echo JHtml::_('form.token'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
         
     </div>
 </form>

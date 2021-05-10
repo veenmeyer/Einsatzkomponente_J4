@@ -8,68 +8,71 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 ?>
 <?php if( $this->item ) : ?>
     <div class="item_fields">
         
         <ul class="fields_list">
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ID'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ID'); ?>:
 			<?php echo $this->item->id; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ORDERING'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ORDERING'); ?>:
 			<?php echo $this->item->ordering; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATA1'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATA1'); ?>:
 			<?php echo $this->item->data1.' : '.$this->item->einsatzart; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_IMAGE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_IMAGE'); ?>:
 			<?php $this->item->image = preg_replace("%thumbs/%", "", $this->item->image,1); ?>
 			<?php echo $this->item->image; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ADDRESS'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ADDRESS'); ?>:
 			<?php echo $this->item->address; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE1'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE1'); ?>:
 			<?php echo $this->item->date1; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE2'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE2'); ?>:
 			<?php echo $this->item->date2; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE3'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE3'); ?>:
 			<?php echo $this->item->date3; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_SUMMARY'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_SUMMARY'); ?>:
 			<?php echo $this->item->summary; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS'); ?>:
 			<?php echo $this->item->boss; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2'); ?>:
 			<?php echo $this->item->boss2; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PEOPLE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PEOPLE'); ?>:
 			<?php echo $this->item->people; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DEPARTMENT'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DEPARTMENT'); ?>:
 			<?php echo $this->item->department; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DESC'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DESC'); ?>:
 			<?php echo $this->item->desc; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING'); ?>:
 			<?php echo $this->item->alerting; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP_REPORT_LATITUDE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP_REPORT_LATITUDE'); ?>:
 			<?php echo $this->item->gmap_report_latitude; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP_REPORT_LONGITUDE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP_REPORT_LONGITUDE'); ?>:
 			<?php echo $this->item->gmap_report_longitude; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_COUNTER'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_COUNTER'); ?>:
 			<?php echo $this->item->counter; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP'); ?>:
 			<?php echo $this->item->gmap; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE'); ?>:
 			<?php echo $this->item->presse; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE2'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE2'); ?>:
 			<?php echo $this->item->presse2; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE3'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE3'); ?>:
 			<?php echo $this->item->presse3; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_UPDATEDATE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_UPDATEDATE'); ?>:
 			<?php echo $this->item->updatedate; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZTICKER'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZTICKER'); ?>:
 			<?php echo $this->item->einsatzticker; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_NOTRUFTICKER'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_NOTRUFTICKER'); ?>:
 			<?php echo $this->item->notrufticker; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TICKERKAT'); ?>:
-			<?php echo JText::_($this->item->tickerKat->title); ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSWAHLORGA'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TICKERKAT'); ?>:
+			<?php echo Text::_($this->item->tickerKat->title); ?></li>
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSWAHLORGA'); ?>:
 			<?php
 				$array = array();
 				foreach((array)$this->item->auswahl_orga as $value): 
@@ -79,7 +82,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 				endforeach;
 				$data = array();
 				foreach($array as $value):
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query	= $db->getQuery(true);
 					$query
 						->select('name')
@@ -91,7 +94,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 				endforeach;
 				$this->item->auswahl_orga = implode(',',$data); ?>
 			<?php echo $this->item->auswahl_orga; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLES'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLES'); ?>:
 			<?php
 				$array = array();
 				foreach((array)$this->item->vehicles as $value): 
@@ -101,7 +104,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 				endforeach;
 				$data = array();
 				foreach($array as $value):
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query	= $db->getQuery(true);
 					$query
 						->select('name')
@@ -113,11 +116,11 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 				endforeach;
 				$this->item->vehicles = implode(',',$data); ?>
 			<?php echo $this->item->vehicles; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_STATUS'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_STATUS'); ?>:
 			<?php echo $this->item->status; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_STATE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_STATE'); ?>:
 			<?php echo $this->item->state; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_CREATED_BY'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_CREATED_BY'); ?>:
 			<?php echo $this->item->created_by; ?></li>
             
             <?php if( $this->item->gmap_report_latitude != '0' ) : ?> 
@@ -138,7 +141,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
         </ul>
         
 		<?php
-			$plugin = JPluginHelper::getPlugin('content', 'myshariff') ;
+			$plugin = PluginHelper::getPlugin('content', 'myshariff') ;
 			if ($plugin) : 	echo JHTML::_('content.prepare', '{myshariff}');endif;
 			?>
 

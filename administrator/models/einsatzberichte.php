@@ -8,13 +8,17 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.modellist');
 
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModelEinsatzberichte extends JModelList {
+class EinsatzkomponenteModelEinsatzberichte extends ListModel {
 
     /**
      * Constructor.
@@ -81,7 +85,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
      */
     protected function populateState($ordering = null, $direction = null) {
         // Initialise variables.
-        $app = JFactory::getApplication('administrator');
+        $app = Factory::getApplication('administrator');
 
         // Load the filter state.
         $search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
@@ -119,7 +123,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 		$this->setState('filter.modified_by', $app->getUserStateFromRequest($this->context.'.filter.modified_by', 'filter_modified_by', '', 'string'));
 
         // Load the parameters.
-        $params = JComponentHelper::getParams('com_einsatzkomponente');
+        $params = ComponentHelper::getParams('com_einsatzkomponente');
         $this->setState('params', $params);
 
         // List state information.
@@ -291,7 +295,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('title')
@@ -313,7 +317,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('title')
@@ -335,7 +339,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('id,title')
@@ -358,7 +362,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('image')
@@ -380,7 +384,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('name')
@@ -389,7 +393,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 					$db->setQuery($query);
 					$results = $db->loadObject();
 					if ($results) {
-						$textValue[] = '<span class="label label-info">'.$results->name.'</span>';
+						$textValue[] = '<span class="badge bg-warning text-dark">'.$results->name.'</span>';
 					}
 				}
 			//$textValue = array_reverse($textValue);
@@ -402,7 +406,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('name')
@@ -424,7 +428,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('name')
@@ -446,7 +450,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('name')
@@ -468,7 +472,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('name')
@@ -490,7 +494,7 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('name')
@@ -506,8 +510,8 @@ class EinsatzkomponenteModelEinsatzberichte extends JModelList {
 			$oneItem->people_ftm = !empty($textValue) ? implode(', ', $textValue) : $oneItem->people_ftm;
 
 			}
-					$oneItem->status_fb = JText::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_FB_OPTION_' . strtoupper($oneItem->status_fb));
-					$oneItem->status = JText::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_OPTION_' . strtoupper($oneItem->status));
+					$oneItem->status_fb = Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_FB_OPTION_' . strtoupper($oneItem->status_fb));
+					$oneItem->status = Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_OPTION_' . strtoupper($oneItem->status));
 
 			// if (isset($oneItem->article_id)) {
 				// $values = explode(',', $oneItem->article_id);

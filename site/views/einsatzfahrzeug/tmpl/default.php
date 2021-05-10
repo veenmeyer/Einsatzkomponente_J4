@@ -8,9 +8,10 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
 
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 
 

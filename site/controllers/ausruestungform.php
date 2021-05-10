@@ -9,6 +9,10 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 require_once JPATH_COMPONENT . '/controller.php';
 
@@ -23,7 +27,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
      * @since	1.6
      */
     public function edit() {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         // Get the previous edit id (if any) and the current edit id.
         $previousId = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
@@ -46,7 +50,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
         }
 
         // Redirect to the edit screen.
-        $this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit', false));
+        $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit', false));
     }
 
     /**
@@ -57,14 +61,14 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
      */
     public function save() {
         // Check for request forgeries.
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
         // Initialise variables.
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $model = $this->getModel('AusruestungForm', 'EinsatzkomponenteModel');
 
         // Get the user data.
-        $data = JFactory::getApplication()->input->get('jform', array(), 'array');
+        $data = Factory::getApplication()->input->get('jform', array(), 'array');
 
         // Validate the posted data.
         $form = $model->getForm();
@@ -98,7 +102,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
 
             // Redirect back to the edit screen.
             $id = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
-            $this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit&id=' . $id, false));
+            $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit&id=' . $id, false));
             return false;
         }
 
@@ -112,8 +116,8 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
 
             // Redirect back to the edit screen.
             $id = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
-            $this->setMessage(JText::sprintf('Save failed', $model->getError()), 'warning');
-            $this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit&id=' . $id, false));
+            $this->setMessage(Text::sprintf('Save failed', $model->getError()), 'warning');
+            $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit&id=' . $id, false));
             return false;
         }
 
@@ -127,11 +131,11 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
         $app->setUserState('com_einsatzkomponente.edit.ausruestung.id', null);
 
         // Redirect to the list screen.
-        $this->setMessage(JText::_('COM_EINSATZKOMPONENTE_ITEM_SAVED_SUCCESSFULLY'));
-        $menu = JFactory::getApplication()->getMenu();
+        $this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_SAVED_SUCCESSFULLY'));
+        $menu = Factory::getApplication()->getMenu();
         $item = $menu->getActive();
         $url = (empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=ausruestungen' : $item->link);
-        $this->setRedirect(JRoute::_($url, false));
+        $this->setRedirect(Route::_($url, false));
 
         // Flush the data from the session.
         $app->setUserState('com_einsatzkomponente.edit.ausruestung.data', null);
@@ -139,7 +143,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
 
     function cancel() {
         
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         // Get the current edit id.
         $editId = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
@@ -152,16 +156,16 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
             $model->checkin($editId);
         }
         
-        $menu = JFactory::getApplication()->getMenu();
+        $menu = Factory::getApplication()->getMenu();
         $item = $menu->getActive();
         $url = (empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=ausruestungen' : $item->link);
-        $this->setRedirect(JRoute::_($url, false));
+        $this->setRedirect(Route::_($url, false));
     }
 
     public function remove() {
 
         // Initialise variables.
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $model = $this->getModel('AusruestungForm', 'EinsatzkomponenteModel');
 
         // Get the user data.
@@ -187,7 +191,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
 
             // Redirect back to the edit screen.
             $id = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
-            $this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestung&layout=edit&id=' . $id, false));
+            $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestung&layout=edit&id=' . $id, false));
             return false;
         }
 
@@ -201,8 +205,8 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
 
             // Redirect back to the edit screen.
             $id = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
-            $this->setMessage(JText::sprintf('Delete failed', $model->getError()), 'warning');
-            $this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestung&layout=edit&id=' . $id, false));
+            $this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
+            $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestung&layout=edit&id=' . $id, false));
             return false;
         }
 
@@ -216,11 +220,11 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
         $app->setUserState('com_einsatzkomponente.edit.ausruestung.id', null);
 
         // Redirect to the list screen.
-        $this->setMessage(JText::_('COM_EINSATZKOMPONENTE_ITEM_DELETED_SUCCESSFULLY'));
-        $menu = JFactory::getApplication()->getMenu();
+        $this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_DELETED_SUCCESSFULLY'));
+        $menu = Factory::getApplication()->getMenu();
         $item = $menu->getActive();
         $url = (empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=ausruestungen' : $item->link);
-        $this->setRedirect(JRoute::_($url, false));
+        $this->setRedirect(Route::_($url, false));
 
         // Flush the data from the session.
         $app->setUserState('com_einsatzkomponente.edit.ausruestung.data', null);

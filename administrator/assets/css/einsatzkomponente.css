@@ -1,31 +1,7 @@
 
 
-.controls input {width:380px!important;}
 
-.div_side_filter {margin-left:15px;}
 
-#jform_einsatzart_logo_preview {
-	max-height:100px !important; max-width:400px !important; 
-} 
-#jform_einsatzart_icon_preview {
-	max-height:100px !important; max-width:400px !important; 
-} 
-#jform_einsatzart_list_preview {
-	max-height:100px !important; max-width:400px !important; 
-} 
-#jform_einsatzbericht_image_klein_preview {
-	max-height:100px !important; max-width:400px !important; 
-} 
-#jform_alarmierungsart_image_klein_preview {
-	max-height:100px !important; max-width:400px !important; 
-} 
-#jform_einsatzbildbearbeiten_image_klein_preview {
-	max-height:100px !important; max-width:400px !important; 
-} 
-
-#jform_einsatzbildbearbeiten_image_gross_preview {
-	max-height:200px !important; 
-} 
 .thumbnail {
     border: 1px solid #DDDDDD;
     border-radius: 4px 4px 4px 4px;
@@ -106,10 +82,6 @@
 
 
 
-#jform_tickerkat_chzn {width:380px!important;}
-#adresse_chzn {width:380px!important;}
-#jformauswahlorga_chzn {width:380px!important;}
-#jform_vehicles_chzn {width:380px!important;}
 
 .backend_tickerkat {display:none;}
 .backend_einsatzfoto {display:none;}

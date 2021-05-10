@@ -8,6 +8,9 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\HTML\HTMLHelper;
 ?>
 <!--Page Heading-->
 <?php if ($this->params->get('show_page_heading', 1)) : ?>
@@ -21,16 +24,16 @@ defined('_JEXEC') or die;
         <?php foreach ($this->items as $item) :?>
                 
 				<?php
-					if($item->state == 1 || ($item->state == 0 && JFactory::getUser()->authorise('core.edit.own',' com_einsatzkomponente.organisation.'.$item->id))):
+					if($item->state == 1 || ($item->state == 0 && Factory::getUser()->authorise('core.edit.own',' com_einsatzkomponente.organisation.'.$item->id))):
 						$show = true;
 						?>
 							<li>
-								<a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=organisation&id=' . (int)$item->id); ?>"><?php echo $item->name; ?></a>
+								<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=organisation&id=' . (int)$item->id); ?>"><?php echo $item->name; ?></a>
 								<?php
-									if(JFactory::getUser()->authorise('core.edit.state','com_einsatzkomponente.organisation'.$item->id)):
+									if(Factory::getUser()->authorise('core.edit.state','com_einsatzkomponente.organisation'.$item->id)):
 									?>
 										<a href="javascript:document.getElementById('form-organisation-state-<?php echo $item->id; ?>').submit()"><?php if($item->state == 1):?>Unpublish<?php else:?>Publish<?php endif; ?></a>
-										<form id="form-organisation-state-<?php echo $item->id ?>" style="display:inline" action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=organisation.save'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
+										<form id="form-organisation-state-<?php echo $item->id ?>" style="display:inline" action="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisation.save'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
 											<input type="hidden" name="jform[id]" value="<?php echo $item->id; ?>" />
 											<input type="hidden" name="jform[ordering]" value="<?php echo $item->ordering; ?>" />
 											<input type="hidden" name="jform[name]" value="<?php echo $item->name; ?>" />
@@ -42,14 +45,14 @@ defined('_JEXEC') or die;
 											<input type="hidden" name="jform[state]" value="<?php echo (int)!((int)$item->state); ?>" />
 											<input type="hidden" name="option" value="com_einsatzkomponente" />
 											<input type="hidden" name="task" value="organisation.save" />
-											<?php echo JHtml::_('form.token'); ?>
+											<?php echo HTMLHelper::_('form.token'); ?>
 										</form>
 									<?php
 									endif;
-									if(JFactory::getUser()->authorise('core.delete','com_einsatzkomponente.organisation'.$item->id)):
+									if(Factory::getUser()->authorise('core.delete','com_einsatzkomponente.organisation'.$item->id)):
 									?>
 										<a href="javascript:document.getElementById('form-organisation-delete-<?php echo $item->id; ?>').submit()">Delete</a>
-										<form id="form-organisation-delete-<?php echo $item->id; ?>" style="display:inline" action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=organisation.remove'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
+										<form id="form-organisation-delete-<?php echo $item->id; ?>" style="display:inline" action="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisation.remove'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
 											<input type="hidden" name="jform[id]" value="<?php echo $item->id; ?>" />
 											<input type="hidden" name="jform[ordering]" value="<?php echo $item->ordering; ?>" />
 											<input type="hidden" name="jform[name]" value="<?php echo $item->name; ?>" />
@@ -62,7 +65,7 @@ defined('_JEXEC') or die;
 											<input type="hidden" name="jform[created_by]" value="<?php echo $item->created_by; ?>" />
 											<input type="hidden" name="option" value="com_einsatzkomponente" />
 											<input type="hidden" name="task" value="organisation.remove" />
-											<?php echo JHtml::_('form.token'); ?>
+											<?php echo HTMLHelper::_('form.token'); ?>
 										</form>
 									<?php
 									endif;

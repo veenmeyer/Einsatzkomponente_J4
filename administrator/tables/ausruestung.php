@@ -9,11 +9,16 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
+use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * ausruestung Table class
  */
-class EinsatzkomponenteTableausruestung extends JTable
+class EinsatzkomponenteTableausruestung extends Table
 {
 
 	/**
@@ -55,24 +60,24 @@ class EinsatzkomponenteTableausruestung extends JTable
 				}
 			}
 		if($array['id'] == 0){
-			$array['created_by'] = JFactory::getUser()->id;
+			$array['created_by'] = Factory::getUser()->id;
 		}
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$task = $input->getString('task', '');
-		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_einsatzkomponente.ausruestung.'.$array['id']) && $array['state'] == 1)){
+		if(($task == 'save' || $task == 'apply') && (!Factory::getUser()->authorise('core.edit.state','com_einsatzkomponente.ausruestung.'.$array['id']) && $array['state'] == 1)){
 			$array['state'] = 0;
 		}
 
 		if (isset($array['params']) && is_array($array['params']))
 		{
-			$registry = new JRegistry();
+			$registry = new Registry();
 			$registry->loadArray($array['params']);
 			$array['params'] = (string) $registry;
 		}
 
 		if (isset($array['metadata']) && is_array($array['metadata']))
 		{
-			$registry = new JRegistry();
+			$registry = new Registry();
 			$registry->loadArray($array['metadata']);
 			$array['metadata'] = (string) $registry;
 		}
@@ -151,7 +156,7 @@ class EinsatzkomponenteTableausruestung extends JTable
 		$k = $this->_tbl_key;
 
 		// Sanitize input.
-		JArrayHelper::toInteger($pks);
+		ArrayHelper::toInteger($pks);
 		$userId = (int) $userId;
 		$state  = (int) $state;
 
@@ -165,7 +170,7 @@ class EinsatzkomponenteTableausruestung extends JTable
 			// Nothing to set publishing state on, return false.
 			else
 			{
-				$this->setError(JText::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
+				$this->setError(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
 
 				return false;
 			}
@@ -191,7 +196,16 @@ class EinsatzkomponenteTableausruestung extends JTable
 			' WHERE (' . $where . ')' .
 			$checkin
 		);
-		$this->_db->execute();
+		try
+		{
+			$this->_db->execute();
+		}
+		catch (\RuntimeException $e)
+		{
+			$this->setError($e->getMessage());
+
+			return false;
+		} 
 
 		// If checkin is supported and all rows were adjusted, check them in.
 		if ($checkin && (count($pks) == $this->_db->getAffectedRows()))
@@ -232,10 +246,10 @@ class EinsatzkomponenteTableausruestung extends JTable
 	 *
 	 * @see JTable::_getAssetParentId
 	 */
-	protected function _getAssetParentId(JTable $table = null, $id = null)
+	protected function _getAssetParentId(Table $table = null, $id = null)
 	{
 		// We will retrieve the parent-asset from the Asset-table
-		$assetParent = JTable::getInstance('Asset');
+		$assetParent = Table::getInstance('Asset');
 		// Default: if no asset-parent can be found we take the global asset
 		$assetParentId = $assetParent->getRootId();
 		// The item has the component as asset-parent

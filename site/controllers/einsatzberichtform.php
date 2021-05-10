@@ -9,6 +9,10 @@
 
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 require_once JPATH_COMPONENT.'/controller.php';
 
@@ -25,11 +29,11 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 	 */
 	public function edit()
 	{
-		$app			= JFactory::getApplication();
+		$app			= Factory::getApplication();
 
 		// Get the previous edit id (if any) and the current edit id.
 		$previousId = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-		$editId	= JFactory::getApplication()->input->getInt('id', null, 'array');
+		$editId	= Factory::getApplication()->input->getInt('id', null, 'array');
 		// Set the user id for the user to edit in the session.
 		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', $editId);
 
@@ -47,7 +51,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 		}
 
 		// Redirect to the edit screen.
-		$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit', false));
+		$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit', false));
 	}
 
 	/**
@@ -59,14 +63,14 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 	public function save()
 	{
 		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$model = $this->getModel('EinsatzberichtForm', 'EinsatzkomponenteModel');
 
 		// Get the user data.
-		$data = JFactory::getApplication()->input->get('jform', array(), 'array');
+		$data = Factory::getApplication()->input->get('jform', array(), 'array');
 
 		// Validate the posted data.
 		$form = $model->getForm();
@@ -97,7 +101,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
 			// Redirect back to the edit screen.
 			$id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
 			return false;
 		}
 
@@ -111,8 +115,8 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
 			// Redirect back to the edit screen.
 			$id = (int)$app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setMessage(JText::sprintf('Save failed', $model->getError()), 'warning');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
+			$this->setMessage(Text::sprintf('Save failed', $model->getError()), 'warning');
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
 			return false;
 		}
 
@@ -126,10 +130,10 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
         $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', null);
 
         // Redirect to the list screen.
-        $this->setMessage(JText::_('Item saved successfully'));
-        $menu = JFactory::getApplication()->getMenu();
+        $this->setMessage(Text::_('Item saved successfully'));
+        $menu = Factory::getApplication()->getMenu();
         $item = $menu->getActive();
-        $this->setRedirect(JRoute::_($item->link, false));
+        $this->setRedirect(Route::_($item->link, false));
 
 		// Flush the data from the session.
 		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);
@@ -137,14 +141,14 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
     
     
     function cancel() {
-		$menu = & JFactory::getApplication()->getMenu();
+		$menu = & Factory::getApplication()->getMenu();
         $item = $menu->getActive();
-        $this->setRedirect(JRoute::_($item->link, false));
+        $this->setRedirect(Route::_($item->link, false));
     }
 	
     function publish() {
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$model = $this->getModel('EinsatzberichtForm', 'EinsatzkomponenteModel');
 
         // Get the user data.
@@ -172,14 +176,14 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
 			// Redirect back to the edit screen.
 			$id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
 			return false;
 		}
 
 		
 		
 		if ($data['id']):
-		$db		= JFactory::getDBO();
+		$db		= Factory::getDBO();
 		$query	= $db->getQuery(true);
 		$query->update('#__eiko_einsatzberichte');
 		$query->set('state = "'.$data['state'].'" ');
@@ -207,8 +211,8 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
 			// Redirect back to the edit screen.
 			$id = (int)$app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setMessage(JText::sprintf('Status konnte nicht geändert werden', $model->getError()), 'warning');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
+			$this->setMessage(Text::sprintf('Status konnte nicht geändert werden', $model->getError()), 'warning');
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
 			return false;
 		}
 
@@ -218,10 +222,10 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
         //$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', null);
 
         // Redirect to the list screen.
-        $this->setMessage(JText::_('Status erfolgreich geändert'));
-        $menu = & JFactory::getApplication()->getMenu();
+        $this->setMessage(Text::_('Status erfolgreich geändert'));
+        $menu = & Factory::getApplication()->getMenu();
         $item = $menu->getActive();
-        $this->setRedirect(JRoute::_($item->link, false));
+        $this->setRedirect(Route::_($item->link, false));
 
 		// Flush the data from the session.
 		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);
@@ -230,7 +234,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 	public function remove()
 	{
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$model = $this->getModel('EinsatzberichtForm', 'EinsatzkomponenteModel');
 
         // Get the user data.
@@ -257,7 +261,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
 			// Redirect back to the edit screen.
 			$id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
 			return false;
 		}
 
@@ -271,8 +275,8 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
 			// Redirect back to the edit screen.
 			$id = (int)$app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setMessage(JText::sprintf('Delete failed', $model->getError()), 'warning');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
+			$this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id='.$id, false));
 			return false;
 		}
 
@@ -286,10 +290,10 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
         $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', null);
 
         // Redirect to the list screen.
-        $this->setMessage(JText::_('Item deleted successfully'));
-        $menu = & JFactory::getApplication()->getMenu();
+        $this->setMessage(Text::_('Item deleted successfully'));
+        $menu = & Factory::getApplication()->getMenu();
         $item = $menu->getActive();
-        $this->setRedirect(JRoute::_($item->link, false));
+        $this->setRedirect(Route::_($item->link, false));
 
 		// Flush the data from the session.
 		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);

@@ -9,6 +9,11 @@
 
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\FormModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Table\Table;
 
 jimport('joomla.application.component.modelform');
 jimport('joomla.event.dispatcher');
@@ -19,7 +24,7 @@ use Joomla\Utilities\ArrayHelper;
  *
  * @since  1.6
  */
-class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
+class EinsatzkomponenteModelEinsatzfahrzeugForm extends FormModel
 {
 	private $item = null;
 
@@ -34,17 +39,17 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
 	 */
 	protected function populateState()
 	{
-		$app = JFactory::getApplication('com_einsatzkomponente');
+		$app = Factory::getApplication('com_einsatzkomponente');
 
 		// Load state from the request userState on edit or from the passed variable on default
-		if (JFactory::getApplication()->input->get('layout') == 'edit')
+		if (Factory::getApplication()->input->get('layout') == 'edit')
 		{
-			$id = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
+			$id = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
 		}
 		else
 		{
-			$id = JFactory::getApplication()->input->get('id');
-			JFactory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id', $id);
+			$id = Factory::getApplication()->input->get('id');
+			Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id', $id);
 		}
 
 		$this->setState('einsatzfahrzeug.id', $id);
@@ -87,7 +92,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
 			// Attempt to load the row.
 			if ($table !== false && $table->load($id))
 			{
-				$user = JFactory::getUser();
+				$user = Factory::getUser();
 				$id   = $table->id;
 				
 				if ($id)
@@ -106,7 +111,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
 
 				if (!$canEdit)
 				{
-					throw new Exception(JText::_('ALERTNOAUTHOR'), 500);
+					throw new Exception(Text::_('ALERTNOAUTHOR'), 500);
 				}
 
 				// Check published state.
@@ -140,7 +145,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
 	{
 		$this->addTablePath(JPATH_ADMINISTRATOR . '/components/com_einsatzkomponente/tables');
 
-		return JTable::getInstance($type, $prefix, $config);
+		return Table::getInstance($type, $prefix, $config);
 	}
 
 	/**
@@ -211,7 +216,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
 			$table = $this->getTable();
 
 			// Get the current user object.
-			$user = JFactory::getUser();
+			$user = Factory::getUser();
 
 			// Attempt to check the row out.
 			if (method_exists($table, 'checkout'))
@@ -264,7 +269,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
 	 */
 	protected function loadFormData()
 	{
-		$data = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.data', array());
 
 		if (empty($data))
 		{
@@ -290,7 +295,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
 	{
 		$id    = (!empty($data['id'])) ? $data['id'] : (int) $this->getState('einsatzfahrzeug.id');
 		$state = (!empty($data['state'])) ? 1 : 0;
-		$user  = JFactory::getUser();
+		$user  = Factory::getUser();
 
 		if ($id)
 		{
@@ -317,7 +322,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
 
 		if ($authorised !== true)
 		{
-			throw new Exception(JText::_('ALERTNOAUTHOR'), 403);
+			throw new Exception(Text::_('ALERTNOAUTHOR'), 403);
 		}
 
 		$table = $this->getTable();
@@ -345,9 +350,9 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends JModelForm
 	{
 		$id = (!empty($data['id'])) ? $data['id'] : (int) $this->getState('einsatzfahrzeug.id');
 
-		if (JFactory::getUser()->authorise('core.delete', 'com_einsatzkomponente.einsatzfahrzeug.' . $id) !== true)
+		if (Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.einsatzfahrzeug.' . $id) !== true)
 		{
-			throw new Exception(403, JText::_('ALERTNOAUTHOR'));
+			throw new Exception(403, Text::_('ALERTNOAUTHOR'));
 		}
 
 		$table = $this->getTable();

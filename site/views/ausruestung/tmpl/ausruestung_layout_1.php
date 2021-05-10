@@ -8,10 +8,13 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
-$canEdit = JFactory::getUser()->authorise('core.edit', 'com_einsatzkomponente.' . $this->item->id);
-if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)) {
-	$canEdit = JFactory::getUser()->id == $this->item->created_by;
+$canEdit = Factory::getUser()->authorise('core.edit', 'com_einsatzkomponente.' . $this->item->id);
+if (!$canEdit && Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)) {
+	$canEdit = Factory::getUser()->id == $this->item->created_by;
 }
 ?>
 <?php if ($this->item) : ?>
@@ -33,20 +36,20 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_einsatzkom
 </tr>
 <tr>
 			<td>
-			<input style="float:left;" type="button" class="btn eiko_back_button" value="<?php echo JText::_('COM_EINSATZKOMPONENTE_ZURUECK');?>" onClick="history.back();">
+			<input style="float:left;" type="button" class="btn eiko_back_button" value="<?php echo Text::_('COM_EINSATZKOMPONENTE_ZURUECK');?>" onClick="history.back();">
 			</td>
 </tr>
 
         </table>
     </div>
     <?php if($canEdit && $this->item->checked_out == 0): ?>
-		<a class="btn btn-warning" href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestungform&id='.$this->item->id); ?>"><?php echo JText::_("COM_EINSATZKOMPONENTE_EDIT"); ?></a>
+		<a class="btn btn-warning" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&id='.$this->item->id); ?>"><?php echo Text::_("COM_EINSATZKOMPONENTE_EDIT"); ?></a>
 	<?php endif; ?>
-								<?php if(JFactory::getUser()->authorise('core.delete','com_einsatzkomponente.ausruestung.'.$this->item->id)):?>
-									<a class="btn btn-danger" href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=ausruestung.remove&id=' . $this->item->id, false, 2); ?>"><?php echo JText::_("COM_EINSATZKOMPONENTE_LOESCHEN"); ?></a>
+								<?php if(Factory::getUser()->authorise('core.delete','com_einsatzkomponente.ausruestung.'.$this->item->id)):?>
+									<a class="btn btn-danger" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestung.remove&id=' . $this->item->id, false, 2); ?>"><?php echo Text::_("COM_EINSATZKOMPONENTE_LOESCHEN"); ?></a>
 								<?php endif; ?>
     <?php
 else:
-    echo JText::_('COM_EINSATZKOMPONENTE_ITEM_NOT_LOADED');
+    echo Text::_('COM_EINSATZKOMPONENTE_ITEM_NOT_LOADED');
 endif;
 ?>

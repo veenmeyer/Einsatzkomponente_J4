@@ -9,21 +9,26 @@
 
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Version;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.multiselect');
 
-$version = new JVersion;
+$version = new Version;
 if ($version->isCompatible('3.0')) :
 JHtml::_('formbehavior.chosen', 'select');
 JHtml::_('bootstrap.tooltip');
 endif;
 
 // Import CSS
-$document = JFactory::getDocument();
+$document = Factory::getDocument();
 $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
-$user	= JFactory::getUser();
+$user	= Factory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
 $listDirn	= $this->state->get('list.direction');
@@ -32,7 +37,7 @@ $saveOrder	= $listOrder == 'a.ordering';
 if ($saveOrder)
 {
 	$saveOrderingUrl = 'index.php?option=com_einsatzkomponente&task=gmapkonfigurationen.saveOrderAjax&tmpl=component';
-	JHtml::_('sortablelist.sortable', 'gmapkonfigurationList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+	HTMLHelper::_('sortablelist.sortable', 'gmapkonfigurationList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 $sortFields = $this->getSortFields();
 ?>
@@ -57,7 +62,7 @@ if (!empty($this->extra_sidebar)) {
 }
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=gmapkonfigurationen'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=gmapkonfigurationen'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if(!empty($this->sidebar)): ?>
 	<div id="j-sidebar-container" class="span2">
 		<?php echo $this->sidebar; ?>
@@ -73,15 +78,15 @@ if (!empty($this->extra_sidebar)) {
 				<tr>
                 <?php if (isset($this->items[0]->ordering)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
+						<?php echo HTMLHelper::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
 					</th>
                 <?php endif; ?>
 					<th width="1%" class="hidden-phone">
-						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 					</th>
                 <?php if (isset($this->items[0]->state)): ?>
 					<th width="1%" class="nowrap center">
-						<?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 					</th>
                 <?php endif; ?>
                 
@@ -93,7 +98,7 @@ if (!empty($this->extra_sidebar)) {
                     
                 <?php if (isset($this->items[0]->id)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 					</th>
                 <?php endif; ?>
 				</tr>
@@ -129,7 +134,7 @@ if (!empty($this->extra_sidebar)) {
 						$disableClassName = '';
 						$disabledLabel	  = '';
 						if (!$saveOrder) :
-							$disabledLabel    = JText::_('JORDERINGDISABLED');
+							$disabledLabel    = Text::_('JORDERINGDISABLED');
 							$disableClassName = 'inactive tip-top';
 						endif; ?>
 						<span class="sortable-handler hasTooltip <?php echo $disableClassName?>" title="<?php echo $disabledLabel?>">
@@ -144,16 +149,16 @@ if (!empty($this->extra_sidebar)) {
 					</td>
                 <?php endif; ?>
 					<td class="center hidden-phone">
-						<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+						<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 					</td>
                 <?php if (isset($this->items[0]->state)): ?>
 					<td class="center">
-						<?php echo JHtml::_('jgrid.published', $item->state, $i, 'gmapkonfigurationen.', $canChange, 'cb'); ?>
+						<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'gmapkonfigurationen.', $canChange, 'cb'); ?>
 					</td>
                 <?php endif; ?>
                 
 				<td>
-			    <a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=gmapkonfiguration.edit&id='.(int) $item->id); ?>">
+			    <a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=gmapkonfiguration.edit&id='.(int) $item->id); ?>">
                 <?php echo 'GMap-Konfiguration'; ?>
                 </a>
 				</td>
@@ -172,7 +177,7 @@ if (!empty($this->extra_sidebar)) {
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 	</div>
 </form>        
 

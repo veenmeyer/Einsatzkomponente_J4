@@ -8,11 +8,15 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 jimport('joomla.application.component.modeladmin');
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModeleinsatzbericht extends JModelAdmin
+class EinsatzkomponenteModeleinsatzbericht extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -34,7 +38,7 @@ class EinsatzkomponenteModeleinsatzbericht extends JModelAdmin
    
 	public function getTable($type = 'Einsatzbericht', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
-		return JTable::getInstance($type, $prefix, $config);
+		return Table::getInstance($type, $prefix, $config);
 	}
 	/**
 	 * Method to get the record form.
@@ -47,7 +51,7 @@ class EinsatzkomponenteModeleinsatzbericht extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		// Get the form.
 		$form = $this->loadForm('com_einsatzkomponente.einsatzbericht', 'einsatzbericht', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
@@ -64,7 +68,7 @@ class EinsatzkomponenteModeleinsatzbericht extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
 			
@@ -81,7 +85,7 @@ class EinsatzkomponenteModeleinsatzbericht extends JModelAdmin
 				//$db->setQuery('SELECT id,ffw FROM #__eiko_organisationen WHERE ffw="1" LIMIT 1');
 				//$standard = $db->loadResult();
 				//$data->auswahl_orga = $standard['id'];
-			$params = JComponentHelper::getParams('com_einsatzkomponente');
+			$params = ComponentHelper::getParams('com_einsatzkomponente');
 			$data->auswahl_orga = 	$params->get('pre_auswahl_orga','');
 			endif;
 			
@@ -105,7 +109,7 @@ class EinsatzkomponenteModeleinsatzbericht extends JModelAdmin
 			$data->ausruestung = implode(',',$array);
 		}
 		
-			$params = JComponentHelper::getParams('com_einsatzkomponente');
+			$params = ComponentHelper::getParams('com_einsatzkomponente');
 			
 			if(is_object($data)) $data->watermark_image = 	$params->get('watermark_image','');
 			
@@ -138,7 +142,7 @@ class EinsatzkomponenteModeleinsatzbericht extends JModelAdmin
 		if (empty($table->id)) {
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
-				$db = JFactory::getDbo();
+				$db = Factory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_einsatzberichte');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
@@ -159,11 +163,11 @@ class EinsatzkomponenteModeleinsatzbericht extends JModelAdmin
  public function delete (&$pks)
     {
 
-        $db =JFactory::getDBO();
+        $db =Factory::getDBO();
         foreach($pks as $id)
         {
             $db->setQuery("DELETE FROM #__eiko_einsatzberichte WHERE id=".$id);
-            $db->query();
+            $db->execute();
         }
 		return true;		
     }	

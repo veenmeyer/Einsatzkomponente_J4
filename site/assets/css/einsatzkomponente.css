@@ -14,40 +14,7 @@
 .eiko_back_button {
 	float:right;
 	}
-.btn-details { 
-	color:#cccccc !important; 
-}
-.btn-details:hover { 
-	color:#000000 !important; 
-}
 
-.btn-home, a .btn-home, input .btn-home, button .btn-home { 
-	font-size: 11px !important; 
-	border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25) !important;
-    -moz-border-bottom-colors: none !important;
-    -moz-border-left-colors: none !important;
-    -moz-border-right-colors: none !important;
-    -moz-border-top-colors: none !important;
-    background-color: #F5F5F5 !important;
-    background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6) !important;
-    background-repeat: repeat-x !important;
-    border-color: #BBBBBB #BBBBBB #A2A2A2 !important;
-    border-image: none !important;
-    border-radius: 4px !important;
-    border-style: solid !important;
-    border-width: 1px !important;
-    color: #333333 !important;
-    cursor: pointer !important;
-    display: inline-block !important;
-    line-height: 15px !important;
-    margin-bottom: 0 !important;
-    padding: 4px 14px !important;
-    text-align: center !important;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75) !important;
-    vertical-align: middle !important;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	
-}
 
 .fahrzeug_box_1 { 
 	background: #e3e3e3 !important; 
@@ -363,16 +330,6 @@ h4, h5 {
 }
 /*Einsatzübericht Layout_1   ENDE    */	
 
-/*Frontend-Pagination  */	
-.limit { float:right !important;}
-.pagination { display:block;}
-.first {}
-.previous {}
-.next {}
-.last {}
-.inputbox input-mini {}
-.counter {}
-/*Frontend-Pagination  ENDE */	
 
 /* Facebook Like Button  */
 .fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style] {
@@ -642,10 +599,6 @@ padding-right:5px;
 }
 
 
-.btn.active,
-.btn:active {
-  border-color: #FF080D !important; 
-}  
 
 #map img { max-width:none; }
 
@@ -707,16 +660,6 @@ padding-right:5px;
 
 .eiko_table_ausruestung {width: 100%;}
 
-.icon-first::before {
-    content: "" !important;
-}
-
-.icon-previous::before , .icon-backward::before {
-    content: "" !important;
-}
-.icon-next::before, .icon-forward::before {
-    content: "" !important;
-}
 
 
 

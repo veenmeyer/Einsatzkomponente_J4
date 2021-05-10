@@ -8,10 +8,16 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
+use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
+
 /**
  * einsatzbilderbearbeiten Table class
  */
-class EinsatzkomponenteTableeinsatzbilderbearbeiten extends JTable {
+class EinsatzkomponenteTableeinsatzbilderbearbeiten extends Table {
     /**
      * Constructor
      *
@@ -32,30 +38,30 @@ class EinsatzkomponenteTableeinsatzbilderbearbeiten extends JTable {
      */
     public function bind($array, $ignore = '') {
         
-		if(!JFactory::getUser()->authorise('core.edit.state','com_einsatzkomponente.einsatzbilderbearbeiten.'.$array['id']) && $array['state'] == 1){
+		if(!Factory::getUser()->authorise('core.edit.state','com_einsatzkomponente.einsatzbilderbearbeiten.'.$array['id']) && $array['state'] == 1){
 			$array['state'] = 0;
 		}
 		if(!isset($array['created_by']) || $array['created_by'] == 0){
-			$array['created_by'] = JFactory::getUser()->id;
+			$array['created_by'] = Factory::getUser()->id;
 		}
         if (isset($array['params']) && is_array($array['params'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['params']);
             $array['params'] = (string) $registry;
         }
         if (isset($array['metadata']) && is_array($array['metadata'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['metadata']);
             $array['metadata'] = (string) $registry;
         }
-        if(!JFactory::getUser()->authorise('core.admin', 'com_einsatzkomponente.einsatzbilderbearbeiten.'.$array['id'])){
-            $actions = JFactory::getACL()->getActions('com_einsatzkomponente','einsatzbilderbearbeiten');
-            $default_actions = JFactory::getACL()->getAssetRules('com_einsatzkomponente.einsatzbilderbearbeiten.'.$array['id'])->getData();
+        if(!Factory::getUser()->authorise('core.admin', 'com_einsatzkomponente.einsatzbilderbearbeiten.'.$array['id'])){
+            $actions = Factory::getACL()->getActions('com_einsatzkomponente','einsatzbilderbearbeiten');
+            $default_actions = Factory::getACL()->getAssetRules('com_einsatzkomponente.einsatzbilderbearbeiten.'.$array['id'])->getData();
             $array_jaccess = array();
             foreach($actions as $action){
                 $array_jaccess[$action->name] = $default_actions[$action->name];
             }
-            $array['rules'] = $this->JAccessRulestoArray($array_jaccess);
+            $array['rules'] = $this->RulestoArray($array_jaccess);
         }
         //Bind the rules for ACL where supported.
 		if (isset($array['rules']) && is_array($array['rules'])) {
@@ -68,7 +74,7 @@ class EinsatzkomponenteTableeinsatzbilderbearbeiten extends JTable {
      * This function convert an array of JAccessRule objects into an rules array.
      * @param type $jaccessrules an arrao of JAccessRule objects.
      */
-    private function JAccessRulestoArray($jaccessrules){
+    private function RulestoArray($jaccessrules){
         $rules = array();
         foreach($jaccessrules as $action => $jaccess){
             $actions = array();
@@ -105,7 +111,7 @@ class EinsatzkomponenteTableeinsatzbilderbearbeiten extends JTable {
         // Initialise variables.
         $k = $this->_tbl_key;
         // Sanitize input.
-        JArrayHelper::toInteger($pks);
+        ArrayHelper::toInteger($pks);
         $userId = (int) $userId;
         $state = (int) $state;
         // If there are no primary keys set check to see if the instance key is set.
@@ -115,7 +121,7 @@ class EinsatzkomponenteTableeinsatzbilderbearbeiten extends JTable {
             }
             // Nothing to set publishing state on, return false.
             else {
-                $this->setError(JText::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
+                $this->setError(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
                 return false;
             }
         }
@@ -134,12 +140,17 @@ class EinsatzkomponenteTableeinsatzbilderbearbeiten extends JTable {
                 ' WHERE (' . $where . ')' .
                 $checkin
         );
-        $this->_db->query();
-        // Check for a database error.
-        if ($this->_db->getErrorNum()) {
-            $this->setError($this->_db->getErrorMsg());
-            return false;
-        }
+		try
+		{
+			$this->_db->execute();
+		}
+		catch (\RuntimeException $e)
+		{
+			$this->setError($e->getMessage());
+
+			return false;
+		} 
+
         // If checkin is supported and all rows were adjusted, check them in.
         if ($checkin && (count($pks) == $this->_db->getAffectedRows())) {
             // Checkin each row.

@@ -9,19 +9,23 @@
 
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Factory;
+use Joomla\Utilities\ArrayHelper;
+
 
 jimport('joomla.application.component.controlleradmin');
 
 /**
  * Gmapkonfigurationen list controller class.
  */
-class EinsatzkomponenteControllerGmapkonfigurationen extends JControllerAdmin
+class EinsatzkomponenteControllerGmapkonfigurationen extends AdminController
 {
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function getModel($name = 'gmapkonfiguration', $prefix = 'EinsatzkomponenteModel')
+	public function getModel($name = 'gmapkonfiguration', $prefix = 'EinsatzkomponenteModel', $config = [])
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
@@ -38,13 +42,13 @@ class EinsatzkomponenteControllerGmapkonfigurationen extends JControllerAdmin
 	public function saveOrderAjax()
 	{
 		// Get the input
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$pks = $input->post->get('cid', array(), 'array');
 		$order = $input->post->get('order', array(), 'array');
 
 		// Sanitize the input
-		JArrayHelper::toInteger($pks);
-		JArrayHelper::toInteger($order);
+		ArrayHelper::toInteger($pks);
+		ArrayHelper::toInteger($order);
 
 		// Get the model
 		$model = $this->getModel();
@@ -58,7 +62,7 @@ class EinsatzkomponenteControllerGmapkonfigurationen extends JControllerAdmin
 		}
 
 		// Close the application
-		JFactory::getApplication()->close();
+		Factory::getApplication()->close();
 	}
     
     

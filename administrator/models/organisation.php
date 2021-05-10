@@ -8,11 +8,14 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
 jimport('joomla.application.component.modeladmin');
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModelorganisation extends JModelAdmin
+class EinsatzkomponenteModelorganisation extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -30,7 +33,7 @@ class EinsatzkomponenteModelorganisation extends JModelAdmin
 	 */
 	public function getTable($type = 'Organisation', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
-		return JTable::getInstance($type, $prefix, $config);
+		return Table::getInstance($type, $prefix, $config);
 	}
 	/**
 	 * Method to get the record form.
@@ -43,7 +46,7 @@ class EinsatzkomponenteModelorganisation extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		// Get the form.
 		$form = $this->loadForm('com_einsatzkomponente.organisation', 'organisation', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
@@ -60,7 +63,7 @@ class EinsatzkomponenteModelorganisation extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.organisation.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.organisation.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
             
@@ -93,7 +96,7 @@ class EinsatzkomponenteModelorganisation extends JModelAdmin
 		if (empty($table->id)) {
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
-				$db = JFactory::getDbo();
+				$db = Factory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_organisationen');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
@@ -112,11 +115,18 @@ class EinsatzkomponenteModelorganisation extends JModelAdmin
  public function delete (&$pks)
     {
 
-        $db =JFactory::getDBO();
+        $db =Factory::getDBO();
         foreach($pks as $id)
         {
             $db->setQuery("DELETE FROM #__eiko_organisationen WHERE id=".$id);
-            $db->query();
+				try
+				{
+					$db->execute();
+				}
+				catch (RuntimeException $e)
+				{
+					throw new Exception($e->getMessage(), 500);
+				}
         }
 		return true;		
     }	

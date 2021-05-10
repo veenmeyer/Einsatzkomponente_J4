@@ -8,12 +8,17 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
+
 
 jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModelEinsatzarchiv extends JModelList
+class EinsatzkomponenteModelEinsatzarchiv extends ListModel
 {
 
     /**
@@ -91,7 +96,7 @@ class EinsatzkomponenteModelEinsatzarchiv extends JModelList
 
 
         // Initialise variables.
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 		$params = $app->getParams('com_einsatzkomponente');
 		$page_limit = $params->get('display_home_pagination_limit','');
 		$show_pagination = $params->get('display_home_pagination','1');
@@ -101,72 +106,27 @@ class EinsatzkomponenteModelEinsatzarchiv extends JModelList
         $limit = $app->getUserStateFromRequest('list.limit', 'limit',$page_limit); 
         $this->setState('list.limit', $limit);
 
-        $limitstart = $app->input->getInt('limitstart', 0);
-        $this->setState('list.start', $limitstart);
-        if ($list = $app->getUserStateFromRequest($this->context . '.list', 'list', array(), 'array'))
-        {
-            foreach ($list as $name => $value)
-            {
-                // Extra validations
-                switch ($name)
-                {
-                    case 'fullordering':
-                        $orderingParts = explode(' ', $value);
+		// List state information
+		$input = Factory::getApplication()->input;
+		$limitstart = $input->getUInt('limitstart', 0);
+		$this->setState('list.start', $limitstart);
 
-                        if (count($orderingParts) >= 2)
-                        {
-                            // Latest part will be considered the direction
-                            $fullDirection = end($orderingParts);
 
-                            if (in_array(strtoupper($fullDirection), array('ASC', 'DESC', '')))
-                            {
-                                $this->setState('list.direction', $fullDirection);
-                            }
+		$params = $this->state->params;
 
-                            unset($orderingParts[count($orderingParts) - 1]);
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$menuParams = $menu->getParams();
+		}
+		else
+		{
+			$menuParams = new Registry;
+		}
 
-                            // The rest will be the ordering
-                            $fullOrdering = implode(' ', $orderingParts);
 
-                            if (in_array($fullOrdering, $this->filter_fields))
-                            {
-                                $this->setState('list.ordering', $fullOrdering);
-                            }
-                        }
-                        else
-                        {
-                            $this->setState('list.ordering', $ordering);
-                            $this->setState('list.direction', $direction);
-                        }
-                        break;
+		$this->setState('list.limit', $limit);
 
-                    case 'ordering':
-                        if (!in_array($value, $this->filter_fields))
-                        {
-                            $value = $ordering;
-                        }
-                        break;
-
-                    case 'direction':
-                        if (!in_array(strtoupper($value), array('ASC', 'DESC', '')))
-                        {
-                            $value = $direction;
-                        }
-                        break;
-
-                    case 'limit':
-                        $limit = $value;
-                        break;
-
-                    // Just to keep the default case
-                    default:
-                        $value = $value;
-                        break;
-                }
-
-                $this->setState('list.' . $name, $value);
-            }
-        }
+		
 // Filter aus Menülink abfangen 
 
 if (!$app->input->getInt('list', 0)) : // Prüfen ob zurück aus Detailansicht
@@ -279,7 +239,7 @@ endif;
 		// Join over the modified by field 'created_by'
 		$query->join('LEFT', '#__users AS modified_by ON modified_by.id = a.modified_by');
 		
-			$user = JFactory::getUser();
+			$user = Factory::getUser();
 			$userId = $user->get('id');
 			$canCreate = $user->authorise('core.create', 'com_einsatzkomponente');
 			$canEdit = $user->authorise('core.edit', 'com_einsatzkomponente');
@@ -349,7 +309,7 @@ endif;
 
 		// Filter Menüparameter auswahlorga
 			if ($filter_auswahlorga) {
-			        $app = JFactory::getApplication();
+			        $app = Factory::getApplication();
 					$params = $app->getParams('com_einsatzkomponente');
 					$array = array();
 					if (count($filter_auswahlorga)>1) :
@@ -470,7 +430,7 @@ endif;
 	
 	
 			if (isset($item->alerting) && $item->alerting != '') {
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('title,image')
@@ -485,7 +445,7 @@ endif;
 			}
 
 			if (isset($item->tickerkat) && $item->tickerkat != '') {
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('title,image')
@@ -500,7 +460,7 @@ endif;
 			}
 
 			if (isset($item->data1) && $item->data1 != '') {
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('id,title,list_icon,marker,icon')
@@ -519,7 +479,7 @@ endif;
 
 			
 
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('count(image)')
@@ -539,7 +499,7 @@ endif;
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('name')
@@ -564,7 +524,7 @@ endif;
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('name')
@@ -680,8 +640,8 @@ endif;
 	//		$item->people_ftm = !empty($textValue) ? implode(', ', $textValue) : $item->people_ftm;
 
 	//		}
-					$item->status_fb = JText::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_FB_OPTION_' . strtoupper($item->status_fb));
-					$item->status = JText::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_OPTION_' . strtoupper($item->status));
+					$item->status_fb = Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_FB_OPTION_' . strtoupper($item->status_fb));
+					$item->status = Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_OPTION_' . strtoupper($item->status));
 
 			if (isset($item->article_id) && $item->article_id != '') {
 				if(is_object($item->article_id)){
@@ -691,7 +651,7 @@ endif;
 
 				$textValue = array();
 				foreach ($values as $value){
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select('title')
@@ -720,7 +680,7 @@ endif;
      */
     protected function loadFormData()
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $filters = $app->getUserState($this->context . '.filter', array());
         $error_dateformat = false;
         foreach ($filters as $key => $value)
@@ -733,7 +693,7 @@ endif;
         }
         if ($error_dateformat)
         {
-            $app->enqueueMessage(JText::_("COM_PRUEBA_SEARCH_FILTER_DATE_FORMAT"), "warning");
+            $app->enqueueMessage(Text::_("COM_PRUEBA_SEARCH_FILTER_DATE_FORMAT"), "warning");
             $app->setUserState($this->context . '.filter', $filters);
         }
 

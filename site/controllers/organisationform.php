@@ -9,6 +9,10 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 require_once JPATH_COMPONENT . '/controller.php';
 
@@ -28,7 +32,7 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 	 */
 	public function edit()
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		// Get the previous edit id (if any) and the current edit id.
 		$previousId = (int) $app->getUserState('com_einsatzkomponente.edit.organisation.id');
@@ -53,7 +57,7 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 		}
 
 		// Redirect to the edit screen.
-		$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=organisationform&layout=edit', false));
+		$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=organisationform&layout=edit', false));
 	}
 
 	/**
@@ -67,14 +71,14 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 	public function save()
 	{
 		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$app   = JFactory::getApplication();
+		$app   = Factory::getApplication();
 		$model = $this->getModel('OrganisationForm', 'EinsatzkomponenteModel');
 
 		// Get the user data.
-		$data = JFactory::getApplication()->input->get('jform', array(), 'array');
+		$data = Factory::getApplication()->input->get('jform', array(), 'array');
 
 		// Validate the posted data.
 		$form = $model->getForm();
@@ -114,7 +118,7 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 
 			// Redirect back to the edit screen.
 			$id = (int) $app->getUserState('com_einsatzkomponente.edit.organisation.id');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=organisationform&layout=edit&id=' . $id, false));
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=organisationform&layout=edit&id=' . $id, false));
 		}
 
 		// Attempt to save the data.
@@ -128,8 +132,8 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 
 			// Redirect back to the edit screen.
 			$id = (int) $app->getUserState('com_einsatzkomponente.edit.organisation.id');
-			$this->setMessage(JText::sprintf('Save failed', $model->getError()), 'warning');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=organisationform&layout=edit&id=' . $id, false));
+			$this->setMessage(Text::sprintf('Save failed', $model->getError()), 'warning');
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=organisationform&layout=edit&id=' . $id, false));
 		}
 
 		// Check in the profile.
@@ -142,11 +146,11 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 		$app->setUserState('com_einsatzkomponente.edit.organisation.id', null);
 
 		// Redirect to the list screen.
-		$this->setMessage(JText::_('COM_EINSATZKOMPONENTE_ITEM_SAVED_SUCCESSFULLY'));
-		$menu = JFactory::getApplication()->getMenu();
+		$this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_SAVED_SUCCESSFULLY'));
+		$menu = Factory::getApplication()->getMenu();
 		$item = $menu->getActive();
 		$url  = (empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=organisationen' : $item->link);
-		$this->setRedirect(JRoute::_($url, false));
+		$this->setRedirect(Route::_($url, false));
 
 		// Flush the data from the session.
 		$app->setUserState('com_einsatzkomponente.edit.organisation.data', null);
@@ -161,7 +165,7 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 	 */
 	public function cancel()
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		// Get the current edit id.
 		$editId = (int) $app->getUserState('com_einsatzkomponente.edit.organisation.id');
@@ -175,10 +179,10 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 			$model->checkin($editId);
 		}
 
-		$menu = JFactory::getApplication()->getMenu();
+		$menu = Factory::getApplication()->getMenu();
 		$item = $menu->getActive();
 		$url  = (empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=organisationen' : $item->link);
-		$this->setRedirect(JRoute::_($url, false));
+		$this->setRedirect(Route::_($url, false));
 	}
 
 	/**
@@ -191,7 +195,7 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 	public function remove()
 	{
 		// Initialise variables.
-		$app   = JFactory::getApplication();
+		$app   = Factory::getApplication();
 		$model = $this->getModel('OrganisationForm', 'EinsatzkomponenteModel');
 
 		// Get the user data.
@@ -222,7 +226,7 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 
 			// Redirect back to the edit screen.
 			$id = (int) $app->getUserState('com_einsatzkomponente.edit.organisation.id');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=organisation&layout=edit&id=' . $id, false));
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=organisation&layout=edit&id=' . $id, false));
 		}
 
 		// Attempt to save the data.
@@ -236,8 +240,8 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 
 			// Redirect back to the edit screen.
 			$id = (int) $app->getUserState('com_einsatzkomponente.edit.organisation.id');
-			$this->setMessage(JText::sprintf('Delete failed', $model->getError()), 'warning');
-			$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=organisation&layout=edit&id=' . $id, false));
+			$this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
+			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=organisation&layout=edit&id=' . $id, false));
 		}
 
 		// Check in the profile.
@@ -250,11 +254,11 @@ class EinsatzkomponenteControllerOrganisationForm extends EinsatzkomponenteContr
 		$app->setUserState('com_einsatzkomponente.edit.organisation.id', null);
 
 		// Redirect to the list screen.
-		$this->setMessage(JText::_('COM_EINSATZKOMPONENTE_ITEM_DELETED_SUCCESSFULLY'));
-		$menu = JFactory::getApplication()->getMenu();
+		$this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_DELETED_SUCCESSFULLY'));
+		$menu = Factory::getApplication()->getMenu();
 		$item = $menu->getActive();
 		$url  = (empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=organisationen' : $item->link);
-		$this->setRedirect(JRoute::_($url, false));
+		$this->setRedirect(Route::_($url, false));
 
 		// Flush the data from the session.
 		$app->setUserState('com_einsatzkomponente.edit.organisation.data', null);

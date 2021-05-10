@@ -8,13 +8,16 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.modellist');
 
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModelAusruestungen extends JModelList
+class EinsatzkomponenteModelAusruestungen extends ListModel
 {
 
 	/**
@@ -56,7 +59,7 @@ class EinsatzkomponenteModelAusruestungen extends JModelList
 
 
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		// List state information
 		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
@@ -202,7 +205,7 @@ if (empty($list['direction']))
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 
 		
-if (!JFactory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente'))
+if (!Factory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente'))
 {
 	$query->where('a.state = 1');
 }
@@ -224,7 +227,7 @@ if (!JFactory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente'))
 
 		
 		// Filter Menüparameter 
-			        $app = JFactory::getApplication();
+			        $app = Factory::getApplication();
 					$params = $app->getParams('com_einsatzkomponente');
 					$array = array();
 					$filter_ausruestung = $params->get('filter_ausruestung');
@@ -293,7 +296,7 @@ if (!JFactory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente'))
 	 */
 	protected function loadFormData()
 	{
-		$app              = JFactory::getApplication();
+		$app              = Factory::getApplication();
 		$filters          = $app->getUserState($this->context . '.filter', array());
 		$error_dateformat = false;
 		foreach ($filters as $key => $value)
@@ -306,7 +309,7 @@ if (!JFactory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente'))
 		}
 		if ($error_dateformat)
 		{
-			$app->enqueueMessage(JText::_("COM_EINSATZKOMPONENTE_SEARCH_FILTER_DATE_FORMAT"), "warning");
+			$app->enqueueMessage(Text::_("COM_EINSATZKOMPONENTE_SEARCH_FILTER_DATE_FORMAT"), "warning");
 			$app->setUserState($this->context . '.filter', $filters);
 		}
 

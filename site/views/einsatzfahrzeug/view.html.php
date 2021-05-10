@@ -9,6 +9,10 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.view');
 
@@ -17,7 +21,7 @@ jimport('joomla.application.component.view');
  *
  * @since  1.6
  */
-class EinsatzkomponenteViewEinsatzfahrzeug extends JViewLegacy
+class EinsatzkomponenteViewEinsatzfahrzeug extends HtmlView
 {
 	protected $state;
 
@@ -38,20 +42,20 @@ class EinsatzkomponenteViewEinsatzfahrzeug extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		$app  = JFactory::getApplication();
-		$user = JFactory::getUser();
+		$app  = Factory::getApplication();
+		$user = Factory::getUser();
 
 		$this->state  = $this->get('State');
 		$this->item   = $this->get('Data');
 		$this->params = $app->getParams('com_einsatzkomponente');
 
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 
 		// Bootstrap laden
-		JHtml::_('behavior.framework', true);
+		HTMLHelper::_('behavior.framework', true);
 		
 		if ($this->params->get('display_fahrzeuge_bootstrap','0') == '1') :
-		JHtml::_('bootstrap.framework');
+		HTMLHelper::_('bootstrap.framework');
 		$document->addStyleSheet($this->baseurl . '/media/jui/css/bootstrap.min.css');
 		$document->addStyleSheet($this->baseurl.'/media/jui/css/icomoon.css');
 		endif;
@@ -83,7 +87,7 @@ class EinsatzkomponenteViewEinsatzfahrzeug extends JViewLegacy
 
 			if ($authorised !== true)
 			{
-				throw new Exception(JText::_('ALERTNOAUTHOR'));
+				throw new Exception(Text::_('ALERTNOAUTHOR'));
 			}
 		}
 
@@ -101,7 +105,7 @@ class EinsatzkomponenteViewEinsatzfahrzeug extends JViewLegacy
 	 */
 	protected function _prepareDocument()
 	{
-		$app   = JFactory::getApplication();
+		$app   = Factory::getApplication();
 		$menus = $app->getMenu();
 		$title = null;
 
@@ -115,7 +119,7 @@ class EinsatzkomponenteViewEinsatzfahrzeug extends JViewLegacy
 		}
 		else
 		{
-			$this->params->def('page_heading', JText::_('COM_EINSATZKOMPONENTE_DEFAULT_PAGE_TITLE'));
+			$this->params->def('page_heading', Text::_('COM_EINSATZKOMPONENTE_DEFAULT_PAGE_TITLE'));
 		}
 
 		$title = $this->params->get('page_title', '');
@@ -126,11 +130,11 @@ class EinsatzkomponenteViewEinsatzfahrzeug extends JViewLegacy
 		}
 		elseif ($app->get('sitename_pagetitles', 0) == 1)
 		{
-			$title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
+			$title = Text::sprintf('JPAGETITLE', $app->get('sitename'), $title);
 		}
 		elseif ($app->get('sitename_pagetitles', 0) == 2)
 		{
-			$title = JText::sprintf('JPAGETITLE', $title, $app->get('sitename'));
+			$title = Text::sprintf('JPAGETITLE', $title, $app->get('sitename'));
 		}
 
 		$this->document->setTitle($title);

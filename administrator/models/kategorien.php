@@ -7,11 +7,14 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModelKategorien extends JModelList
+class EinsatzkomponenteModelKategorien extends ListModel
 {
     /**
      * Constructor.
@@ -43,14 +46,14 @@ class EinsatzkomponenteModelKategorien extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = Factory::getApplication('administrator');
 		// Load the filter state.
 		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 		$published = $app->getUserStateFromRequest($this->context.'.filter.state', 'filter_published', '', 'string');
 		$this->setState('filter.state', $published);
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		$this->setState('params', $params);
 		// List state information.
 		parent::populateState('a.title', 'asc');

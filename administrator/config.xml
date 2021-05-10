@@ -22,7 +22,7 @@
 	  		<field
 				name="new_dir"
 				type="radio"
-				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_OPTION_BILDER_IN_UNTERORDNER"
 				description="COM_EINSATZKOMPONENTE_OPTION_3">
@@ -31,10 +31,11 @@
 					<option
 						value="1">JYES</option>
 	  		</field>
+			
 	  		<field
 				name="titelbild_auto"
 				type="radio"
-				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_OPTION_TITELBILD_AUTOMATISCH"
 				description="COM_EINSATZKOMPONENTE_OPTION_4">
@@ -68,7 +69,7 @@
 			<field
 			name="quadratisch"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="false"
 			label="COM_EINSATZKOMPONENTE_OPTION_THUMB_FORM"
 			description="Hier kann das Aussehen der Thumbs ausgwählt werden.">
@@ -91,7 +92,7 @@
 			<field
 			name="image_resize"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="true"
 			label="COM_EINSATZKOMPONENTE_OPTION_RESIZEFUNKTION"
 			description="">
@@ -101,6 +102,7 @@
 			<option
 				value="true">JYES</option>
 			</field>
+			
 			<field name="image_resize_max_width" 
 				type="text" 
 				showon="image_resize:true"
@@ -130,7 +132,7 @@
 			<field
 			name="watermark_show"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="true"
 			label="COM_EINSATZKOMPONENTE_OPTION_WASSERZEICHENFUNKTION"
 			description="">
@@ -182,7 +184,7 @@
 				<field
 					name="gmap_action"
 					type="radio"
-					class="btn-group"
+					layout="joomla.form.field.radio.switcher"
 					default="1"
 					label="COM_EINSATZKOMPONENTE_OPTION_GMAP_ERLAUBEN"
 					description="Kartenfunktionen">
@@ -238,8 +240,8 @@
 	  		<field
 				name="display_detail_organisationen"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon="gmap_action:1,2"
-				class="btn-group"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_OPTION_ORGANISATIONEN_STANDORTE"
 				description="Hier können Sie einstellen, ob die Standorte der Organisationen auf der Karte angezeigt werden sollen.">
@@ -263,8 +265,8 @@
 	  <field
 			name="einsatzkarte_gmap_icon"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="14"
 			label="COM_EINSATZKOMPONENTE_OPTION_GROESSE_GMAP_ICONS"
 			description="">
@@ -280,8 +282,8 @@
 	  <field
 			name="einsatzkarte_gmap_icon_orga"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="24"
 			label="COM_EINSATZKOMPONENTE_OPTION_GROESSE_ORGANISATIONS_ICONS"
 			description="">
@@ -297,8 +299,8 @@
 	  		<field
 				name="display_detail_popup"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon="gmap_action:1,2"
-				class="btn-group"
 				default="true"
 				label="COM_EINSATZKOMPONENTE_OPTION_POPUP_ONLOAD"
 				description="Hier können Sie einstellen, ob das Popup für den Einsatzortmarker sofort beim Laden der Seite angezeigt werden soll.">
@@ -352,7 +354,7 @@
 		<field
 			name="send_mail_backend"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Email-Funktionen (manuell) im Backend aktivieren ?"
 			label="COM_EINSATZKOMPONENTE_EMAIL_MANUELL" >
@@ -372,7 +374,7 @@
 		<field
 			name="send_mail_auto"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Email-Funktionen (automatisch) aktivieren ?"
 			label="COM_EINSATZKOMPONENTE_EMAIL_AUTOMATISCH" >
@@ -394,7 +396,7 @@
 		<field
 			name="send_mail_orga"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Hier können Sie einstellen, ob in den Emails die beteiligten Organisationen eingefügt werden sollen."
 			label="COM_EINSATZKOMPONENTE_ORGA_EMAIL" >
@@ -406,7 +408,7 @@
 		<field
 			name="send_mail_kat"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Hier können Sie einstellen, ob in den Emails die Einsatzkategorie eingefügt werden soll."
 			label="COM_EINSATZKOMPONENTE_KATEGORIE_EMAIL" >
@@ -418,7 +420,7 @@
 		<field
 			name="send_mail_image"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Hier kann das Titelbild in die Email eingefügt werden."
 			label="COM_EINSATZKOMPONENTE_TITELBILD_EMAIL" >
@@ -430,7 +432,7 @@
 		<field
 			name="send_mail_link"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Hier können Sie einstellen, ob in den Emails Links zu den Detailberichten eingefügt werden sollen."
 			label="COM_EINSATZKOMPONENTE_DETAIL_LINK_EMAIL" >
@@ -442,7 +444,7 @@
 		<field
 			name="send_mail_desc"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Hier können Sie einstellen, ob in den Emails die Einsatzberichte eingefügt werden sollen."
 			label="COM_EINSATZKOMPONENTE_BERICHT_EMAIL" >
@@ -466,7 +468,7 @@
 			<field
 				name="display_home_rss"
 				type="radio"
-				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_RSS_FEED_FUNKTION"
 				description="">
@@ -496,8 +498,8 @@
 			<field
 				name="display_rss_image"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon ="display_home_rss:1"
-				class="btn-group"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_ANZEIGE_BILD"
 				description="">
@@ -510,8 +512,8 @@
 			<field
 				name="display_rss_orgas"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon ="display_home_rss:1"
-				class="btn-group"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_ANZEIGE_RSS_ORGAS" 
 				description="">
@@ -524,8 +526,8 @@
 			<field
 				name="display_rss_vehicles"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon ="display_home_rss:1"
-				class="btn-group"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_ANZEIGE_RSS_VEHICLES" 
 				description="">
@@ -538,8 +540,8 @@
 			<field
 				name="display_rss_people"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon ="display_home_rss:1"
-				class="btn-group"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_ANZEIGE_RSS_PEOPLE" 
 				description="">
@@ -552,8 +554,8 @@
 			<field
 				name="display_rss_alerttime"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon ="display_home_rss:1"
-				class="btn-group"
 				default="0"
 				label="Anzeige Alarmierungszeit" 
 				description="">
@@ -566,8 +568,8 @@
 			<field
 				name="display_rss_time"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon ="display_home_rss:1"
-				class="btn-group"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_ANZEIGE_RSS_TIME" 
 				description="">
@@ -607,7 +609,7 @@
 			<field
 				name="display_home_JSON"
 				type="radio"
-				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_JSON_FEED_FUNKTION"
 				description="">
@@ -641,7 +643,7 @@
 	  <field
 			name="article_frontpage"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_ARTIKEL_JOOMLA_HAUPTEINTRAG"
 			description="Hier können Sie einstellen, ob der Artikel als Haupteintrag angezeigt werden soll.">
@@ -654,7 +656,7 @@
 	  <field
 			name="article_orgas"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_ARTIKEL_EINGESETZTE_KRAEFTE"
 			description="Hier können Sie einstellen, ob die eingesetzten Kräfte unter dem Artikel angezeigt werden sollen.">
@@ -697,7 +699,7 @@
 		<field
 			name="article_frontend"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Joomla-Artikel direkt nach Eintrag im Frontend erstellen ?"
 			label="COM_EINSATZKOMPONENTE_ARTIKEL_JOOMLA_ARTIKEL_FRONTEND" >
@@ -711,7 +713,7 @@
 
 <!--Menüpfade-->
 
-<fieldset name="menüpfad" label="COM_EINSATZKOMPONENTE_OPTION_MENU_PATH" description="COM_EINSATZKOMPONENTE_OPTION_MENU_PATH_DESC">
+<fieldset name="menuepfad" label="COM_EINSATZKOMPONENTE_OPTION_MENU_PATH" description="COM_EINSATZKOMPONENTE_OPTION_MENU_PATH_DESC">
 
 	<field 
 		name="homelink" 
@@ -739,7 +741,7 @@
 
 <!--Einsatzübersicht-->
 
-<fieldset name="einsatzübersicht" label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT" description="">
+<fieldset name="einsatzuebersicht" label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT" description="">
 
 <field name="note_einsatzuebersicht" 
 		type="note" 
@@ -754,7 +756,7 @@
 	  		<field
 				name="display_home_bootstrap"
 				type="radio"
-				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_BOOTSTRAP_CSS_JS"
 			description="Hier kann die Bootstrap CSS und Javascript manuell nachgeladen werden. (Testweise -> dieser Auswahlpunkt fällt eventuell wieder weg)">
@@ -775,8 +777,8 @@
 	  <field
 			name="display_home_map"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="0"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_MAP"
 			description="">
@@ -789,8 +791,8 @@
 	  <field
 			name="display_home_einsatzgebiet"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_MAP_MISSIONAREA"
 			description="">
@@ -811,8 +813,8 @@
 	  <field
 			name="display_home_organisationen"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_ORGANIZATIONS_ON_MAP"
 			description="">
@@ -825,8 +827,8 @@
 	  <field
 			name="display_home_missions"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="1"
 			label="Einsatzorte auf Karte"
 			description="">
@@ -846,7 +848,7 @@
 	  <field
 			name="display_home_number"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="2"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_MISSION_NUMBER"
 			description="Funktion nur beim Standard-Layout">
@@ -873,7 +875,7 @@
 	  <field
 			name="display_home_alertimage"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_ALERTING_IMAGE"
 			description="Funktion nur beim Standard-Layout">
@@ -887,7 +889,7 @@
 	  <field
 			name="display_home_marker"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_MISSION_COLOR"
 			description="Funktion nur beim Standard-Layout">
@@ -900,7 +902,7 @@
 	  <field
 			name="display_home_date_image"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_SHOW_DATE"
 			description="Funktion nur beim Standard-Layout">
@@ -917,7 +919,7 @@
 	  <field
 			name="display_home_monat"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_MONATSNAMEN_TRENNUNG"
 			description="Funktion nur beim Standard-Layout">
@@ -930,7 +932,7 @@
 	  	  <field
 			name="display_home_jahr"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_JAHR_TRENNUNG"
 			description="Funktion nur beim Standard-Layout">
@@ -944,7 +946,7 @@
 	  <field
 			name="display_list_icon"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_MISSION_ICON"
 			description="Funktion nur beim Standard-Layout">
@@ -957,7 +959,7 @@
 	  <field
 			name="display_tickerkat_icon"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_CATEGORY_ICON"
 			description="Funktion nur beim Standard-Layout">
@@ -970,7 +972,7 @@
 	  <field
 			name="display_home_image"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_EINSATZBILD"
 			description="Funktion nur beim Standard-Layout und Layout1">
@@ -983,7 +985,7 @@
 	  <field
 			name="display_home_counter"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_ZUGRIFFE"
 			description="Funktion nur beim Standard-Layout">
@@ -996,7 +998,7 @@
 	  <field
 			name="display_home_orga"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_ORGANISATIONEN"
 			description="Funktion nur beim Standard-Layout">
@@ -1009,7 +1011,7 @@
 	  <field
 			name="display_home_presse"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_INFO_ZU_PRESSELINKS"
 			description="Funktion nur beim Menüpunkt Einsatzarchiv">
@@ -1031,7 +1033,7 @@
 	  <field
 			name="display_home_image_nopic"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_ERSATZBILD"
 			description="Zeigt ein Ersatzbild an, wenn kein Foto vorhanden ist. (Pfad: ../images/com_einsatzkomponente/einsatzbilder/nopic.png). Funktion nur beim Standard-Layout und Layout1">
@@ -1054,7 +1056,7 @@
 	  <field
 			name="display_home_links"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_LINK_DETAILBERICHT"
 			description="Funktion nur beim Standard-Layout und Layout1">
@@ -1067,8 +1069,8 @@
 	  <field
 			name="display_home_links_2"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon ="display_home_links:1"
-			class="btn-group"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_LINK_DETAILBERICHT_AUF_EINSATZART"
 			description="Funktion nur beim Standard-Layout und Layout1">
@@ -1082,8 +1084,8 @@
 	  <field
 			name="display_home_links_3"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon ="display_home_links:1"
-			class="btn-group"
 			default="0"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_LINK_DETAILBERICHT_AUF_BILD"
 			description="Funktion nur beim Standard-Layout und Layout1">
@@ -1097,7 +1099,7 @@
 	  <field
 			name="display_home_info"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_LINK_JQUERY_KURZINFO"
 			description="Funktion nur beim Standard-Layout">
@@ -1120,7 +1122,7 @@
 	  <field
 			name="display_home_einsatzstaerke"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_EINSSATZSTAERKE"
 			description="">
@@ -1166,7 +1168,7 @@
 	  <field
 			name="display_home_pagination"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_PAGINATION"
 			description="Funktion nur beim Standard-Layout und Layout1">
@@ -1206,7 +1208,7 @@
 	  		<field
 				name="display_detail_bootstrap"
 				type="radio"
-				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_BOOTSTRAP_CSS_JS"
 			description="Hier kann die Bootstrap CSS und Javascript manuell nachgeladen werden.(Testweise -> dieser Auswahlpunkt fällt eventuell wieder weg)">
@@ -1228,7 +1230,7 @@
 	  <field
 			name="display_detail_desc"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			description="Hier können Sie einstellen, ob der ausführliche Einsatzbericht angezeigt werden soll."
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_DESC" >
@@ -1241,7 +1243,7 @@
 		<field
 			name="display_detail_tickerkat"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			description="Hier können Sie einstellen, ob die Einsatzkategorie angezeigt werden sollen."
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_MISSION_CATEGORY" >
@@ -1253,7 +1255,7 @@
 	  <field
 			name="display_detail_tickerkat_icon"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			description="Hier können Sie einstellen, ob das Einsatzkategorie-Icon angezeigt werden soll."
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_MISSION_CATEGORY_ICON" >
@@ -1266,7 +1268,7 @@
 	  <field
 			name="display_detail_einsatzart"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Hier können Sie einstellen, ob die Einsatzart angezeigt werden sollen."
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_MISSION_TYPE" >
@@ -1278,7 +1280,7 @@
 	  <field
 			name="display_detail_einsatznummer"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Hier können Sie einstellen, ob die Einsatznummer angezeigt werden sollen."
 			label="Einsatznummer" >
@@ -1290,7 +1292,7 @@
 	  <field
 			name="display_detail_einsatzart_icon"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="0"
 			description="Hier können Sie einstellen, ob das Einsatzart-Icon angezeigt werden soll."
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_MISSION_TYPE_ICON" >
@@ -1303,7 +1305,7 @@
 	  <field
 			name="display_alertingtime"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			description="Hier können Sie einstellen, ob die Alarmierungszeit angezeigt werden sollen."
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_ALERTING_TIME" >
@@ -1316,7 +1318,7 @@
 		<field
 			name="display_einsatzdauer"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			description="Hier können Sie einstellen, ob die Einsatzdauer angezeigt werden soll. Die Dauer wird aus der Alarmierungszeit und dem Einsatzende errechnet und nur ausgegeben wenn das Einsatzende eingetragen ist.
 			Die Einsatzdauer wird in folgendem Format angegeben: dd Tag(e) hh Std. mm Min."
@@ -1340,7 +1342,7 @@
 	  <field
 			name="display_detail_hits"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_ZUGRIFFE"
 			description="Hier können Sie einstellen, ob die Anzahl der Zugriffe auf die Detailseite angezeigt werden soll.">
@@ -1357,7 +1359,7 @@
 	  <field
 			name="display_detail_orga_links"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_ORGANISATIONEN"
 			description="Hier können Sie einstellen, ob die angezeigten Organisationen verlinkt werden sollen. (nur im Layout1)">
@@ -1371,7 +1373,7 @@
 	  <field
 			name="display_detail_fhz_links"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_FAHRZEUGE"
 			description="Hier können Sie einstellen, ob die angezeigten Fahrzeuge verlinkt werden sollen. (nur im Layout1)">
@@ -1385,7 +1387,7 @@
 	  <field
 			name="display_detail_fhz_images"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_FAHRZEUGE_IMAGE"
 			description="Hier können Sie einstellen, ob die angezeigten Fahrzeuge auch als Bild dargestellt werden sollen. (nur im Layout2)">
@@ -1398,7 +1400,7 @@
 	  <field
 			name="display_detail_ausruestung"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_TOOLS"
 			description="Hier können Sie einstellen, ob die eingesetzte Ausrüstung angezeigt werden soll.">
@@ -1429,8 +1431,8 @@
 	  		<field
 				name="display_detail_map_for_only_user"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon="gmap_action:1,2"
-				class="btn-group"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_EINSATZKARTE"
 				description="Hier können Sie einstellen, wem die Einsatzkarte angezeigt werden soll.">
@@ -1459,8 +1461,8 @@
 	  		<field
 				name="display_detail_einsatz_marker"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon="gmap_action:1,2"
-				class="btn-group"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_EINSATZART_MAP_MARKER"
 				description="Hier können Sie einstellen, ob die Einsatzort-Markierung generell angezeigt werden soll.">
@@ -1472,8 +1474,8 @@
 			<field
 				name="display_map_route"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon="gmap_action:1,2"
-				class="btn-group"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_EINSATZART_MAP_STRECKENVERLAUF"
 				description="Hier können Sie die Anzeige des Streckenverlauf von der erstgenanneten Organisation zum Einsatzort anzeigen lassen. (nur für GoogleMaps)">
@@ -1485,8 +1487,8 @@
 	  		<field
 				name="display_detail_einsatzgebiet"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon="gmap_action:1,2"
-				class="btn-group"
 				default="1"
 				label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_MAP_MISSION_AREA"
 				description="Hier können Sie einstellen, ob das Einsatzgebiet auf der Karte angezeigt werden sollen.">
@@ -1512,7 +1514,7 @@
 	  <field
 			name="display_detail_footer"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZBERICHT_DETAIL_FOOTER"
 			description="Hier kann man einen individuellen Text (siehe unten) unterm Einsatzbericht anzeigen lassen.">
@@ -1553,8 +1555,8 @@
 	  		<field
 				name="display_einsatzkarte_bootstrap"
 				type="radio"
+				layout="joomla.form.field.radio.switcher"
 				showon="gmap_action:1,2"
-				class="btn-group"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_OPTION_EINSATZKARTE_BOOTSTRAP_CSS_JS"
 				description="Hier kann die Bootstrap CSS und Javascript manuell nachgeladen werden. (Testweise -> dieser Auswahlpunkt fällt eventuell wieder weg)">
@@ -1576,8 +1578,8 @@
 	  <field
 			name="display_einsatzkarte_map"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZKARTE_MAP"
 			description="">
@@ -1589,8 +1591,8 @@
 	  <field
 			name="display_einsatzkarte_sidebar"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZKARTE_SIDEBAR"
 			description="">
@@ -1603,8 +1605,8 @@
 	  <field
 			name="display_einsatzkarte_einsatzgebiet"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZKARTE_MISSION_MAP_ALARMAREA"
 			description="">
@@ -1663,8 +1665,8 @@
 	  <field
 			name="display_einsatzkarte_organisationen"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZKARTE_ORGANIZATION_ON_MAP"
 			description="">
@@ -1683,8 +1685,8 @@
 	  <field
 			name="display_einsatzkarte_links"
 			type="radio"
+			layout="joomla.form.field.radio.switcher"
 			showon="gmap_action:1,2"
-			class="btn-group"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_EINSATZKARTE_LINK_TO_DETAIL" 
 			description="">
@@ -1717,7 +1719,7 @@
 	  		<field
 				name="display_orga_bootstrap"
 				type="radio"
-				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_OPTION_EINSATZKARTE_BOOTSTRAP_CSS_JS"
 				description="Hier kann die Bootstrap CSS und Javascript manuell nachgeladen werden. (Testweise -> dieser Auswahlpunkt fällt eventuell wieder weg)">
@@ -1737,7 +1739,7 @@
 	  <field
 			name="display_orga_links"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_ORGANISATIONEN_ORGANISATIONEN"
 			description="Hier können Sie einstellen, ob die angezeigten Organisationen verlinkt werden sollen. (nur im Standart-Layout)">
@@ -1751,7 +1753,7 @@
 	  <field
 			name="display_orga_fhz_links"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_ORGANISATIONEN_FAHRZEUGE"
 			description="Hier können Sie einstellen, ob die angezeigten Fahrzeuge verlinkt werden sollen. (nur im Standart-Layout)">
@@ -1786,7 +1788,7 @@
 	  		<field
 				name="display_fahrzeuge_bootstrap"
 				type="radio"
-				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_OPTION_EINSATZKARTE_BOOTSTRAP_CSS_JS"
 				description="Hier kann die Bootstrap CSS und Javascript manuell nachgeladen werden. (Testweise -> dieser Auswahlpunkt fällt eventuell wieder weg)">
@@ -1806,7 +1808,7 @@
 	  <field
 			name="show_fahrzeuge_detail1"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_VEHICLES_BESCHREIBUNG"
 			description="">
@@ -1819,7 +1821,7 @@
 	  <field
 			name="show_fahrzeuge_detail2"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_VEHICLES_ZEIGE_DETAIL_2"
 			description="">
@@ -1832,7 +1834,7 @@
 	  <field
 			name="show_fahrzeuge_einsatz"
 			type="radio"
-			class="btn-group"
+			layout="joomla.form.field.radio.switcher"
 			default="1"
 			label="COM_EINSATZKOMPONENTE_OPTION_VEHICLES_LETZTER_EINTRAG"
 			description="Option letztes Einsatzdatum des Fahrzeuges anzeigen.">
@@ -1859,7 +1861,7 @@
 	  		<field
 				name="display_ausruestung_bootstrap"
 				type="radio"
-				class="btn-group"
+				layout="joomla.form.field.radio.switcher"
 				default="0"
 				label="COM_EINSATZKOMPONENTE_OPTION_AUSRUESTUNG_BOOTSTRAP"
 				description="Hier kann die Bootstrap CSS und Javascript manuell nachgeladen werden. (Testweise -> dieser Auswahlpunkt fällt eventuell wieder weg)">
@@ -1944,7 +1946,7 @@
         <field
 		name="pdf_show_id"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob die ID des Einsatzes in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_EINSATZ_ID" >
@@ -1958,7 +1960,7 @@
         <field
 		name="pdf_show_counter"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob der Counter in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_COUNTER" >
@@ -1972,7 +1974,7 @@
         <field
 		name="pdf_show_alarmart"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob die Alarmierungsart in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_ALARMIERUNGSART" >
@@ -1986,7 +1988,7 @@
         <field
 		name="pdf_show_einsatzart"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob die Einsatzart in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_EINSATZART" >
@@ -2014,7 +2016,7 @@
         <field
 		name="pdf_show_ort"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob der Einsatzort in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_EINSATZORT" >
@@ -2028,7 +2030,7 @@
         <field
 		name="pdf_show_alarmzeit"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob die Alarmierungszeit in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_ALARMIERUNGSZEIT" >
@@ -2042,7 +2044,7 @@
         <field
 		name="pdf_show_ausfahrzeit"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob die Ausfahrzeit in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_AUSFAHRTSZEIT" >
@@ -2056,7 +2058,7 @@
         <field
 		name="pdf_show_einsatzende"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob das Einsatzende in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_EINSATZENDE" >
@@ -2070,7 +2072,7 @@
         <field
 		name="pdf_show_einsatzleiter"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob der Einsatzleiter in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_EINSATZLEITER" >
@@ -2084,7 +2086,7 @@
         <field
 		name="pdf_show_einsatzfuehrer"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob der Einsatzführer in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_EINSATZFUEHRER" >
@@ -2098,7 +2100,7 @@
         <field
 		name="pdf_show_mannschaft"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob die Mannschaftsstärke in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_MANNSCHAFTSSTAERKE" >
@@ -2112,7 +2114,7 @@
         <field
 		name="pdf_show_orgas"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob die beteiligten Organisationen in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_ORGANISATIONEN" >
@@ -2126,7 +2128,7 @@
         <field
 		name="pdf_show_fahrzeuge"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob die eingesetzten Fahrzeuge in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_FAHRZEUGE" >
@@ -2140,7 +2142,7 @@
         <field
 		name="pdf_show_ausruestung"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob die eingesetzte Ausrüstung in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_AUSRUESTUNG" >
@@ -2154,7 +2156,7 @@
         <field
 		name="pdf_show_kurzbericht"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob der Kurzbericht in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_KURZBERICHT" >
@@ -2168,7 +2170,7 @@
         <field
 		name="pdf_show_langbericht"
 		type="radio"
-		class="btn-group"
+		layout="joomla.form.field.radio.switcher"
 		default="1"
 		description="Wähle hier aus, ob der Einsatzbericht in die PDF eingefügt werden soll."
 		label="COM_EINSATZKOMPONENTE_OPTION_PDF_EINSATZBERICHT" >

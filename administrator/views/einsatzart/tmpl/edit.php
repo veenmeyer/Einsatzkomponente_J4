@@ -8,19 +8,20 @@
  */
 // no direct access
 defined('_JEXEC') or die;
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.keepalive');
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Version;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
-$version = new JVersion;
-if ($version->isCompatible('3.0')) :
-JHtml::_('formbehavior.chosen', 'select');
-endif;
+HTMLHelper::_('bootstrap.tooltip');
+HTMLHelper::_('behavior.formvalidator');
+HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('formbehavior.chosen', 'select');
 
-// Import CSS
-$document = JFactory::getDocument();
-$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
@@ -29,11 +30,11 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 			Joomla.submitform(task, document.getElementById('einsatzart-form'));
 		}
 		else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 		}
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzart-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzart-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -69,12 +70,15 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
 			</div>
-				
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('params'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('params'); ?></div>
+			</div>
             </fieldset>
     	</div>
         
         <input type="hidden" name="task" value="" />
-        <?php echo JHtml::_('form.token'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
         
     </div>
 </form>

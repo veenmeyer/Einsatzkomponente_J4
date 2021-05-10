@@ -8,11 +8,16 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+
 jimport('joomla.application.component.view');
 /**
  * View to edit
  */
-class EinsatzkomponenteViewEinsatzart extends JViewLegacy
+class EinsatzkomponenteViewEinsatzart extends HtmlView
 {
 	protected $state;
 	protected $item;
@@ -39,8 +44,8 @@ class EinsatzkomponenteViewEinsatzart extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		JFactory::getApplication()->input->set('hidemainmenu', true);
-		$user		= JFactory::getUser();
+		Factory::getApplication()->input->set('hidemainmenu', true);
+		$user		= Factory::getUser();
 		$isNew		= ($this->item->id == 0);
         if (isset($this->item->checked_out)) {
 		    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
@@ -48,25 +53,25 @@ class EinsatzkomponenteViewEinsatzart extends JViewLegacy
             $checkedOut = false;
         }
 		$canDo		= EinsatzkomponenteHelper::getActions();
-		JToolBarHelper::title(JText::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZART'), 'einsatzart.png');
+		ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZART'), 'einsatzart.png');
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{
-			JToolBarHelper::apply('einsatzart.apply', 'JTOOLBAR_APPLY');
-			JToolBarHelper::save('einsatzart.save', 'JTOOLBAR_SAVE');
+			ToolbarHelper::apply('einsatzart.apply', 'JTOOLBAR_APPLY');
+			ToolbarHelper::save('einsatzart.save', 'JTOOLBAR_SAVE');
 		}
 		if (!$checkedOut && ($canDo->get('core.create'))){
-			JToolBarHelper::custom('einsatzart.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+			ToolbarHelper::custom('einsatzart.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
 		}
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')) {
-			JToolBarHelper::custom('einsatzart.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
+			ToolbarHelper::custom('einsatzart.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
 		}
 		if (empty($this->item->id)) {
-			JToolBarHelper::cancel('einsatzart.cancel', 'JTOOLBAR_CANCEL');
+			ToolbarHelper::cancel('einsatzart.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else {
-			JToolBarHelper::cancel('einsatzart.cancel', 'JTOOLBAR_CLOSE');
+			ToolbarHelper::cancel('einsatzart.cancel', 'JTOOLBAR_CLOSE');
 		}
 	}
 }

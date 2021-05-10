@@ -8,12 +8,15 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 
 require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 
-$canEdit = JFactory::getUser()->authorise('core.edit', 'com_einsatzkomponente.' . $this->item->id);
-if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)) {
-	$canEdit = JFactory::getUser()->id == $this->item->created_by;
+$canEdit = Factory::getUser()->authorise('core.edit', 'com_einsatzkomponente.' . $this->item->id);
+if (!$canEdit && Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)) {
+	$canEdit = Factory::getUser()->id == $this->item->created_by;
 }
 ?>
 <?php if ($this->item) : ?>
@@ -89,14 +92,14 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_einsatzkom
 			<?php endif;?>
 			
 			<?php // letzter Einsatz   
-			$database			= JFactory::getDBO();
+			$database			= Factory::getDBO();
 			$query = 'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("'.$this->item->id.'",auswahl_orga) AND (state ="1" OR state="2") ORDER BY date1 DESC' ;
 			$database->setQuery( $query );
 			$total = $database->loadObjectList();
 			?>
 			<?php if ($total) : ?>
 			<li>Letzter Eintrag:
-			<a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid='.$this->params->get('homelink','').'&id='.(int) $total[0]->id); ?>"><?php echo date("d.m.Y", strtotime($total[0]->date1));?></a></li>
+			<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid='.$this->params->get('homelink','').'&id='.(int) $total[0]->id); ?>"><?php echo date("d.m.Y", strtotime($total[0]->date1));?></a></li>
 			<?php endif; ?>
 
 			
@@ -128,7 +131,7 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_einsatzkom
 				
 		<?php if ($this->params->get('display_orga_fhz_links','1')) :?>
 					<?php if (!$value->link) :?>
-					<a target="_self" href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $value->id); ?>">
+					<a target="_self" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $value->id); ?>">
 					<img  class="img-rounded eiko_img_einsatzbild_main_1" style="margin-right:10px;width:<?php echo $this->params->get('display_home_image_width','80px');?>;" src="<?php echo JURI::Root();?><?php echo $value->image;?>" title="<?php echo $value->name;?>"/>
 					</a>
 					<?php else :?>
@@ -160,26 +163,26 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_einsatzkom
 
 			<?php if ($this->params->get('show_orga_karte','1')) : ?>
 			<tr>
-			<td><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LATITUDE'); ?>:
+			<td><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LATITUDE'); ?>:
 			<?php echo $this->item->gmap_latitude; ?></td>
-			<td><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LONGITUDE'); ?>:
+			<td><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LONGITUDE'); ?>:
 			<?php echo $this->item->gmap_longitude; ?></td>
 			</tr>
 			<?php endif;?>
 
 <?php endif;?>
 
-<input type="button" class="btn eiko_back_button" value="<?php echo JText::_('COM_EINSATZKOMPONENTE_ZURUECK');?>" onClick="history.back();">
+<input type="button" class="btn eiko_back_button" value="<?php echo Text::_('COM_EINSATZKOMPONENTE_ZURUECK');?>" onClick="history.back();">
 
 		</table>
 	</div>
 	<?php if($canEdit): ?>
-		<a class="btn" href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=organisationform.&id='.$this->item->id); ?>"><?php echo JText::_("COM_EINSATZKOMPONENTE_EDITIEREN"); ?></a>
+		<a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=organisationform.&id='.$this->item->id); ?>"><?php echo Text::_("COM_EINSATZKOMPONENTE_EDITIEREN"); ?></a>
 	<?php endif; ?>
 								<?php //if(JFactory::getUser()->authorise('core.delete','com_einsatzkomponente.organisation.'.$this->item->id)):?>
-									<!-- <a class="btn" href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=organisation.remove&id=' . $this->item->id, false, 2); ?>"><?php echo JText::_("COM_EINSATZKOMPONENTE_LOESCHEN"); ?></a> -->
+									<!-- <a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisation.remove&id=' . $this->item->id, false, 2); ?>"><?php echo Text::_("COM_EINSATZKOMPONENTE_LOESCHEN"); ?></a> -->
 								<?php //endif; ?>
 	<?php
 else:
-	echo JText::_('COM_EINSATZKOMPONENTE_ITEM_NOT_LOADED');
+	echo Text::_('COM_EINSATZKOMPONENTE_ITEM_NOT_LOADED');
 endif;

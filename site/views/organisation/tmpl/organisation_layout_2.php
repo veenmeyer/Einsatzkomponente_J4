@@ -8,8 +8,12 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\HTML\HTMLHelper;
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 ?>
 <input type="button" class="btn eiko_back_button" value="Zurück" onClick="history.back();">
@@ -18,11 +22,11 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
     <div class="item_fields">
         
         <ul class="fields_list">
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_ID'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_ID'); ?>:
 			<?php echo $this->item->id; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_ORDERING'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_ORDERING'); ?>:
 			<?php echo $this->item->ordering; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_NAME'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_NAME'); ?>:
 			<?php echo $this->item->name; ?></li>
 			<li><?php echo $this->item->detail1_label; ?>:
 			<?php echo $this->item->detail1; ?></li>
@@ -38,28 +42,28 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 			<?php echo $this->item->detail6; ?></li>
 			<li><?php echo $this->item->detail7_label; ?>:
 			<?php echo $this->item->detail7; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_LINK'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_LINK'); ?>:
 			<?php echo $this->item->link; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LATITUDE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LATITUDE'); ?>:
 			<?php echo $this->item->gmap_latitude; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LONGITUDE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_GMAP_LONGITUDE'); ?>:
 			<?php echo $this->item->gmap_longitude; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_FFW'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_FFW'); ?>:
 			<?php echo $this->item->ffw; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DESC'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_DESC'); ?>:
 			<?php echo $this->item->desc; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_STATE'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_STATE'); ?>:
 			<?php echo $this->item->state; ?></li>
-			<li><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_CREATED_BY'); ?>:
+			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_ORGANISATION_CREATED_BY'); ?>:
 			<?php echo $this->item->created_by; ?></li>
         </ul>
         
     </div>
    
-								<?php if(JFactory::getUser()->authorise('core.delete','com_einsatzkomponente.organisation.'.$this->item->id)):
+								<?php if(Factory::getUser()->authorise('core.delete','com_einsatzkomponente.organisation.'.$this->item->id)):
 								?>
 									<a href="javascript:document.getElementById('form-organisation-delete-<?php echo $this->item->id ?>').submit()">Delete</a>
-									<form id="form-organisation-delete-<?php echo $this->item->id; ?>" style="display:inline" action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=organisation.remove'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
+									<form id="form-organisation-delete-<?php echo $this->item->id; ?>" style="display:inline" action="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisation.remove'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
 										<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>" />
 										<input type="hidden" name="jform[ordering]" value="<?php echo $this->item->ordering; ?>" />
 										<input type="hidden" name="jform[name]" value="<?php echo $this->item->name; ?>" />
@@ -86,7 +90,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 										<input type="hidden" name="jform[created_by]" value="<?php echo $this->item->created_by; ?>" />
 										<input type="hidden" name="option" value="com_einsatzkomponente" />
 										<input type="hidden" name="task" value="organisation.remove" />
-										<?php echo JHtml::_('form.token'); ?>
+										<?php echo HTMLHelper::_('form.token'); ?>
 									</form>
 								<?php
 								endif;

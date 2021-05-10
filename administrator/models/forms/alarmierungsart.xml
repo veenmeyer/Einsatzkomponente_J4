@@ -33,6 +33,9 @@
         <option value="1">JPUBLISHED</option>
         <option value="0">JUNPUBLISHED</option>
     </field> 
+	
+       <field name="params" type="hidden" filter="safehtml" default="" /> 
+
  </fieldset> 
  <fieldset 
                         name="accesscontrol">

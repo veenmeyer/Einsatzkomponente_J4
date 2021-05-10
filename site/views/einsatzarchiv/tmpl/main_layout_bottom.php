@@ -1,12 +1,21 @@
-<?php defined('_JEXEC') or die; ?>
-
+<?php defined('_JEXEC') or die; 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
+?>
 <tfoot>
   <!--Prüfen, ob Pagination angezeigt werden soll-->
   <?php if ($this->params->get('display_home_pagination')) : ?>
     <tr>
       <td colspan="<?php echo $eiko_col; ?>">
         <form action="#" method=post>
-          <?php echo $this->pagination->getListFooter(); ?><!--Pagination anzeigen-->
+		
+		<p class="counter float-end pt-3 pe-2">
+			<?php echo $this->pagination->getPagesCounter(); ?>
+		</p>
+		
+          <?php echo $this->pagination->getPagesLinks(); ?><!--Pagination anzeigen-->
         </form>
       </td>
     </tr>
@@ -25,7 +34,7 @@
 <input type="hidden" name="boxchecked" value="0"/>
 <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>"/>
 <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>"/>
-<?php echo JHtml::_('form.token'); ?>
+<?php echo HTMLHelper::_('form.token'); ?>
 
 </form>
 
@@ -76,8 +85,8 @@ jQuery(document).ready(function () {
 
 function deleteItem() {
     var item_id = jQuery(this).attr('data-item-id');
-    if (confirm("<?php echo JText::_('COM_EINSATZKOMPONENTE_WIRKLICH_LOESCHEN'); ?>")) {
-        window.location.href = '<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=einsatzberichtform.remove&id=', false, 2) ?>' + item_id;
+    if (confirm("<?php echo Text::_('COM_EINSATZKOMPONENTE_WIRKLICH_LOESCHEN'); ?>")) {
+        window.location.href = '<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzberichtform.remove&id=', false, 2) ?>' + item_id;
     }
 }
 </script>
@@ -91,6 +100,6 @@ if ($this->params->get('display_home_marker','1') && !empty($marker_colors)) {
     $markers_css .= '.eiko_td_marker_color_' . $id . ' {background-color: ' . $color . ';}' . "\n";
     $markers_css .= '.eiko_td_marker_gradient_' . $id . ' {background: linear-gradient(to bottom, ' . $rgba . ' 0%,rgba(125,185,232,0) 100%);}' . "\n";
   }
-  JFactory::getDocument()->addStyleDeclaration($markers_css);
+  Factory::getDocument()->addStyleDeclaration($markers_css);
 }
 ?>

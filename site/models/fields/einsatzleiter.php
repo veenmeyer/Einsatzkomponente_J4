@@ -7,11 +7,15 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('JPATH_BASE') or die;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
 jimport('joomla.form.formfield');
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldEinsatzleiter extends JFormField
+class FormFieldEinsatzleiter extends FormField
 {
 	/**
 	 * The form field type.
@@ -32,11 +36,11 @@ class JFormFieldEinsatzleiter extends JFormField
 		$html = array();
 		$address = array();
         
-$id = JFactory::getApplication()->input->getVar('id', 0);
+$id = Factory::getApplication()->input->getVar('id', 0);
 
-$params = JComponentHelper::getParams('com_einsatzkomponente');
+$params = ComponentHelper::getParams('com_einsatzkomponente');
 
-$db = JFactory::getDBO();
+$db = Factory::getDBO();
 $query = 'SELECT id, boss as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY boss ORDER BY boss';
 $db->setQuery($query);
 $arrayDb = $db->loadObjectList();
@@ -44,7 +48,7 @@ $arrayDb = $db->loadObjectList();
 $html[]='<input class="control-label" type="text"  name="'. $this->name.'"  id="'.$this->id.'"  value="'.$this->value.'" size="'.$this->size.'" />';
 
 if (count($arrayDb)):
-$array[] = JHTML::_('select.option', '', JText::_('COM_EINSATZKOMPONENTE_EINSATZLEITER_AUSWAEHLEN'), 'title', 'title');
+$array[] = JHTML::_('select.option', '', Text::_('COM_EINSATZKOMPONENTE_EINSATZLEITER_AUSWAEHLEN'), 'title', 'title');
 $array = array_merge($array, $arrayDb);
 $html[].= '<br/><br/>'.JHTML::_('select.genericlist', $array, "boss", 'onchange="changeText_einsatzleiter()" ', 'title', 'title', '0');
 

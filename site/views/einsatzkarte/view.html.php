@@ -8,6 +8,10 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 jimport('joomla.application.component.view');
 JLoader::import('helpers.einsatzkomponente', JPATH_SITE.'/administrator/components/com_einsatzkomponente');
 JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatzkomponente'); 
@@ -15,7 +19,7 @@ JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatz
  * View class for a list of Einsatzkomponente.
  */
  
-class EinsatzkomponenteViewEinsatzkarte extends JViewLegacy
+class EinsatzkomponenteViewEinsatzkarte extends HtmlView
 {
 	
 	
@@ -35,7 +39,7 @@ class EinsatzkomponenteViewEinsatzkarte extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		$app                = JFactory::getApplication();
+		$app                = Factory::getApplication();
         $this->state		= $this->get('State');
         $this->items		= $this->get('Items');
         $this->pagination	= $this->get('Pagination');
@@ -69,17 +73,17 @@ class EinsatzkomponenteViewEinsatzkarte extends JViewLegacy
 		$this->layout_detail_link = ''; 
 		if ($layout_detail) : $this->layout_detail_link = '&layout='.$layout_detail;  endif; // Detailbericht Layout 'default' ?
 		
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 		
         // Import CSS
 		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 		$document->addStyleSheet('components/com_einsatzkomponente/assets/css/responsive.css');
 		
 		// Bootstrap laden
-		JHtml::_('behavior.framework', true);
+		HTMLHelper::_('behavior.framework', true);
 		
 		if ($this->params->get('display_einsatzkarte_bootstrap','0') == '1') :
-		JHtml::_('bootstrap.framework');
+		HTMLHelper::_('bootstrap.framework');
 		$document->addStyleSheet($this->baseurl . '/media/jui/css/bootstrap.min.css');
 		$document->addStyleSheet($this->baseurl.'/media/jui/css/icomoon.css');
 		endif;
@@ -116,7 +120,7 @@ class EinsatzkomponenteViewEinsatzkarte extends JViewLegacy
 	 */
 	protected function _prepareDocument()
 	{
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$menus	= $app->getMenu();
 		$title	= null;
 		// Because the application sets a default page title,
@@ -126,17 +130,17 @@ class EinsatzkomponenteViewEinsatzkarte extends JViewLegacy
 		{
 			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
 		} else {
-			$this->params->def('page_heading', JText::_('com_einsatzkomponente_DEFAULT_PAGE_TITLE'));
+			$this->params->def('page_heading', Text::_('com_einsatzkomponente_DEFAULT_PAGE_TITLE'));
 		}
 		$title = $this->params->get('page_title', '');
 		if (empty($title)) {
 			$title = $app->getCfg('sitename');
 		}
 		elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
+			$title = Text::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
 		}
 		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = JText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
+			$title = Text::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
 		}
 		$this->document->setTitle($title);
 		if ($this->params->get('menu-meta_description'))

@@ -8,11 +8,14 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 jimport('joomla.application.component.view');
 /**
  * View to edit
  */
-class EinsatzkomponenteViewAlarmierungsart extends JViewLegacy
+class EinsatzkomponenteViewAlarmierungsart extends HtmlView
 {
 	protected $state;
 	protected $item;
@@ -37,8 +40,8 @@ class EinsatzkomponenteViewAlarmierungsart extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		JFactory::getApplication()->input->set('hidemainmenu', true);
-		$user		= JFactory::getUser();
+		Factory::getApplication()->input->set('hidemainmenu', true);
+		$user		= Factory::getUser();
 		$isNew		= ($this->item->id == 0);
         if (isset($this->item->checked_out)) {
 		    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
@@ -46,7 +49,7 @@ class EinsatzkomponenteViewAlarmierungsart extends JViewLegacy
             $checkedOut = false;
         }
 		$canDo		= EinsatzkomponenteHelper::getActions();
-		JToolBarHelper::title(JText::_('COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSART'), 'alarmierungsart.png');
+		JToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSART'), 'alarmierungsart.png');
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{

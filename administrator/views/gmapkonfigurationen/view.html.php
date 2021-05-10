@@ -9,13 +9,17 @@
 
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Version;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.view');
 
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewGmapkonfigurationen extends JViewLegacy
+class EinsatzkomponenteViewGmapkonfigurationen extends HtmlView
 {
 	protected $items;
 	protected $pagination;
@@ -39,7 +43,7 @@ class EinsatzkomponenteViewGmapkonfigurationen extends JViewLegacy
         
 		$this->addToolbar();
         
-		$version = new JVersion;
+		$version = new Version;
         if ($version->isCompatible('3.0')) :
         $this->sidebar = JHtmlSidebar::render();
 		endif;
@@ -59,7 +63,7 @@ class EinsatzkomponenteViewGmapkonfigurationen extends JViewLegacy
 		$state	= $this->get('State');
 		$canDo	= EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
 
-		JToolBarHelper::title(JText::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATIONEN'), 'gmapkonfigurationen.png');
+		JToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATIONEN'), 'gmapkonfigurationen.png');
 
         //Check if the form exists before showing the add/edit buttons
         $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/gmapkonfiguration';
@@ -131,9 +135,9 @@ class EinsatzkomponenteViewGmapkonfigurationen extends JViewLegacy
 	protected function getSortFields()
 	{
 		return array(
-		'a.id' => JText::_('JGRID_HEADING_ID'),
-		'a.state' => JText::_('JSTATUS'),
-		'a.created_by' => JText::_('COM_EINSATZKOMPONENTE_GMAPKONFIGURATIONEN_CREATED_BY'),
+		'a.id' => Text::_('JGRID_HEADING_ID'),
+		'a.state' => Text::_('JSTATUS'),
+		'a.created_by' => Text::_('COM_EINSATZKOMPONENTE_GMAPKONFIGURATIONEN_CREATED_BY'),
 		);
 	}
 

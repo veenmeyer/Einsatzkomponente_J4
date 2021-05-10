@@ -9,13 +9,14 @@
 
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Controller\FormController;
 
 jimport('joomla.application.component.controllerform');
 
 /**
  * einsatzart controller class.
  */
-class EinsatzkomponenteControllereinsatzart extends JControllerForm
+class EinsatzkomponenteControllereinsatzart extends FormController
 {
 
     function __construct() {

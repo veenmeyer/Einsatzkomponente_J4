@@ -8,12 +8,21 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\FormModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Input\Input;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\Utilities\ArrayHelper;
+
 jimport('joomla.application.component.modelform');
 jimport('joomla.event.dispatcher');
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModelEinsatzbericht extends JModelForm
+class EinsatzkomponenteModelEinsatzbericht extends FormModel
 {
     
     var $_item = null;
@@ -28,14 +37,14 @@ class EinsatzkomponenteModelEinsatzbericht extends JModelForm
 	protected function populateState() 
 	{
 		
-		$app = JFactory::getApplication('com_einsatzkomponente');
+		$app = Factory::getApplication('com_einsatzkomponente');
 		// Load state from the request userState on edit or from the passed variable on default
-        if (JFactory::getApplication()->input->get('layout') == 'edit') {
-            $id = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
+        if (Factory::getApplication()->input->get('layout') == 'edit') {
+            $id = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
 
         } else {
-            $id = JFactory::getApplication()->input->get('id');
-            JFactory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', $id);
+            $id = Factory::getApplication()->input->get('id');
+            Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', $id);
         }
 		$this->setState('einsatzbericht.id', $id);
 		// Load the parameters.
@@ -77,7 +86,7 @@ class EinsatzkomponenteModelEinsatzbericht extends JModelForm
 				// Convert the JTable to a clean JObject.
 				$properties = $table->getProperties(1);
 				//$properties[test]= 'testvalue';print_r ($properties);
-				$this->_item = JArrayHelper::toObject($properties, 'JObject');
+				$this->_item = ArrayHelper::toObject($properties, 'JObject');
 			} elseif ($error = $table->getError()) {
 				$this->setError($error);
 			}
@@ -88,7 +97,7 @@ class EinsatzkomponenteModelEinsatzbericht extends JModelForm
 	public function getTable($type = 'Einsatzbericht', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{   
         $this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
 	}     
     
 	/**
@@ -132,7 +141,7 @@ class EinsatzkomponenteModelEinsatzbericht extends JModelForm
 			// Initialise the table
 			$table = $this->getTable();
 			// Get the current user object.
-			$user = JFactory::getUser();
+			$user = Factory::getUser();
 			// Attempt to check the row out.
             if (method_exists($table, 'checkout')) {
                 if (!$table->checkout($user->get('id'), $id)) {
@@ -190,7 +199,7 @@ class EinsatzkomponenteModelEinsatzbericht extends JModelForm
 			//}
 		$id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('einsatzbericht.id');
         $state = (!empty($data['state'])) ? 1 : 0;
-        $user = JFactory::getUser();
+        $user = Factory::getUser();
         if($id) {
 			
 			
@@ -207,44 +216,44 @@ class EinsatzkomponenteModelEinsatzbericht extends JModelForm
             }
         }
         if ($authorised !== true) {
-            throw new Exception( JText::_('ALERTNOAUTHOR'), 403);
+            throw new Exception( Text::_('ALERTNOAUTHOR'), 403);
             return false;
         }
 			
 			
 			// Einsatz kopieren
 			if($user->authorise('core.create', 'com_einsatzkomponente') == true){
-		    $copy = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.copy');
+		    $copy = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.copy');
         	if (!$copy == 0) :
-            JFactory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', 0);
-            JFactory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.copy', 0);
+            Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', 0);
+            Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.copy', 0);
             $data['id'] = 0;
 			endif; 
 			}
 // Bilder-Upload
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$params = $app->getParams('com_einsatzkomponente');
         $table = $this->getTable();
         if ($table->save($data) === true) {
 		if ($params->get('eiko')) :
-		$files = JFactory::getApplication()->input->files->get('data');
+		$files = Factory::getApplication()->input->files->get('data');
 		if(!$files['0']['name'] =='') :
 		$cid = $table->id;
 		
 		// Wasserzeichen speichern
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		// Get the form data
-		$formData = new JInput($input->get('jform', '', 'array'));
+		$formData = new Input($input->get('jform', '', 'array'));
 		// Get any data being able to use default values
 		$watermark_image = $formData->getString('watermark_image');
 
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		// Set new value of param(s)
 		$params->set('watermark_image', $watermark_image);
 
 		// Save the parameters
-		$componentid = JComponentHelper::getComponent('com_einsatzkomponente')->id;
-		$table = JTable::getInstance('extension');
+		$componentid = ComponentHelper::getComponent('com_einsatzkomponente')->id;
+		$table = Table::getInstance('extension');
 		$table->load($componentid);
 		$table->bind(array('params' => $params->toString()));
 
@@ -274,8 +283,8 @@ class EinsatzkomponenteModelEinsatzbericht extends JModelForm
      public function delete($data)
     {
         $id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('einsatzbericht.id');
-        if(JFactory::getUser()->authorise('core.delete', 'com_einsatzkomponente') !== true){
-            throw new Exception( JText::_('ALERTNOAUTHOR'), 403);
+        if(Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente') !== true){
+            throw new Exception( Text::_('ALERTNOAUTHOR'), 403);
             return false;
         }
         $table = $this->getTable();

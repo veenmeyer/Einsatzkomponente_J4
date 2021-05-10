@@ -9,13 +9,17 @@
 
 // no direct access
 defined('_JEXEC') or die;  
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Plugin\PluginHelper;
 
 
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 
-$user = JFactory::getUser($this->item->created_by);
+$user = Factory::getUser($this->item->created_by);
 $this->item->created_by=$user->get('username');
 ?>
 
@@ -37,7 +41,7 @@ $this->item->created_by=$user->get('username');
         <span class="published"><?php echo date("d.m.Y", strtotime($this->item->createdate)).''; ?>
 		</span>
 					<?php if ($this->params->get('display_detail_einsatznummer','0') == '1') :?> 
-			 <span style="font-size:smaller;" class="text-muted eiko_detail_einsatznummer"><?php echo JText::_('</br>(Einsatz-Nr.'); ?> <?php echo $this->einsatznummer.')'; ?></span> 
+			 <span style="font-size:smaller;" class="text-muted eiko_detail_einsatznummer"><?php echo Text::_('</br>(Einsatz-Nr.'); ?> <?php echo $this->einsatznummer.')'; ?></span> 
             <?php endif;?>
 
     </p>
@@ -61,7 +65,7 @@ $this->item->created_by=$user->get('username');
             <!--Einsatzkategorie-->
 			<?php if ($this->params->get('display_detail_tickerkat','1') == '1') :?> 
             <?php if( $this->item->tickerkat ) : ?>
-			<strong>Kategorie:</strong> <?php echo JText::_($this->tickerKat->title);?><br>
+			<strong>Kategorie:</strong> <?php echo Text::_($this->tickerKat->title);?><br>
             <?php endif;?>
             <?php endif;?>
             <!--Einsatzkategorie ENDE-->
@@ -69,7 +73,7 @@ $this->item->created_by=$user->get('username');
             <!--Einsatzart-->
 			<?php if ($this->params->get('display_detail_einsatzart','0') == '1') :?> 
             <?php if( $this->item->data1 ) : ?>
-			<strong>Art:</strong> <?php echo JText::_($this->einsatzlogo->title);?><br>
+			<strong>Art:</strong> <?php echo Text::_($this->einsatzlogo->title);?><br>
             <?php endif;?>
             <?php endif;?>
             <!--Einsatzart ENDE-->
@@ -88,7 +92,7 @@ $this->item->created_by=$user->get('username');
 				$vehicles_images = array();
 				$vehicles_list = array();
 				foreach($array as $value):
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query	= $db->getQuery(true);
 					$query
 						->select('*')
@@ -101,8 +105,8 @@ $this->item->created_by=$user->get('username');
 					
 					if ($this->params->get('display_detail_fhz_links','1')) :
 					if (!$results[0]->link) :
-					$vehicles_list[] = '<a href="'.JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self">'.$results[0]->name.'</a>';
-					$vehicles_images[] = '<span style="margin-right:10px;background-color:#D8D8D8;white-space:nowrap;"><a href="'.JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self"><img width="40px" style="margin-top:15px;"  src="'.JURI::Root().$results[0]->image.'"  alt="'.$results[0]->name.'" title="'.$results[0]->name.'  '.$results[0]->detail2.'"/></a>&nbsp;&nbsp;<a href="'.JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self">'.$results[0]->name.'</a>  '.$results[0]->detail2.'</span>';					
+					$vehicles_list[] = '<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self">'.$results[0]->name.'</a>';
+					$vehicles_images[] = '<span style="margin-right:10px;background-color:#D8D8D8;white-space:nowrap;"><a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self"><img width="40px" style="margin-top:15px;"  src="'.JURI::Root().$results[0]->image.'"  alt="'.$results[0]->name.'" title="'.$results[0]->name.'  '.$results[0]->detail2.'"/></a>&nbsp;&nbsp;<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self">'.$results[0]->name.'</a>  '.$results[0]->detail2.'</span>';					
 					else:
 					$vehicles_list[] = '<a href="'.$results[0]->link.'" target="_blank">'.$results[0]->name.'</a>';
 					$vehicles_images[] = '<span style="margin-right:10px;background-color:#D8D8D8;white-space:nowrap;"><a href="'.$results[0]->link.'" target="_blank"><img width="40px" style="margin-top:15px;" src="'.JURI::Root().$results[0]->image.'"  alt="'.$results[0]->name.'" title="'.$results[0]->name.'  ('.$results[0]->detail2.')" /></a>&nbsp;&nbsp;<a href="'.$results[0]->link.'" target="_blank">&nbsp;&nbsp;'.$results[0]->name.'</a></span>';
@@ -143,7 +147,7 @@ $this->item->created_by=$user->get('username');
 				endforeach;
 				$data = array();
 				foreach($array as $value):
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query	= $db->getQuery(true);
 					$query
 						->select('*')
@@ -154,7 +158,7 @@ $this->item->created_by=$user->get('username');
 					
 					if ($this->params->get('display_detail_orga_links','1')) :
 					if (!$results[0]->link) :
-					$data[] = '<a href="'.JRoute::_('index.php?option=com_einsatzkomponente&view=organisation&Itemid='.$this->params->get('orgalink','').'&id=' . $results[0]->id).'" target="_self" alt="'.$results[0]->link.'">'.$results[0]->name.'</a>';
+					$data[] = '<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=organisation&Itemid='.$this->params->get('orgalink','').'&id=' . $results[0]->id).'" target="_self" alt="'.$results[0]->link.'">'.$results[0]->name.'</a>';
 					else:					
 					$data[] = '<a href="'.$results[0]->link.'" target="_blank" alt="'.$results[0]->link.'">'.$results[0]->name.'</a>';
 					endif;
@@ -199,7 +203,7 @@ $this->item->created_by=$user->get('username');
 			<?php endif;?>
 
 		<?php
-			$plugin = JPluginHelper::getPlugin('content', 'myshariff') ;
+			$plugin = PluginHelper::getPlugin('content', 'myshariff') ;
 			if ($plugin) : 	echo JHTML::_('content.prepare', '{myshariff}');endif;
 			?>
 
@@ -262,7 +266,7 @@ $this->item->created_by=$user->get('username');
 <?php endif; ?>
 
             <!--Einsatzkarte-->
-			<?php $user	= JFactory::getUser();?>
+			<?php $user	= Factory::getUser();?>
             <?php if( $this->item->gmap) : ?> 
             <?php if( $this->item->gmap_report_latitude != '0' ) : ?> 
             <?php if( $this->params->get('display_detail_map_for_only_user','0') == '1' || $user->id ) :?> 

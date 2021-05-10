@@ -23,7 +23,7 @@
        <field name="beschr" type="media"
             label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZART_BESCHR"
             description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZART_BESCHR" 
-            required="true" 
+            required="false" 
 			hide_none="1"
 			preview ="true"
 			preview_height="80px"
@@ -62,6 +62,9 @@
         <option value="1">JPUBLISHED</option>
         <option value="0">JUNPUBLISHED</option>
     </field> 
+	
+       <field name="params" type="hidden" filter="safehtml" default="" /> 
+	
  </fieldset> 
  <fieldset 
                         name="accesscontrol">

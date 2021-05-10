@@ -9,6 +9,9 @@
  
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 
 // Added for Joomla 3.0
 if(!defined('DS')){
@@ -18,11 +21,11 @@ if(!defined('DS')){
 // Include dependancies
 jimport('joomla.application.component.controller');
 // Execute the task.
-$controller	= JControllerLegacy::getInstance('Einsatzkomponente');
+$controller	= BaseController::getInstance('Einsatzkomponente');
 
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 		$db->setQuery('SELECT manifest_cache FROM #__extensions WHERE name = "com_einsatzkomponente"');
 		$parameter = json_decode( $db->loadResult(), true );
         $version = $parameter['version'];
@@ -50,5 +53,5 @@ $controller	= JControllerLegacy::getInstance('Einsatzkomponente');
 //echo 'Layout :'.JFactory::getApplication()->input->get('layout').'<br/>';
 //echo 'Task :'.JFactory::getApplication()->input->get('task').'<br/>';
 		
-$controller->execute(JFactory::getApplication()->input->get('task'));
+$controller->execute(Factory::getApplication()->input->get('task'));
 $controller->redirect();

@@ -145,6 +145,7 @@
        <field name="ausruestung" type="sql" class="inputbox"
             label="COM_EINSATZKOMPONENTE_BELADUNG_AUSRUESTUNG"
             description="" 
+            default="" 
             required="false" 
             query="SELECT id, name FROM #__eiko_ausruestung WHERE state='1' ORDER BY ordering ASC"
 			key_field="id"       		
@@ -193,6 +194,9 @@
       <option value="1">JPUBLISHED</option>
       <option value="0">JUNPUBLISHED</option>
     </field>
+	
+       <field name="params" type="hidden" filter="safehtml" default="" /> 
+
   </fieldset>
   <fieldset 
                         name="accesscontrol">

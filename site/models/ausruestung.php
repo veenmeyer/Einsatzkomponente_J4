@@ -8,6 +8,10 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\ItemModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Table\Table;
 
 jimport('joomla.application.component.modelitem');
 jimport('joomla.event.dispatcher');
@@ -15,7 +19,7 @@ jimport('joomla.event.dispatcher');
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModelAusruestung extends JModelItem {
+class EinsatzkomponenteModelAusruestung extends ItemModel {
 
     /**
      * Method to auto-populate the model state.
@@ -25,14 +29,14 @@ class EinsatzkomponenteModelAusruestung extends JModelItem {
      * @since	1.6
      */
     protected function populateState() {
-        $app = JFactory::getApplication('com_einsatzkomponente');
+        $app = Factory::getApplication('com_einsatzkomponente');
 
         // Load state from the request userState on edit or from the passed variable on default
-        if (JFactory::getApplication()->input->get('layout') == 'edit') {
-            $id = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.ausruestung.id');
+        if (Factory::getApplication()->input->get('layout') == 'edit') {
+            $id = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.ausruestung.id');
         } else {
-            $id = JFactory::getApplication()->input->get('id');
-            JFactory::getApplication()->setUserState('com_einsatzkomponente.edit.ausruestung.id', $id);
+            $id = Factory::getApplication()->input->get('id');
+            Factory::getApplication()->setUserState('com_einsatzkomponente.edit.ausruestung.id', $id);
         }
         $this->setState('ausruestung.id', $id);
 
@@ -83,7 +87,7 @@ class EinsatzkomponenteModelAusruestung extends JModelItem {
         
 
 		if ( isset($this->_item->created_by) ) {
-			$this->_item->created_by_name = JFactory::getUser($this->_item->created_by)->name;
+			$this->_item->created_by_name = Factory::getUser($this->_item->created_by)->name;
 		}
 
         return $this->_item;
@@ -91,7 +95,7 @@ class EinsatzkomponenteModelAusruestung extends JModelItem {
 
     public function getTable($type = 'Ausruestung', $prefix = 'EinsatzkomponenteTable', $config = array()) {
         $this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
 
     /**
@@ -139,7 +143,7 @@ class EinsatzkomponenteModelAusruestung extends JModelItem {
             $table = $this->getTable();
 
             // Get the current user object.
-            $user = JFactory::getUser();
+            $user = Factory::getUser();
 
             // Attempt to check the row out.
             if (method_exists($table, 'checkout')) {
@@ -154,7 +158,7 @@ class EinsatzkomponenteModelAusruestung extends JModelItem {
     }
 
     public function getCategoryName($id) {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query
                 ->select('title')

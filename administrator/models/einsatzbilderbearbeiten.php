@@ -8,11 +8,14 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
 jimport('joomla.application.component.modeladmin');
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModeleinsatzbilderbearbeiten extends JModelAdmin
+class EinsatzkomponenteModeleinsatzbilderbearbeiten extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -30,7 +33,7 @@ class EinsatzkomponenteModeleinsatzbilderbearbeiten extends JModelAdmin
 	 */
 	public function getTable($type = 'Einsatzbilderbearbeiten', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
-		return JTable::getInstance($type, $prefix, $config);
+		return Table::getInstance($type, $prefix, $config);
 	}
 	/**
 	 * Method to get the record form.
@@ -43,7 +46,7 @@ class EinsatzkomponenteModeleinsatzbilderbearbeiten extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		// Get the form.
 		$form = $this->loadForm('com_einsatzkomponente.einsatzbilderbearbeiten', 'einsatzbilderbearbeiten', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
@@ -60,7 +63,7 @@ class EinsatzkomponenteModeleinsatzbilderbearbeiten extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbilderbearbeiten.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbilderbearbeiten.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
             
@@ -93,7 +96,7 @@ class EinsatzkomponenteModeleinsatzbilderbearbeiten extends JModelAdmin
 		if (empty($table->id)) {
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
-				$db = JFactory::getDbo();
+				$db = Factory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_images');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
@@ -114,7 +117,7 @@ class EinsatzkomponenteModeleinsatzbilderbearbeiten extends JModelAdmin
 
         foreach($pks as $id)
         {
-			$db = JFactory::getDBO();
+			$db = Factory::getDBO();
 			$query = 'SELECT * FROM #__eiko_images WHERE id='.$id;
 			$db->setQuery($query);
 			$result = $db->loadObjectList();
@@ -124,9 +127,16 @@ class EinsatzkomponenteModeleinsatzbilderbearbeiten extends JModelAdmin
 			
 			@ unlink ( $delete_image );
 			@ unlink ( $delete_thumb );
-        	$db =JFactory::getDBO();
+        	$db =Factory::getDBO();
             $db->setQuery("DELETE FROM #__eiko_images WHERE id=".$id);
-            $db->query();
+				try
+				{
+					$db->execute();
+				}
+				catch (RuntimeException $e)
+				{
+					throw new Exception($e->getMessage(), 500);
+				}
         }
 		return true;		
     }	

@@ -8,24 +8,30 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Version;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 
-$params = JComponentHelper::getParams('com_einsatzkomponente');
+$params = ComponentHelper::getParams('com_einsatzkomponente');
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.keepalive');
 
-$version = new JVersion;
+$version = new Version;
 if ($version->isCompatible('3.0')) :
 JHtml::_('formbehavior.chosen', 'select');
 endif;
 
 
 // Import CSS
-$document = JFactory::getDocument();
+$document = Factory::getDocument();
 $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
 
@@ -45,11 +51,11 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 			Joomla.submitform(task, document.getElementById('organisation-form'));
 		}
 		else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 		}
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -72,9 +78,9 @@ if ($this->item->name)
             <div class="control-group">  
             
 <?php 
-	echo '<div class="control-label">';echo JText::_('Zugeordnete Fahrzeuge :');echo '</div>';
+	echo '<div class="control-label">';echo Text::_('Zugeordnete Fahrzeuge :');echo '</div>';
 	echo '<div class="controls"><ul class="adminformlist">';
-$database			= JFactory::getDBO();
+$database			= Factory::getDBO();
 $query = 'SELECT * FROM #__eiko_fahrzeuge WHERE department = "'.$this->item->id.'" ORDER BY ordering,state ASC ' ;
 $database->setQuery( $query );
 $total = $database->loadObjectList();	
@@ -278,13 +284,13 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 
 				<?php if ($this->canSave): ?>
 					<button type="submit" class="validate btn btn-primary">
-						<?php echo JText::_('JSUBMIT'); ?>
+						<?php echo Text::_('JSUBMIT'); ?>
 					</button>
 				<?php endif; ?>
 				<a class="btn"
-				   href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=organisationform.cancel'); ?>"
-				   title="<?php echo JText::_('JCANCEL'); ?>">
-					<?php echo JText::_('JCANCEL'); ?>
+				   href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisationform.cancel'); ?>"
+				   title="<?php echo Text::_('JCANCEL'); ?>">
+					<?php echo Text::_('JCANCEL'); ?>
 				</a>
 			</div>
 		</div>
@@ -292,7 +298,7 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 		<input type="hidden" name="option" value="com_einsatzkomponente"/>
 		<input type="hidden" name="task"
 			   value="organisationform.save"/>
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 		
     </div>			
 	</fieldset>

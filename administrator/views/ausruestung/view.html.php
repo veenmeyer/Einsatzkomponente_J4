@@ -9,13 +9,16 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.view');
 
 /**
  * View to edit
  */
-class EinsatzkomponenteViewAusruestung extends JViewLegacy {
+class EinsatzkomponenteViewAusruestung extends HtmlView {
 
     protected $state;
     protected $item;
@@ -42,9 +45,9 @@ class EinsatzkomponenteViewAusruestung extends JViewLegacy {
      * Add the page title and toolbar.
      */
     protected function addToolbar() {
-        JFactory::getApplication()->input->set('hidemainmenu', true);
+        Factory::getApplication()->input->set('hidemainmenu', true);
 
-        $user = JFactory::getUser();
+        $user = Factory::getUser();
         $isNew = ($this->item->id == 0);
         if (isset($this->item->checked_out)) {
             $checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
@@ -53,7 +56,7 @@ class EinsatzkomponenteViewAusruestung extends JViewLegacy {
         }
         $canDo = EinsatzkomponenteHelper::getActions();
 
-        JToolBarHelper::title(JText::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG'), 'ausruestung.png');
+        JToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG'), 'ausruestung.png');
 
         // If not checked out, can save the item.
         if (!$checkedOut && ($canDo->get('core.edit') || ($canDo->get('core.create')))) {

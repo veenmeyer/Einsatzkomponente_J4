@@ -7,11 +7,13 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
 jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModelEinsatzkarte extends JModelList {
+class EinsatzkomponenteModelEinsatzkarte extends ListModel {
     /**
      * Constructor.
      *
@@ -32,11 +34,11 @@ class EinsatzkomponenteModelEinsatzkarte extends JModelList {
     protected function populateState($ordering = null, $direction = null) {
         
         // Initialise variables.
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         // List state information
         $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
         $this->setState('list.limit', $limit);
-        $limitstart = JFactory::getApplication()->input->getInt('limitstart', 0);
+        $limitstart = Factory::getApplication()->input->getInt('limitstart', 0);
         $this->setState('list.start', $limitstart);
         
         

@@ -8,15 +8,19 @@
  */
 // no direct access
 defined('_JEXEC') or die;
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.keepalive');
-JHtml::_('formbehavior.chosen', 'select');
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
-// Import CSS
-$document = JFactory::getDocument();
-$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+HTMLHelper::_('bootstrap.tooltip');
+HTMLHelper::_('behavior.formvalidator');
+HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('formbehavior.chosen', 'select');
+
+HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
@@ -25,11 +29,11 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 			Joomla.submitform(task, document.getElementById('einsatzbilderbearbeiten-form'));
 		}
 		else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 		}
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzbilderbearbeiten-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzbilderbearbeiten-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -66,7 +70,7 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
     	</div>
         
         <input type="hidden" name="task" value="" />
-        <?php echo JHtml::_('form.token'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
         
     </div>
 </form>

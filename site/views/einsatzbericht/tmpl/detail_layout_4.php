@@ -9,12 +9,16 @@
 
 // no direct access
 defined('_JEXEC') or die;  
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Plugin\PluginHelper;
 require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 
 
 $vehicles_images = '';
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 ?>
 
@@ -28,7 +32,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 	<div class="eiko_navbar_2 " style="left"><?php echo $this->navbar;?></div>
 	
 			<?php if ($this->params->get('display_detail_einsatznummer','0') == '1') :?> 
-			 <div class="text-muted eiko_detail_einsatznummer"><?php echo JText::_('</br>(Einsatz-Nr.'); ?> <?php echo $this->einsatznummer.')'; ?></div> 
+			 <div class="text-muted eiko_detail_einsatznummer"><?php echo Text::_('</br>(Einsatz-Nr.'); ?> <?php echo $this->einsatznummer.')'; ?></div> 
             <?php endif;?>
 
     <!--Navigation ENDE-->
@@ -50,22 +54,22 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 <?php endif;?>
 
   <tr style="padding:10px;">
-    <td class="layout4_row_6" width="250px"><?php echo JText::_('COM_EINSATZKOMPONENTE_EINSATZART');?></td>
+    <td class="layout4_row_6" width="250px"><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZART');?></td>
     <td class="layout4_row_6" style="font-weight:bold;"><?php echo $this->einsatzlogo->title; ?></td>
   </tr>
   
   <tr>
-    <td class="layout4_row_7" width="250px"><?php echo JText::_('COM_EINSATZKOMPONENTE_KURZBERICHT');?></td>
+    <td class="layout4_row_7" width="250px"><?php echo Text::_('COM_EINSATZKOMPONENTE_KURZBERICHT');?></td>
     <td class="layout4_row_7"><?php echo $this->item->summary; ?></td>
   </tr>
   
   <tr>
-    <td class="layout4_row_8" width="250px"><?php echo JText::_('COM_EINSATZKOMPONENTE_EINSATZORT');?></td>
+    <td class="layout4_row_8" width="250px"><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZORT');?></td>
     <td class="layout4_row_8"><?php echo $this->item->address.''; ?></td>
   </tr>
 
   <tr>
-    <td class="layout4_row_9" width="250px"><?php echo JText::_('COM_EINSATZKOMPONENTE_ALERTING');?></td>
+    <td class="layout4_row_9" width="250px"><?php echo Text::_('COM_EINSATZKOMPONENTE_ALERTING');?></td>
     <td class="layout4_row_9">
     Alarmierung per
 <?php if($this->alarmierungsart->image)	:?>
@@ -76,18 +80,18 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 <?php endif;?>
 
 	<?php
-		$wochentage = explode(',',JText::_('COM_EINSATZKOMPONENTE_SONNTAG').','.JText::_('COM_EINSATZKOMPONENTE_MONTAG').','.JText::_('COM_EINSATZKOMPONENTE_DIENSTAG').','.JText::_('COM_EINSATZKOMPONENTE_MITTWOCH').','.JText::_('COM_EINSATZKOMPONENTE_DONNERSTAG').','.JText::_('COM_EINSATZKOMPONENTE_FREITAG').','.JText::_('COM_EINSATZKOMPONENTE_SAMSTAG'));
+		$wochentage = explode(',',Text::_('COM_EINSATZKOMPONENTE_SONNTAG').','.Text::_('COM_EINSATZKOMPONENTE_MONTAG').','.Text::_('COM_EINSATZKOMPONENTE_DIENSTAG').','.Text::_('COM_EINSATZKOMPONENTE_MITTWOCH').','.Text::_('COM_EINSATZKOMPONENTE_DONNERSTAG').','.Text::_('COM_EINSATZKOMPONENTE_FREITAG').','.Text::_('COM_EINSATZKOMPONENTE_SAMSTAG'));
 		$date2 = $wochentage[date('w', strtotime($this->item->date1))];			   		
 	?>
 	
-    am <?php echo $date2.', '.date("d.m.Y", strtotime($this->item->date1)).''; ?>, um <?php echo date("H:i", strtotime($this->item->date1)).' '.JText::_('COM_EINSATZKOMPONENTE_UHR'); ?>
+    am <?php echo $date2.', '.date("d.m.Y", strtotime($this->item->date1)).''; ?>, um <?php echo date("H:i", strtotime($this->item->date1)).' '.Text::_('COM_EINSATZKOMPONENTE_UHR'); ?>
     </td>
   </tr>
 
  <?php if ($this->params->get('display_einsatzdauer','1') && ($this->item->date3>1) ): ?>
   <tr>
     <td class="layout4_row_100" width="250px">
-    	<?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZDAUER'); ?>
+    	<?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZDAUER'); ?>
     </td>
     <td class="layout4_row_100">
 		<?php echo $this->einsatzdauer;	?>
@@ -96,7 +100,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
  <?php endif;?>
  
   <tr>
-    <td class="layout4_row_10" width="250px"><?php echo JText::_('COM_EINSATZKOMPONENTE_MANNSCHAFTSSTARKE');?></td>
+    <td class="layout4_row_10" width="250px"><?php echo Text::_('COM_EINSATZKOMPONENTE_MANNSCHAFTSSTARKE');?></td>
     <td class="layout4_row_10">
 		<?php
 			if ($this->item->people == 0) {
@@ -110,11 +114,11 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
   </tr>
   
   <tr>
-    <td class="layout4_row_11" width="250px"><?php echo JText::_('COM_EINSATZKOMPONENTE_EINSATZKRAEFTE');?></td>
+    <td class="layout4_row_11" width="250px"><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZKRAEFTE');?></td>
     <td class="layout4_row_11">
             <?php if( $this->item->auswahl_orga ) : ?>   
             <div class="well well-small">
-			<?php echo '<span style="font-weight: bold;"><u>'.JText::_('COM_EINSATZKOMPONENTE_ORGANISATIONEN').'</u></span>'; ?>
+			<?php echo '<span style="font-weight: bold;"><u>'.Text::_('COM_EINSATZKOMPONENTE_ORGANISATIONEN').'</u></span>'; ?>
 			<?php
 				$array = array();
 				foreach((array)$this->item->auswahl_orga as $value): 
@@ -124,7 +128,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 				endforeach;
 				$data = array();
 				foreach($array as $value):
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query	= $db->getQuery(true);
 					$query
 						->select('*')
@@ -135,7 +139,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 					
 					if ($this->params->get('display_detail_orga_links','1')) :
 					if (!$results[0]->link) :
-					$data[] = '<li><a href="'.JRoute::_('index.php?option=com_einsatzkomponente&view=organisation&Itemid='.$this->params->get('orgalink','').'&id=' . $results[0]->id).'" target="_self" alt="'.$results[0]->link.'">'.$results[0]->name.'</a></li>';
+					$data[] = '<li><a href="'.Route::_('index.php?option=com_einsatzkomponente&view=organisation&Itemid='.$this->params->get('orgalink','').'&id=' . $results[0]->id).'" target="_self" alt="'.$results[0]->link.'">'.$results[0]->name.'</a></li>';
 					else:					
 					$data[] = '<li style="margin:0;"><a href="'.$results[0]->link.'" target="_blank" alt="'.$results[0]->link.'">'.$results[0]->name.'</a></li>';
 					endif;
@@ -167,7 +171,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 				$vehicles_images = array();
 				$vehicles_list = array();
 				foreach($array as $value):
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query	= $db->getQuery(true);
 					$query
 						->select('*')
@@ -180,8 +184,8 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 					
 					if ($this->params->get('display_detail_fhz_links','1')) :
 					if (!$results[0]->link) :
-					$vehicles_list[] = '<li><a href="'.JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self">'.$results[0]->name.'</li></a>';
-					$vehicles_images[] = '<span style="margin-right:10px;background-color:#D8D8D8;white-space:nowrap;"><a href="'.JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self"><img width="90px" style="margin-top:15px;"  src="'.JURI::Root().$results[0]->image.'"  alt="'.$results[0]->name.'" title="'.$results[0]->name.'  '.$results[0]->detail2.'"/></a>&nbsp;&nbsp;<a href="'.JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self">'.$results[0]->name.'</a>  '.$results[0]->detail2.'</span>';					
+					$vehicles_list[] = '<li><a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self">'.$results[0]->name.'</li></a>';
+					$vehicles_images[] = '<span style="margin-right:10px;background-color:#D8D8D8;white-space:nowrap;"><a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self"><img width="90px" style="margin-top:15px;"  src="'.JURI::Root().$results[0]->image.'"  alt="'.$results[0]->name.'" title="'.$results[0]->name.'  '.$results[0]->detail2.'"/></a>&nbsp;&nbsp;<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $results[0]->id).'" target="_self">'.$results[0]->name.'</a>  '.$results[0]->detail2.'</span>';					
 					else:
 					$vehicles_list[] = '<li><a href="'.$results[0]->link.'" target="_blank">'.$results[0]->name.'</li></a>';
 					$vehicles_images[] = '<span style="margin-right:10px;background-color:#D8D8D8;white-space:nowrap;"><a href="'.$results[0]->link.'" target="_blank"><img width="90px" style="margin-top:15px;" src="'.JURI::Root().$results[0]->image.'"  alt="'.$results[0]->name.'" title="'.$results[0]->name.'  ('.$results[0]->detail2.')" /></a>&nbsp;&nbsp;<a href="'.$results[0]->link.'" target="_blank">&nbsp;&nbsp;'.$results[0]->name.'</a></span>';
@@ -204,7 +208,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
             <?php endif;?>
             
             <?php if( $this->item->vehicles ) : ?>
-			<?php echo '<span><u><b>'.JText::_('COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE').'</b></u></span><br/>'; ?>
+			<?php echo '<span><u><b>'.Text::_('COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE').'</b></u></span><br/>'; ?>
 			<?php if ($this->params->get('display_detail_fhz_images','1') and $this->item->vehicles) :?>
 			<?php echo ''.$vehicles_images;?> 
             <?php else:?>
@@ -221,7 +225,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 <?php if ($this->params->get('display_detail_desc','1')): ?>
   <tr>
     <td  class="layout4_row_12" colspan="2">
-		<b><u class="einsatzbericht-title"><?php echo JText::_('COM_EINSATZKOMPONENTE_TITLE_MAIN_3');?></u></b>
+		<b><u class="einsatzbericht-title"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_MAIN_3');?></u></b>
 <?php jimport('joomla.html.content'); ?>  
 <?php $Desc = JHTML::_('content.prepare', $this->item->desc); ?>
 <div class="eiko_einsatzbericht_2">
@@ -235,7 +239,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
  
 <!-- Plugin-Support "MyShariff" -->  
 		<?php
-			$plugin = JPluginHelper::getPlugin('content', 'myshariff') ;
+			$plugin = PluginHelper::getPlugin('content', 'myshariff') ;
 			if ($plugin) : 	
 			?>
 			    <tr>
@@ -272,7 +276,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 <?php if ($this->images) : ?>
   <tr>
     <td class="layout4_row_15" colspan="2">
-		<b><u><?php echo JText::_('COM_EINSATZKOMPONENTE_EINSATZFOTOS');?></u></b>
+		<b><u><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZFOTOS');?></u></b>
             <div class="row-fluid">
             <ul class="thumbnails eiko_thumbnails_2">
             <?php
@@ -313,12 +317,12 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
  
  
 <!--Einsatzkarte-->
-			<?php $user	= JFactory::getUser();?>
+			<?php $user	= Factory::getUser();?>
             <?php if( $this->item->gmap) : ?> 
             <?php if( $this->item->gmap_report_latitude != '0' ) : ?> 
 			<tr>
 				<td colspan="2">
-					<b><u><?php echo JText::_('COM_EINSATZKOMPONENTE_EINSATZORT');?></u></b>
+					<b><u><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZORT');?></u></b>
 				</td>
 			</tr>
 			<tr>			

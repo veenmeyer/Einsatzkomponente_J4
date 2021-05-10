@@ -7,11 +7,13 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('JPATH_BASE') or die;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Factory;
 jimport('joomla.form.formfield');
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldoptgroup extends JFormField
+class FormFieldoptgroup extends FormField
 {
         /**
          * The form field type.
@@ -30,7 +32,7 @@ class JFormFieldoptgroup extends JFormField
         {
                 // Initialize variables.
                 $html = array();
-                $db = JFactory::getDBO();
+                $db = Factory::getDBO();
                 $query = 'SELECT id,name from #__eiko_organisationen where state=1 order by ordering ASC';
                 $db->setQuery($query);
                 $orgs = $db->loadObjectList();

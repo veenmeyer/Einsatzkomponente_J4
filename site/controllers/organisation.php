@@ -9,6 +9,9 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 
 require_once JPATH_COMPONENT . '/controller.php';
 
@@ -28,7 +31,7 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 	 */
 	public function edit()
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		// Get the previous edit id (if any) and the current edit id.
 		$previousId = (int) $app->getUserState('com_einsatzkomponente.edit.organisation.id');
@@ -53,7 +56,7 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 		}
 
 		// Redirect to the edit screen.
-		$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=organisationform&layout=edit', false));
+		$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=organisationform&layout=edit', false));
 	}
 
 	/**
@@ -67,10 +70,10 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 	public function publish()
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		// Checking if the user can remove object
-		$user = JFactory::getUser();
+		$user = Factory::getUser();
 
 		if ($user->authorise('core.edit', 'com_einsatzkomponente') || $user->authorise('core.edit.state', 'com_einsatzkomponente'))
 		{
@@ -86,7 +89,7 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 			// Check for errors.
 			if ($return === false)
 			{
-				$this->setMessage(JText::sprintf('Save failed: %s', $model->getError()), 'warning');
+				$this->setMessage(Text::sprintf('Save failed: %s', $model->getError()), 'warning');
 			}
 
 			// Clear the profile id from the session.
@@ -96,18 +99,18 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 			$app->setUserState('com_einsatzkomponente.edit.organisation.data', null);
 
 			// Redirect to the list screen.
-			$this->setMessage(JText::_('COM_EINSATZKOMPONENTE_ITEM_SAVED_SUCCESSFULLY'));
-			$menu = JFactory::getApplication()->getMenu();
+			$this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_SAVED_SUCCESSFULLY'));
+			$menu = Factory::getApplication()->getMenu();
 			$item = $menu->getActive();
 
 			if (!$item)
 			{
 				// If there isn't any menu item active, redirect to list view
-				$this->setRedirect(JRoute::_('index.php?option=com_einsatzkomponente&view=organisationen', false));
+				$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=organisationen', false));
 			}
 			else
 			{
-				$this->setRedirect(JRoute::_($item->link . $menuitemid, false));
+				$this->setRedirect(Route::_($item->link . $menuitemid, false));
 			}
 		}
 		else
@@ -126,10 +129,10 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 	public function remove()
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		// Checking if the user can remove object
-		$user = JFactory::getUser();
+		$user = Factory::getUser();
 
 		if ($user->authorise('core.delete', 'com_einsatzkomponente'))
 		{
@@ -144,7 +147,7 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 			// Check for errors.
 			if ($return === false)
 			{
-				$this->setMessage(JText::sprintf('Delete failed', $model->getError()), 'warning');
+				$this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
 			}
 			else
 			{
@@ -160,13 +163,13 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 				// Flush the data from the session.
 				$app->setUserState('com_einsatzkomponente.edit.organisation.data', null);
 
-				$this->setMessage(JText::_('COM_EINSATZKOMPONENTE_ITEM_DELETED_SUCCESSFULLY'));
+				$this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_DELETED_SUCCESSFULLY'));
 			}
 
 			// Redirect to the list screen.
-			$menu = JFactory::getApplication()->getMenu();
+			$menu = Factory::getApplication()->getMenu();
 			$item = $menu->getActive();
-			$this->setRedirect(JRoute::_($item->link, false));
+			$this->setRedirect(Route::_($item->link, false));
 		}
 		else
 		{

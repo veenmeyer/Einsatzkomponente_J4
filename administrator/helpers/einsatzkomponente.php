@@ -8,12 +8,18 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Version;
+use Joomla\CMS\Session\Session;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Utilities\ArrayHelper;
+
 
 /**
  * Einsatzkomponente helper.
@@ -33,9 +39,11 @@ class EinsatzkomponenteHelper
 		$return = urlencode(base64_encode($uri));
 		
 
-			$params = JComponentHelper::getParams('com_einsatzkomponente');
-
-			  JHtmlSidebar::addEntry(
+			$params = ComponentHelper::getParams('com_einsatzkomponente');
+			
+if (JVERSION < '4.0.0')
+{			  
+			JHtmlSidebar::addEntry(
 				  Text::_('COM_EINSATZKOMPONENTE_TITLE_KONTROLLCENTER'),
 				  'index.php?option=com_einsatzkomponente&view=kontrollcenter',
 				  $vName == 'kontrollcenter'
@@ -109,7 +117,9 @@ class EinsatzkomponenteHelper
 					// 'index.php?option=com_fields&view=groups&context=com_einsatzkomponente.einsatzbericht',
 					// $vName == 'fields.groups'
 				// );
-			// }			  
+			// }
+
+}			
 	}
 	/**
 	 * Gets a list of the actions that can be performed.
@@ -120,7 +130,7 @@ class EinsatzkomponenteHelper
 	public static function getActions()
 	{
 		$user	= Factory::getUser();
-		$result	= new JObject;
+		$result	= new CMSObject;
 		$assetName = 'com_einsatzkomponente';
 		$actions = array(
 			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.edit.value', 'core.delete'
@@ -146,7 +156,7 @@ class EinsatzkomponenteHelper
 	}
 	
     public static function ermittle_einsatz_nummer ($selectedDate,$einsatzart) {
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		$ex_einsatzart = $params->get('display_home_number_excl_einsatzart','');
 		
 		$query = 'SELECT COUNT(*) AS total,state FROM #__eiko_einsatzberichte WHERE (date1 BETWEEN "'.date('Y', $selectedDate).'-01-01 00:00:00" AND "'.date('Y-m-d H:i:s', $selectedDate).'") AND (state = "1" OR state = "2") and data1 !="'.$ex_einsatzart.'"  ' ;
@@ -219,6 +229,15 @@ class EinsatzkomponenteHelper
 		$query = 'SELECT * FROM #__eiko_images WHERE report_id = "'.$report_id.'" AND state ="1" ORDER BY ordering';
 		$db->setQuery($query);
 		$result = $db->loadObjectList();
+        return $result;
+	}
+	public static function getSummary ($report_id = '0') 
+	{
+		// Funktion : Alle Einsatzbilder per ID laden
+		$db = Factory::getDBO();
+		$query = 'SELECT summary FROM #__eiko_einsatzberichte WHERE id = "'.$report_id.'"';
+		$db->setQuery($query);
+		$result = $db->loadResult();
         return $result;
 	}
 
@@ -345,7 +364,7 @@ class EinsatzkomponenteHelper
 	
     public static function getFahrzeuge_mission ($array_vehicle ='',$orga_id='',$title='') {
  		// Funktion : sonstige Fahrzeuge aus DB holen
-						$params = JComponentHelper::getParams('com_einsatzkomponente');
+						$params = ComponentHelper::getParams('com_einsatzkomponente');
 						$sonstige ='';
 						$sonstige_result = '';
 						$query = 'SELECT * from #__eiko_fahrzeuge where department = "'.$orga_id.'" and (state = 1 or state = 2) order by ordering ASC';
@@ -379,7 +398,7 @@ class EinsatzkomponenteHelper
 	}
     public static function getFahrzeuge_mission_image ($array_vehicle ='',$orga_id='') {
  		// Funktion : sonstige Fahrzeuge aus DB holen
-						$params = JComponentHelper::getParams('com_einsatzkomponente');
+						$params = ComponentHelper::getParams('com_einsatzkomponente');
 						$vehicles_image ='';
 						$vehicles_images ='';
 						$sonstige_result = '';
@@ -411,7 +430,7 @@ class EinsatzkomponenteHelper
 	
 public static function getGmap($marker1_title='',$marker1_lat='1',$marker1_lng='1',$marker1_image='circle.png',$marker2_title='',$marker2_lat='1',$marker2_lng='1',$marker2_image='icon.png',$center_lat='1',$center_lng='1',$gmap_zoom_level='1',$gmap_onload='HYBRID',$zoom_control = 'false',$organisationen='[["",1,1,0,"images/com_einsatzkomponente/images/map/icons/haus_rot.png"],["",1,1,1,"images/com_einsatzkomponente/images/map/icons/haus_rot.png"] ]',$orga_image='haus_rot.png',$einsatzgebiet='[53.28071418254047,7.416630163574155],[53.294772929932165,7.4492458251952485],[53.29815865222114,7.4767116455077485],[53.31313468829642,7.459888830566342],[53.29949234792138,7.478256597900327],[53.29815865222114,7.506409063720639],[53.286461382800795,7.521686926269467],[53.26726681991669,7.499027624511655]',$display_detail_popup='false',$standort,$display_map_route="0",$einsatzorte='[]')
  {
-$params = JComponentHelper::getParams('com_einsatzkomponente');
+$params = ComponentHelper::getParams('com_einsatzkomponente');
 $gmap ='function initialize() {
 	
   var isDraggable = window.innerWidth > 680 ? true : false;
@@ -573,7 +592,7 @@ return $gmap; }
 	
 public static function getOsm($marker1_title='',$marker1_lat='1',$marker1_lng='1',$marker1_image='circle.png',$marker2_title='',$marker2_lat='1',$marker2_lng='1',$marker2_image='icon.png',$center_lat='1',$center_lng='1',$gmap_zoom_level='1',$gmap_onload='HYBRID',$zoom_control = 'false',$organisationen='[["",1,1,0,"../../images/com_einsatzkomponente/images/map/icons/haus_rot.png"],["",1,1,1,"../../images/com_einsatzkomponente/images/map/icons/haus_rot.png"] ]',$orga_image='haus_rot.png',$einsatzgebiet='[ [53.28071418254047,7.416630163574155],[53.294772929932165,7.4492458251952485],[53.29815865222114,7.4767116455077485],[53.31313468829642,7.459888830566342],[53.29949234792138,7.478256597900327],[53.29815865222114,7.506409063720639],[53.286461382800795,7.521686926269467],[53.26726681991669,7.499027624511655] ]',$display_detail_popup='false',$standort,$display_map_route="true",$einsatzorte='[]')
  {
-$params = JComponentHelper::getParams('com_einsatzkomponente');
+$params = ComponentHelper::getParams('com_einsatzkomponente');
 $gmap ='//<![CDATA[
 
 var map;
@@ -663,7 +682,7 @@ return $gmap; }
 	
 
 	
-	    public static function getNavbar($params,$prev_id,$next_id,$id,$menu_link) {
+	    public static function getNavbar($params,$prev_id,$next_id,$id,$menu_link,$menuID) {
 	
 	//Load admin language file
 $lang = Factory::getLanguage();
@@ -672,19 +691,10 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 
 	$navbar  ='';
 	$navbar .='<div class="btn-group-justified">';
-	
-	if( $prev_id) : 
-    $navbar .='<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int)$prev_id).'" class="btn eiko_btn_2" title="">';
-    $navbar .='<strong>'.Text::_('COM_EINSATZKOMPONENTE_ZURUECK').'</strong></a>';
-	endif; 
-	
-	if( $next_id) :
-    $navbar .='<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int)$next_id).'" class=" btn eiko_btn_2" title="">';
-    $navbar .='<strong>'.Text::_('COM_EINSATZKOMPONENTE_NAECHSTE').'</strong></a>';
-	endif; ?>
+?>	
     
     <?php if ($menu_link=='&Itemid=') : 
-			$menu_link = Route::_('index.php?Itemid='.$params->get('homelink','').'');
+			$menu_link = Route::_('index.php?Itemid='.$params->get('homelink',''));
 			endif;
 			?>
     
@@ -700,7 +710,17 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
     //$navbar .='<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichte&Itemid='.$params->get('homelink','').'').'&list=1" class="btn eiko_btn_2"><strong>'.Text::_('COM_EINSATZKOMPONENTE_UEBERSICHT').'</strong></a>';
 	
    // Behebt Bug aus J3.8.4   &list=1 funktioniert in Link nicht mehr
-    $navbar .='<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid='.$params->get('homelink','').'').'" class="btn eiko_btn_2"><strong>'.Text::_('COM_EINSATZKOMPONENTE_UEBERSICHT').'</strong></a>';
+    $navbar .='<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv').'" class="btn eiko_btn_2"><strong>'.Text::_('COM_EINSATZKOMPONENTE_UEBERSICHT').'</strong></a>';
+	endif; 
+
+	if( $prev_id) : 
+    $navbar .='<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int)$prev_id).'" class="btn eiko_btn_2" title="">';
+    $navbar .='<strong>'.Text::_('COM_EINSATZKOMPONENTE_ZURUECK').'</strong></a>';
+	endif; 
+	
+	if( $next_id) :
+    $navbar .='<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int)$next_id).'" class=" btn eiko_btn_2" title="">';
+    $navbar .='<strong>'.Text::_('COM_EINSATZKOMPONENTE_NAECHSTE').'</strong></a>';
 	endif; 
 	
 	
@@ -730,8 +750,8 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 		$db->setQuery('SELECT manifest_cache FROM #__extensions WHERE name = "com_einsatzkomponente"');
 		$params = json_decode( $db->loadResult(), true );
         $eikoversion = $params['version'];
-		$version = new JVersion;
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$version = new Version;
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		$response = @file("https://einsatzkomponente.joomla100.com/gateway/validation.php?validation=".$params->get('validation_key','0')."&domain=".$_SERVER['SERVER_NAME']."&version=".$version->getShortVersion()."&eikoversion=".$eikoversion); // Request absetzen
 		@$response_code = intval($response[1]); // Rückgabewert auslesen
 if ($response_code=='12') :	
@@ -758,7 +778,7 @@ $params->set('eiko', '0');
 		$paramms = json_decode( $db->loadResult(), true );
         $version = $paramms['version'];
         if($version!=str_replace("Premium","",$version)):
-		$paramms = JComponentHelper::getParams('com_einsatzkomponente');
+		$paramms = ComponentHelper::getParams('com_einsatzkomponente');
 		$paramms->set('eiko', '1');
 		$response_code='12';
 		endif;  
@@ -783,10 +803,10 @@ endif;
 		}
 		
 		
-    public function sendMail($cid) {
+    public static function sendMail($cid) {
 
 		// Check for request forgeries
-		JSession::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 		$user = Factory::getUser();
 		// Get items to remove from the request.
 		$cid = Factory::getApplication()->input->get('cid', array(), 'array');
@@ -794,15 +814,15 @@ endif;
 
 		if (!is_array($cid) || count($cid) < 1)
 		{
-			Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
+			Factory::getApplication()->enqueueMessage(Text::_('NO_ITEM_SELECTED'), 'error');
 		}
 		else
 		{
 		//$model = $this->getModel();
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 			// Make sure the item ids are integers
 			jimport('joomla.utilities.arrayhelper');
-			JArrayHelper::toInteger($cid);
+			ArrayHelper::toInteger($cid);
 			
 		foreach ($cid as $key => $val) {
 			
@@ -920,7 +940,7 @@ endif;
 
 		if (is_array($attribs))
 		{
-			$attribs = JArrayHelper::toString($attribs);
+			$attribs = ArrayHelper::toString($attribs);
 			$attribs =  substr("$attribs", 3); // Bugfix
 		}
 		////static::_('bootstrap.tooltip');
@@ -980,14 +1000,14 @@ endif;
 		$options = array( 'style' => 'xhtml' );
 		return $renderer->render( $pos, $options, null);  
     }
-	public function pdf($cid)
+	public static function pdf($cid)
      	{
 	     	require_once JPATH_COMPONENT.'/helpers/fpdf.php';
 		//$model = $this->getModel();
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		// Make sure the item ids are integers
 		jimport('joomla.utilities.arrayhelper');
-		JArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 		
 		foreach ($cid as $key => $rep_id) {
 			$db = Factory::getDBO();
@@ -1096,7 +1116,7 @@ endif;
 			$fahrzeuge = $fahrz_all;
 			$bericht = strip_tags($bericht);
 			
-		     	$params = JComponentHelper::getParams('com_einsatzkomponente');
+		     	$params = ComponentHelper::getParams('com_einsatzkomponente');
 		     	
 		     	//Hier wird das PDF-Grundgerüst erstellt
 			$pdf=new FPDF('P','mm','A4');

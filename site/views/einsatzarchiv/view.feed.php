@@ -9,6 +9,10 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Document\Feed\FeedItem;
 
 jimport('joomla.application.component.view');
 JLoader::import('helpers.einsatzkomponente', JPATH_SITE.'/administrator/components/com_einsatzkomponente');
@@ -17,7 +21,7 @@ JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatz
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
+class EinsatzkomponenteViewEinsatzarchiv extends HtmlView {
 
     protected $items;
     protected $pagination;
@@ -29,7 +33,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
      * Display the view
      */
     public function display($tpl = null) {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         $this->state = $this->get('State');
         $this->items = $this->get('Items');
@@ -44,13 +48,13 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
 		if ($layout_detail) : $this->layout_detail_link = '&layout='.$layout_detail;  endif; // Detailbericht Layout 'default' ?
 
 		
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$menus	= $app->getMenu();
 		$title	= null;
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself
 		$menu = $menus->getActive();
-		$this->document->link = JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid='.$menu->id);
+		$this->document->link = Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid='.$menu->id);
 		$i=0;
 		foreach ( $this->items as $item )
 		{
@@ -66,7 +70,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
 			$nr = EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->date1,$item->data1_id);
 			// url link to article
 			// & used instead of &amp; as this is converted by feed creator
-			$link = JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht'.$this->layout_detail_link.'&id='.$item->id);
+			$link = Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht'.$this->layout_detail_link.'&id='.$item->id);
 
 			//$auswahl_orga=  implode(',',$this->auswahl_orga); 
 			$item->auswahl_orga = str_replace(",", " +++ ", $item->auswahl_orga);
@@ -76,7 +80,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
 			$author			= $item->created_by_alias ? $item->created_by_alias : $item->author;
 */
 			// load individual item creator class
-			$rss_item = new JFeedItem();
+			$rss_item = new FeedItem();
 			$rss_item->title = "+++ Einsatz Nr: " . $nr . " - " . $title . " +++";
 			$rss_item->link 		= $link;
 

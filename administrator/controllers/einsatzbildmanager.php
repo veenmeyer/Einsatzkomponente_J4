@@ -8,17 +8,27 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Version;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+
 jimport('joomla.application.component.controlleradmin');
 /**
  * Einsatzbildmanager list controller class.
  */
-class EinsatzkomponenteControllerEinsatzbildmanager extends JControllerAdmin
+class EinsatzkomponenteControllerEinsatzbildmanager extends AdminController
 {
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function getModel($name = 'einsatzbilderbearbeiten', $prefix = 'EinsatzkomponenteModel')
+	public function getModel($name = 'einsatzbilderbearbeiten', $prefix = 'EinsatzkomponenteModel', $config = [])
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
@@ -35,12 +45,12 @@ class EinsatzkomponenteControllerEinsatzbildmanager extends JControllerAdmin
 	public function saveOrderAjax()
 	{
 		// Get the input
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$pks = $input->post->get('cid', array(), 'array');
 		$order = $input->post->get('order', array(), 'array');
 		// Sanitize the input
-		JArrayHelper::toInteger($pks);
-		JArrayHelper::toInteger($order);
+		ArrayHelper::toInteger($pks);
+		ArrayHelper::toInteger($order);
 		// Get the model
 		$model = $this->getModel();
 		// Save the ordering
@@ -50,21 +60,21 @@ class EinsatzkomponenteControllerEinsatzbildmanager extends JControllerAdmin
 			echo "1";
 		}
 		// Close the application
-		JFactory::getApplication()->close();
+		Factory::getApplication()->close();
 	}
 	
 	public function delete()
 	{
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to remove from the request.
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'array');
+		$cid = Factory::getApplication()->input->get('cid', array(), 'array');
 		
 
 		if (!is_array($cid) || count($cid) < 1)
 		{
-			JFactory::getApplication()->enqueueMessage(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
+			Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
 		}
 		else
 		{
@@ -73,42 +83,42 @@ class EinsatzkomponenteControllerEinsatzbildmanager extends JControllerAdmin
 
 			// Make sure the item ids are integers
 			jimport('joomla.utilities.arrayhelper');
-			JArrayHelper::toInteger($cid);
+			ArrayHelper::toInteger($cid);
 
 			// Remove the items.
 			if ($model->delete($cid))
 			{
-				$this->setMessage(JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
+				$this->setMessage(Text::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
 			}
 			else
 			{
 				$this->setMessage($model->getError());
 			}
 		}
-		$version = new JVersion;
+		$version = new Version;
         	if ($version->isCompatible('3.0')) :
 				// Invoke the postDelete method to allow for the child class to access the model.
 				$this->postDeleteHook($model, $cid);
 			endif;
 
-		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
 	}
 
 	
 	
     function thumb()  
     {  
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
-		$input = JFactory::getApplication()->input;
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
+		$input = Factory::getApplication()->input;
 		$cid = $input->post->get('cid', array(), 'array');
 		// Sanitize the input
-		JArrayHelper::toInteger($cid);
-		JToolBarHelper::title(JText::_('Thumbs erstellen'), 'weblinks.png');
-        JToolBarHelper::cancel();
-		$option		= JFactory::getApplication()->input->getCmd('option');
+		ArrayHelper::toInteger($cid);
+		ToolbarHelper::title(Text::_('Thumbs erstellen'), 'weblinks.png');
+        ToolbarHelper::cancel();
+		$option		= Factory::getApplication()->input->getCmd('option');
   
         // Check for request forgeries  
-        JSession::checkToken() or jexit( 'Invalid Token' );  
+        Session::checkToken() or jexit( 'Invalid Token' );  
   
   
         $total      = count( $cid );  
@@ -157,13 +167,22 @@ class EinsatzkomponenteControllerEinsatzbildmanager extends JControllerAdmin
 			if (file_exists($source)) {
 			 $n++;
 			 makeThumb( $source, $thumbwidth, $thumbhigh, $quadratisch,80,$target ); // Funktion makeThumb aufrufen
-			 $db =& JFactory::getDBO();  
+			 $db =& Factory::getDBO();  
              $query = 'UPDATE #__eiko_images SET thumb="' . $rThumbFileName . '" WHERE id = "' . $cid[$i] . '"';
 			 $db->setQuery($query);
-			 $db->query();
-			 $msg    =  $n.JText::_( 'Thumb(s) erstellt' );  
+				try
+				{
+					$db->execute();
+				}
+				catch (\RuntimeException $e)
+				{
+					$this->setError($e->getMessage());
+
+					return false;
+				}			 
+			$msg    =  $n.Text::_( 'Thumb(s) erstellt' );  
 			} else {
-			JFactory::getApplication()->enqueueMessage( JText::_( 'Das Einsatzbild "'.$source.'" existiert nicht !' ), 'error' );
+			Factory::getApplication()->enqueueMessage( Text::_( 'Das Einsatzbild "'.$source.'" existiert nicht !' ), 'error' );
 			} 
 			
         }//for  
@@ -176,7 +195,7 @@ class EinsatzkomponenteControllerEinsatzbildmanager extends JControllerAdmin
 }
  // Funktion : Einsatzbild laden
     function einsatzbild ($id) {
-$database			=& JFactory::getDBO();
+$database			=& Factory::getDBO();
 $query = 'SELECT * FROM #__eiko_images WHERE id = "'.$id.'" ' ;
 $database->setQuery( $query );
 $einsatzbild = $database->loadObjectList();	

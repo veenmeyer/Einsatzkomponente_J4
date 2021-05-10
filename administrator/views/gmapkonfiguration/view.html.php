@@ -9,16 +9,23 @@
 
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+
 
 jimport('joomla.application.component.view');
 JLoader::import('helpers.einsatzkomponente', JPATH_SITE.'/administrator/components/com_einsatzkomponente');
 JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatzkomponente'); 
 
 
+
 /**
  * View to edit
  */
-class EinsatzkomponenteViewGmapkonfiguration extends JViewLegacy
+class EinsatzkomponenteViewGmapkonfiguration extends HtmlView
 {
 	protected $state;
 	protected $item;
@@ -35,7 +42,7 @@ class EinsatzkomponenteViewGmapkonfiguration extends JViewLegacy
 		$this->state	= $this->get('State');
 		$this->item		= $this->get('Item');
 		$this->form		= $this->get('Form');
-		$this->params = JComponentHelper::getParams('com_einsatzkomponente');
+		$this->params = ComponentHelper::getParams('com_einsatzkomponente');
 
 		$this->gmap_config = EinsatzkomponenteHelper::load_gmap_config(); // GMap-Config aus helper laden 
 
@@ -57,7 +64,6 @@ class EinsatzkomponenteViewGmapkonfiguration extends JViewLegacy
 		if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));
 		}
-
 		$this->addToolbar();
 		parent::display($tpl);
 	}
@@ -67,9 +73,9 @@ class EinsatzkomponenteViewGmapkonfiguration extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		JFactory::getApplication()->input->set('hidemainmenu', true);
+		Factory::getApplication()->input->set('hidemainmenu', true);
 
-		$user		= JFactory::getUser();
+		$user		= Factory::getUser();
 		$isNew		= ($this->item->id == 0);
         if (isset($this->item->checked_out)) {
 		    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
@@ -78,26 +84,26 @@ class EinsatzkomponenteViewGmapkonfiguration extends JViewLegacy
         }
 		$canDo		= EinsatzkomponenteHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATION'), 'gmapkonfiguration.png');
+		ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATION'), 'gmapkonfiguration.png');
 
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{
 
-			JToolBarHelper::apply('gmapkonfiguration.apply', 'JTOOLBAR_APPLY');
-			JToolBarHelper::save('gmapkonfiguration.save', 'JTOOLBAR_SAVE');
+			ToolbarHelper::apply('gmapkonfiguration.apply', 'JTOOLBAR_APPLY');
+			ToolbarHelper::save('gmapkonfiguration.save', 'JTOOLBAR_SAVE');
 		}
 		if (empty($this->item->id)) {
-			JToolBarHelper::cancel('gmapkonfiguration.cancel', 'JTOOLBAR_CANCEL');
+			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else {
-			JToolBarHelper::cancel('gmapkonfiguration.cancel', 'JTOOLBAR_CLOSE');
+			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'JTOOLBAR_CLOSE');
 		}
 		
-		JToolBarHelper::divider();
+		ToolbarHelper::divider();
 		
 		if (!$checkedOut && ($canDo->get('core.admin'))){
-			JToolBarHelper::custom('gmapkonfiguration.reset', 'refresh.png', 'refresh_f2.png', 'COM_EINSATZKOMPONENTE_GMAP_ALLE_WERTE_ZURUECKSETZEN', false);		}
+			ToolbarHelper::custom('gmapkonfiguration.reset', 'refresh.png', 'refresh_f2.png', 'COM_EINSATZKOMPONENTE_GMAP_ALLE_WERTE_ZURUECKSETZEN', false);		}
 
 
 	}

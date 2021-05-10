@@ -8,11 +8,15 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Version;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 jimport('joomla.application.component.view');
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewAlarmierungsarten extends JViewLegacy
+class EinsatzkomponenteViewAlarmierungsarten extends HtmlView
 {
 	protected $items;
 	protected $pagination;
@@ -34,7 +38,7 @@ class EinsatzkomponenteViewAlarmierungsarten extends JViewLegacy
         
 		$this->addToolbar();
         
-		$version = new JVersion;
+		$version = new Version;
         if ($version->isCompatible('3.0')) :
         $this->sidebar = JHtmlSidebar::render();
 		endif;
@@ -51,7 +55,7 @@ class EinsatzkomponenteViewAlarmierungsarten extends JViewLegacy
 		require_once JPATH_COMPONENT.'/helpers/einsatzkomponente.php';
 		$state	= $this->get('State');
 		$canDo	= EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
-		JToolBarHelper::title(JText::_('COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSARTEN'), 'alarmierungsarten.png');
+		JToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSARTEN'), 'alarmierungsarten.png');
         //Check if the form exists before showing the add/edit buttons
         $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/alarmierungsart';
         if (file_exists($formPath)) {
@@ -95,18 +99,18 @@ class EinsatzkomponenteViewAlarmierungsarten extends JViewLegacy
 			JToolBarHelper::preferences('com_einsatzkomponente');
 		}
 		
-		$version = new JVersion;
+		$version = new Version;
         if ($version->isCompatible('3.0')) :
         //Set sidebar action - New in 3.0
 		JHtmlSidebar::setAction('index.php?option=com_einsatzkomponente&view=alarmierungsarten');
 		$options = array ();
-		$options[] = JHtml::_('select.option', '1', 'JPUBLISHED');
-		$options[] = JHtml::_('select.option', '0', 'JUNPUBLISHED');
+		$options[] = HTMLHelper::_('select.option', '1', 'JPUBLISHED');
+		$options[] = HTMLHelper::_('select.option', '0', 'JUNPUBLISHED');
 		$options[] = JHtml::_('select.option', '*', 'JALL');
 		JHtmlSidebar::addFilter(
-			JText::_('JOPTION_SELECT_PUBLISHED'),
+			Text::_('JOPTION_SELECT_PUBLISHED'),
 			'filter_published',
-			JHtml::_('select.options', $options, "value", "text", $this->state->get('filter.state'), true)
+			HTMLHelper::_('select.options', $options, "value", "text", $this->state->get('filter.state'), true)
 		);
 		endif;
 		
@@ -119,12 +123,12 @@ class EinsatzkomponenteViewAlarmierungsarten extends JViewLegacy
 	protected function getSortFields()
 	{
 		return array(
-		'a.id' => JText::_('JGRID_HEADING_ID'),
-		'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
-		'a.title' => JText::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSARTEN_TITLE'),
-		'a.image' => JText::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSARTEN_IMAGE'),
-		'a.state' => JText::_('JSTATUS'),
-		'a.created_by' => JText::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSARTEN_CREATED_BY'),
+		'a.id' => Text::_('JGRID_HEADING_ID'),
+		'a.ordering' => Text::_('JGRID_HEADING_ORDERING'),
+		'a.title' => Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSARTEN_TITLE'),
+		'a.image' => Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSARTEN_IMAGE'),
+		'a.state' => Text::_('JSTATUS'),
+		'a.created_by' => Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSARTEN_CREATED_BY'),
 		);
 	}
     

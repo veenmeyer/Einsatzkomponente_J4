@@ -9,13 +9,17 @@
 
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Factory;
+use Joomla\Utilities\ArrayHelper;
+
 
 jimport('joomla.application.component.controlleradmin');
 
 /**
  * Ausruestungen list controller class.
  */
-class EinsatzkomponenteControllerAusruestungen extends JControllerAdmin
+class EinsatzkomponenteControllerAusruestungen extends AdminController
 {
 	/**
 	 * Proxy for getModel.
@@ -38,13 +42,13 @@ class EinsatzkomponenteControllerAusruestungen extends JControllerAdmin
 	public function saveOrderAjax()
 	{
 		// Get the input
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$pks = $input->post->get('cid', array(), 'array');
 		$order = $input->post->get('order', array(), 'array');
 
 		// Sanitize the input
-		JArrayHelper::toInteger($pks);
-		JArrayHelper::toInteger($order);
+		ArrayHelper::toInteger($pks);
+		ArrayHelper::toInteger($order);
 
 		// Get the model
 		$model = $this->getModel();
@@ -58,7 +62,7 @@ class EinsatzkomponenteControllerAusruestungen extends JControllerAdmin
 		}
 
 		// Close the application
-		JFactory::getApplication()->close();
+		Factory::getApplication()->close();
 	}
     
     

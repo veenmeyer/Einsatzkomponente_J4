@@ -207,7 +207,9 @@
         		<option value="1">JPUBLISHED</option>
         		<option value="0">JUNPUBLISHED</option>
        </field> 
-	   
+
+       <field name="gmap_icon" type="hidden" filter="safehtml" default="" /> 
+       <field name="params" type="hidden" filter="safehtml" default="" /> 
  </fieldset> 
  
  

@@ -8,13 +8,14 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Filesystem\Folder;
 jimport( 'joomla.filesystem.file' );
 jimport( 'joomla.filesystem.folder' );
 
 
-// Import CSS
-$document = JFactory::getDocument();
-$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
 $bug = '0';
 ?>
@@ -27,12 +28,12 @@ $bug = '0';
 </div>
 <?php
 // Versions-Nummer 
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $db->setQuery('SELECT manifest_cache FROM #__extensions WHERE name = "com_einsatzkomponente"');
 $params = json_decode( $db->loadResult(), true );
 	
-$repair      	= JFactory::getApplication()->input->get('repair', false);
-$restore      	= JFactory::getApplication()->input->get('restore', false);
+$repair      	= Factory::getApplication()->input->get('repair', false);
+$restore      	= Factory::getApplication()->input->get('restore', false);
 
 // DB-Service
 
@@ -48,7 +49,7 @@ $repair_array ['117'] = "UPDATE `#__eiko_einsatzberichte` SET `createdate` = `up
 $repair_array ['118'] = "UPDATE `#__eiko_einsatzberichte` SET `modified_by` = `created_by`;";
 
 if ($repair) : 
-	$db = JFactory::getDbo();
+	$db = Factory::getDbo();
 	$query = $repair_array[$repair];
 	$db->setQuery($query);
 	try {
@@ -113,14 +114,14 @@ echo '<h2>Installation/Update :</h2>';
 	// ------------------ Fahrzeugbilder -------------------------------------------------------------------------
 	$discr = "Image-Ordner für die Einsatzkomponente";
 	$dir = JPATH_ROOT.'/images/com_einsatzkomponente'; 
-	if (!JFolder::exists($dir))   
+	if (!Folder::exists($dir))   
 	{
 		echo 'Der '.$discr.' <span class="label label-important">existiert nicht</span>.<br/>';
 		$source = JPATH_ROOT.'/'.'media/com_einsatzkomponente/'; 
 		$target = JPATH_ROOT.'/images/com_einsatzkomponente/';
 		echo 'Kopiere:&nbsp;&nbsp;&nbsp;'.$source.'&nbsp;&nbsp;&nbsp;&nbsp;<b>nach:</b>&nbsp;&nbsp;&nbsp;&nbsp;'.$target.'<br/>';
-		JFolder::copy($source,$target);
-			if (!JFolder::exists($dir))   
+		Folder::copy($source,$target);
+			if (!Folder::exists($dir))   
 			{
 			echo 'Der '.$discr.' <span class="label label-important">wurde nicht erstellt !!!!</span>.<br/><br/>';$bug='1'; 
 			}
@@ -134,7 +135,7 @@ echo '<h2>Installation/Update :</h2>';
 		}
 // ------------------ Check GMap-Config Datenbanktabelle ------------------------------------------------------
 
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $db->setQuery('SELECT id FROM #__eiko_gmap_config WHERE id = "1"');
 $check_gmap = $db->loadResult();
 
@@ -143,8 +144,9 @@ if ($check_gmap) {
 }
 else
 {
-	$db = JFactory::getDbo();
-	$query = "INSERT INTO `#__eiko_gmap_config`(`id`) VALUES (1)";
+	$db = Factory::getDbo();
+    $query = "INSERT INTO `#__eiko_gmap_config` (`id`, `asset_id`, `gmap_zoom_level`, `gmap_onload`, `gmap_width`, `gmap_height`, `gmap_alarmarea`, `start_lat`, `start_lang`, `state`, `created_by`, `params`) VALUES
+(1, 172, '12', 'HYBRID', 600, 300, '53.28071418254047,7.416630163574155|53.294772929932165,7.4492458251952485|53.29815865222114,7.4767116455077485|53.31313468829642,7.459888830566342|53.29949234792138,7.478256597900327|53.29815865222114,7.506409063720639|53.286461382800795,7.521686926269467|53.26726681991669,7.499027624511655|', '53.286871867528056', '7.475510015869147', 1, 1, '');";
 	$db->setQuery($query);
 	try {
 	// Execute the query in Joomla 3.0.
@@ -153,116 +155,10 @@ else
 	//print the errors
 	echo 'Die GMap-Konfigurationstabelle wurde <span class="label label-important">nicht erstellt.</span>.<br/><br/>';  
 	print_r ($e).'<br/><br/>';$bug = '1';
-	}
-	$db = JFactory::getDbo();
-	$db->setQuery('SELECT id FROM #__eiko_gmap_config WHERE id = "1"');
-	$check_gmap = $db->loadResult();
-	if ($check_gmap) {
-	echo 'Die GMap-Konfigurationstabelle wurde <span class="label label-info">erstellt.</span>.<br/><br/>'; 
-	
-	$db = JFactory::getDbo();
-    $query = 'UPDATE `#__eiko_gmap_config` SET `gmap_alarmarea` = "53.28071418254047,7.416630163574155|53.294772929932165,7.4492458251952485|53.29815865222114,7.4767116455077485|53.31313468829642,7.459888830566342|53.29949234792138,7.478256597900327|53.29815865222114,7.506409063720639|53.286461382800795,7.521686926269467|53.26726681991669,7.499027624511655|" WHERE `id` = 1;';	
-	$db->setQuery($query); 
-	//execute db object
-	try {
-	// Execute the query in Joomla 3.0.
-	$result = $db->execute();
-	} catch (Exception $e) {
-	//print the errors
-	print_r($e);
-	}	
-	}
-	else{}
-	}
-// ------------------ Update von Version 3.0 beta 3 auf 3.0 beta 4 --------------------------------------------------
-	$db = JFactory::getDbo();
-	$db->setQuery('show columns from `#__eiko_einsatzberichte` where Field="presse_label"');
-	try {
-	$check_presse = $db->execute();
-	} catch (Exception $e) {
-	print_r($e);$bug='1';
-	}	
-$check_presse = $check_presse->num_rows;
-if (!$check_presse) {
-	
-	$db = JFactory::getDbo();
-    $query = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `presse_label` VARCHAR( 255 ) NOT NULL DEFAULT "Presselink" AFTER `gmap`';	
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-	}	
-	$db = JFactory::getDbo();
-    $query = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `presse2_label` VARCHAR( 255 ) NOT NULL DEFAULT "Presselink" AFTER `presse`';	
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-	}	
-	
-	$db = JFactory::getDbo();
-    $query = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `presse3_label` VARCHAR( 255 ) NOT NULL DEFAULT "Presselink" AFTER `presse2`';	
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-	}	
-	
-	echo 'DB-Updates  < 3.0 beta 4 erfolgreich <span class="label label-success">aktualisiert.</span>.<br/><br/>'; 
-}
-else {
-	//echo 'Alle Daten sind bereits <span class="label label-success">aktuell</span><br/><br/>'; 
-	}
-	
-// ------------------ Update von Version 3.04 auf 3.05 beta --------------------------------------------------
-	$db = JFactory::getDbo();
-	$db->setQuery('show columns from `#__eiko_einsatzberichte` where Field="status_fb"');
-	try {
-	$check_status_fb = $db->execute();
-	} catch (Exception $e) {
-	print_r($e);$bug='1';
-	}	
-$check_status_fb = $check_status_fb->num_rows;
-if (!$check_status_fb) {
-	
-	$db = JFactory::getDbo();
-    $query = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `status_fb` VARCHAR( 255 ) NOT NULL DEFAULT "1" AFTER `gmap`';	
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-	}	
-}
-else {
-	} 
-	
-	$db = JFactory::getDbo();
-	$db->setQuery('show columns from `#__eiko_einsatzberichte` where Field="article_id"');
-	try {
-	$check_status_fb = $db->execute();
-	} catch (Exception $e) {
-	print_r($e);$bug='1';
-	}	
-$check_status_fb = $check_status_fb->num_rows;
-if (!$check_status_fb) {
-	
-	$db = JFactory::getDbo();
-    $query = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `article_id` VARCHAR( 255 ) NOT NULL DEFAULT "0" AFTER `asset_id`';	
-	$db->setQuery($query);  
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-	}	
-
-	echo 'DB-Updates  < 3.05 beta erfolgreich <span class="label label-success">aktualisiert.</span>.<br/><br/>'; 
-}
-else {
-	echo 'Alle Daten sind bereits <span class="label label-success">aktuell</span><br/><br/>'; 
-	}
-	
+}}
 // ------------------ Update von Version 3.05 auf 3.06 beta ---------------------------------------------------
 $check_tickerkat = '0';
-	$db = JFactory::getDbo();
+	$db = Factory::getDbo();
 	$db->setQuery('select * from `#__eiko_tickerkat`');
 	try {
 	$check_tickerkat = $db->execute();
@@ -311,7 +207,7 @@ $sql="CREATE TABLE IF NOT EXISTS `#__eiko_tickerkat` (
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;";
-	$db = JFactory::getDbo();
+	$db = Factory::getDbo();
 	$db->setQuery($sql); 
 	try {
 	$result = $db->execute();
@@ -319,14 +215,6 @@ $sql="CREATE TABLE IF NOT EXISTS `#__eiko_tickerkat` (
 		print_r ($e);$bug='1';
 	}	
 
-//$sql = "ALTER TABLE `#__eiko_tickerkat` CHANGE `id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;";
-//	$db = JFactory::getDbo();
-//	$db->setQuery($sql); 
-//	try {
-//	$result = $db->execute();
-//	} catch (Exception $e) {
-//		print_r ($e);$bug='1';
-//	}	
 
 
 foreach($eiko_tickerkat as $data){
@@ -334,7 +222,7 @@ foreach($eiko_tickerkat as $data){
     $sql = 'INSERT INTO `#__eiko_tickerkat` (id, asset_id, title, image, beschreibung, ordering, state,created_by,checked_out,checked_out_time)
     VALUES ("'.$data["id"].'", "'.$data["asset_id"].'", "'.$data["title"].'", "'.$data["image"].'", "'.$data["beschreibung"].'", "'.$data["ordering"].'", "'.$data["state"].'", "'.$data["created_by"].'","'.$data["checked_out"].'","'.$data["checked_out_time"].'")';
 	//echo $sql.'<br/>';
-	$db = JFactory::getDbo();
+	$db = Factory::getDbo();
 	$db->setQuery($sql); 
 	try {
 	$result = $db->execute();
@@ -348,317 +236,14 @@ foreach($eiko_tickerkat as $data){
 
 }
 
-	$db = JFactory::getDbo();
-	$query = "ALTER TABLE `#__eiko_einsatzberichte` CHANGE `tickerkat` `tickerkat` INT(10) NOT NULL;";
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-	}	
 
 // ------------------------------------------------------------------------------------------------------------
-	$check_update = '0';
-	$db = JFactory::getDbo();
-	$db->setQuery('select `auswahl_orga` from `#__eiko_einsatzberichte`'); 
-	try {
-	$result = $db->loadObjectList();$check_update = '1';
-	} catch (Exception $e) {$check_update = '0'; }
 	
-	if (!$check_update) :
-	$db = JFactory::getDbo();
-	$query = "ALTER TABLE `#__eiko_einsatzberichte` ADD `auswahl_orga` TEXT NOT NULL AFTER `auswahlorga`;";
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-	}	
-       	$results = array();
-		$query = 'SELECT * FROM #__eiko_einsatzberichte' ;
-		$db	= JFactory::getDBO();
-		$db->setQuery( $query );
-		$results = $db->loadObjectList();
-		
-       	$data = array();
-		foreach($results as $result):
-		$data_id = '';
-		foreach(explode(',',$result->auswahlorga) as $data):
-						$db = JFactory::getDbo();
-						$query	= $db->getQuery(true);
-						$query
-							->select('id')
-							->from('`#__eiko_organisationen`')
-							->where('name = "' .$data.'"');
-						$db->setQuery($query);
-						$orga_id = $db->loadResult();
-						
-		//echo '('.$data.' - '.$orga_id.') ';
-		$data_id .= $orga_id.',';
-		endforeach;
-	  	//$data_id=substr($data_id,0,strlen($data_id)-1);
-		//echo '</br>';
-		//echo $result->id.' = '.$data_id.'</br>';
-		
-$db = JFactory::getDbo();
-$query = $db->getQuery(true);
-// Fields to update.
-$fields = array(
-    $db->quoteName('auswahl_orga') . ' = ' . $db->quote(''.$data_id.'') );
-// Conditions for which records should be updated.
-$conditions = array(
-    $db->quoteName('id') . ' = '.$result->id.'' );
-$query->update($db->quoteName('#__eiko_einsatzberichte'))->set($fields)->where($conditions);
- 
-$db->setQuery($query);
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-		print_r ($e);$bug='1';
-	}	
-	
-		endforeach;
-	
-
-       	$results = array();
-		$query = 'SELECT * FROM #__eiko_fahrzeuge' ;
-		$db	= JFactory::getDBO();
-		$db->setQuery( $query );
-		$results = $db->loadObjectList();
-		
-       	$data = '';
-		foreach($results as $result):
-						$db = JFactory::getDbo();
-						$query	= $db->getQuery(true);
-						$query
-							->select('id')
-							->from('`#__eiko_organisationen`')
-							->where('name = "' .$result->department.'"');
-						$db->setQuery($query);
-						$orga_id = $db->loadResult();
-						
-		//echo '('.$result->department.' - '.$orga_id.')</br> ';
-		
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		// Fields to update.
-		$fields = array(
-		$db->quoteName('department') . ' = ' . $db->quote(''.$orga_id.'') );
-		// Conditions for which records should be updated.
-		$conditions = array(
-		$db->quoteName('id') . ' = '.$result->id.'' );
-		$query->update($db->quoteName('#__eiko_fahrzeuge'))->set($fields)->where($conditions);
- 
-		$db->setQuery($query);
-			try {
-				$result = $db->execute();
-				} catch (Exception $e) {
-					print_r ($e);$bug='1';
-					}	
-
-		endforeach;
-		
-
-
-       	$results = array();
-		$query = 'SELECT * FROM #__eiko_einsatzberichte' ;
-		$db	= JFactory::getDBO();
-		$db->setQuery( $query );
-		$results = $db->loadObjectList();
-		
-       	$data = array();
-		$bug_data='';
-
-		foreach($results as $result):
-		$data_id = '';
-						$db = JFactory::getDbo();
-						$query	= $db->getQuery(true);
-						$query
-							->select('id')
-							->from('`#__eiko_einsatzarten`')
-							->where('title = "' .$result->data1.'"');
-						$db->setQuery($query);
-						$data_id = $db->loadResult();
-						
-		//echo '('.$result->data1.' - '.$data_id.') ';
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		// Fields to update.
-		$fields = array(
-		$db->quoteName('data1') . ' = ' . $db->quote(''.$data_id.'') );
-		// Conditions for which records should be updated.
-		$conditions = array(
-		$db->quoteName('id') . ' = '.$result->id.'' );
-		$query->update($db->quoteName('#__eiko_einsatzberichte'))->set($fields)->where($conditions);
-		$db->setQuery($query);
-			try {
-				$result = $db->execute();
-				} catch (Exception $e) {
-					print_r ($e);$bug='1';$bug_data='1';
-					}	
-		endforeach;
-	
-	if (!$bug_data) :
-	$db = JFactory::getDbo();
-	$query = "ALTER TABLE `#__eiko_einsatzberichte` CHANGE `data1` `data1` INT(10) NOT NULL;";
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-		print_r ($e);$bug='1';
-	}	
-	endif;
-		
-
-		
-endif;	
-
-// ------------------ ADD gmap_icon zu Organisationen --------------------------------------------------
-	$check_gmap_icon = '0';
-	$db = JFactory::getDbo();
-	$db->setQuery('select gmap_icon_orga from `#__eiko_organisationen`');
-	try {
-	$check_gmap_icon = $db->execute();$check_gmap_icon='1';
-	} catch (Exception $e) {
-	$check_gmap_icon='0';
-	}	
-
-if (!$check_gmap_icon) {
-	
-	$db = JFactory::getDbo();
-    $query = 'ALTER TABLE `#__eiko_organisationen` ADD `gmap_icon_orga` VARCHAR( 255 ) NOT NULL AFTER `name`';	
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-	print_r($e);$bug='1';
-	}	
-}
-else {
-	}
-
-// ------------------ ADD ausruestung zu Einsatzberichte --------------------------------------------------
-	$check_update = '0';
-	$db = JFactory::getDbo();
-	$db->setQuery('select ausruestung from `#__eiko_einsatzberichte`');
-	try {
-	$check_update = $db->execute();$check_update='1';
-	} catch (Exception $e) {$check_update='0';}
-	
-	if (!$check_update) :
-	
-	$db = JFactory::getDbo();
-	$query = "ALTER TABLE `#__eiko_einsatzberichte` ADD `ausruestung` TEXT NOT NULL AFTER `vehicles`;";
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {print_r($e);$bug='1';}	
-	
-	endif;
-
-// ------------------------------------------------------------------------------------------------------------
-// ------------------ ADD ausruestung zu Fahrzeuge --------------------------------------------------
-	$check_update = '0';
-	$db = JFactory::getDbo();
-	$db->setQuery('select ausruestung from `#__eiko_fahrzeuge`');
-	try {
-	$check_update = $db->execute();$check_update='1';
-	} catch (Exception $e) {$check_update='0';}
-	
-	if (!$check_update) :
-	
-	$db = JFactory::getDbo();
-	$query = "ALTER TABLE `#__eiko_fahrzeuge` ADD `ausruestung` TEXT NOT NULL AFTER `department`;";
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {print_r($e);$bug='1';}	 
-	
-	endif;
-
-// ------------------------------------------------------------------------------------------------------------
-// ------------------ Update von Version 3.06 auf 3.07  ---------------------------------------------------
-	$check_ausruestung = '';
-	$db = JFactory::getDbo();
-	$db->setQuery('select * from `#__eiko_ausruestung` where id="0"');
-	try {
-	$check_ausruestung = $db->execute();
-	} catch (Exception $e) {$check_ausruestung=true;}
-	
-	
-if ($check_ausruestung) :
-
-$e ='';
-$sql="CREATE TABLE IF NOT EXISTS `#__eiko_ausruestung` (
-`id` int(11)  UNSIGNED NOT NULL AUTO_INCREMENT,
-  `asset_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `beschreibung` text NOT NULL,
-  `ordering` int(11) NOT NULL,
-  `state` tinyint(1) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `checked_out` int(11) NOT NULL,
-  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-	$db = JFactory::getDbo();
-	$db->setQuery($sql); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-		print_r ($e);$bug='1';
-	}	
-
-endif;
-	
-
-
-// ---------------------- Fehler in auswahl_orga beheben, das letzte "," löschen -----------------------------------------------
-
-       	$results = array();
-		$query = 'SELECT * FROM #__eiko_einsatzberichte' ;
-		$db	= JFactory::getDBO();
-		$db->setQuery( $query );
-		$results = $db->loadObjectList();
-		
-       	$data = array();
-		foreach($results as $result):
-		
-		if (substr($result->auswahl_orga, -1) == ','   ) :
-	  	$result->auswahl_orga=substr($result->auswahl_orga,0,strlen($result->auswahl_orga)-1);
-		endif;
-		//echo $result->id.' = '.$result->auswahl_orga.'<br/>';
-		
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		// Fields to update.
-		$fields = array(
-		$db->quoteName('auswahl_orga') . ' = ' . $db->quote(''.$result->auswahl_orga.'') );
-		// Conditions for which records should be updated.
-		$conditions = array(
-		$db->quoteName('id') . ' = '.$result->id.'' );
-		$query->update($db->quoteName('#__eiko_einsatzberichte'))->set($fields)->where($conditions);
- 
-		$db->setQuery($query);
-		try {
-		$result = $db->execute();
-		} catch (Exception $e) {
-			print_r ($e);$bug='1';
-		}	
-	
-		endforeach;
 // ------------------------------------------------------------------------------------------------------------
 
 		if (!file_exists('../images/com_einsatzkomponente/pdf')) {
 		mkdir('../images/com_einsatzkomponente/pdf', 0755, true); }
 
-	// Behebt Fehler in der Sortierung nach Counter-Anzahl
-	$db = JFactory::getDbo();
-    $query = 'ALTER TABLE `#__eiko_einsatzberichte` CHANGE `counter` `counter` INT( 20 ) NOT NULL';	
-	$db->setQuery($query); 
-	try {
-	$result = $db->execute();
-	} catch (Exception $e) {
-	}	
 
 
 ?>
@@ -700,28 +285,3 @@ endif;
 
 </div>
 </div>
-<hr>
-<?php
-// ------------------------------------ Alte Datenbanken vorhanden ? ---------------------------------------
-
-	$check_db = '';
-	$db = JFactory::getDbo();
-	$db->setQuery('SELECT id from #__reports');
-	try {
-	// Execute the query in Joomla 3.0.
-	$check_db = $db->execute();
-	} catch (Exception $e) {
-	echo '<div class="well"><span class="label label-success">Hinweis:</span> Ein Import von Einsatzdaten aus früheren Versionen der Einsatzkomponente ist möglich.<br/>Dazu bitte die Datenbanktabellen _reports_* einfach in diese Datenbank kopieren und die Installation erneut vornehmen.<br/>Für weitere Informationen bitte ans Forum wenden, wir unterstützen hierbei natürlich sehr gerne.</div>';
-	}	
-	
-	if ($check_db) : 
-	echo '<div class="well"><span class="label label-success">Hinweis:</span> Frühere Datenbanktabellen #__reports_* importieren ? <input
-   type="button"
-   class="btn btn-danger"
-   value="Importieren"
-   title=""
-   onclick="window.location=\'index.php?option=com_einsatzkomponente&view=datenimport\'"
-   /><br/>(Achtung alle vorhandenen Daten werden überschrieben)<br/></div>';
-    endif;
-	?>
-

@@ -8,21 +8,20 @@
  */
 // no direct access
 defined('_JEXEC') or die;
-$params = JComponentHelper::getParams('com_einsatzkomponente');
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.keepalive');
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
-JHtml::_('formbehavior.chosen', 'select');
+HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+HTMLHelper::_('bootstrap.tooltip');
+HTMLHelper::_('behavior.formvalidator');
+HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('formbehavior.chosen', 'select');
+HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
-
-// Import CSS
-$document = JFactory::getDocument();
-$document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
-
-
- 
+$params = ComponentHelper::getParams('com_einsatzkomponente');
 
 ?>
 
@@ -38,11 +37,11 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 			Joomla.submitform(task, document.getElementById('organisation-form'));
 		}
 		else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 		}
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -65,9 +64,9 @@ if ($this->item->name)
             <div class="control-group">  
             
 <?php 
-	echo '<div class="control-label">';echo JText::_('COM_EINSATZKOMPONENTE_ZUGORDNETE_FAHRZEUGE').':';echo '</div>';
+	echo '<div class="control-label">';echo Text::_('COM_EINSATZKOMPONENTE_ZUGORDNETE_FAHRZEUGE').':';echo '</div>';
 	echo '<div class="controls"><ul class="adminformlist">';
-$database			= JFactory::getDBO();
+$database			= Factory::getDBO();
 $query = 'SELECT * FROM #__eiko_fahrzeuge WHERE department = "'.$this->item->id.'" ORDER BY ordering,state ASC ' ;
 $database->setQuery( $query );
 $total = $database->loadObjectList();	
@@ -79,14 +78,14 @@ $total = $database->loadObjectList();
 		if ($totale->detail2): echo ' ( '.$totale->detail2.' )'; endif;
 		if ($totale->detail1): echo ' '.$totale->detail1; endif;
 		echo '</a>';
-                if ($totale->state == 2): echo JText::_('COM_EINSATZKOMPONENTE_FAHRZEUG_AUSSER_DIENST'); endif;
-                if ($totale->state == 0): echo JText::_('COM_EINSATZKOMPONENTE_FAHRZEUG_DEAKTIVIERT'); endif;
+                if ($totale->state == 2): echo Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG_AUSSER_DIENST'); endif;
+                if ($totale->state == 0): echo Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG_DEAKTIVIERT'); endif;
                 echo '</li>';
 		endforeach; 
 		}
 		else
 		{
-		echo '<span class="label label-important">'.JText::_('COM_EINSATZKOMPONENTE_KEINE_FAHRZEUGE').'</span>';
+		echo '<span class="label label-important">'.Text::_('COM_EINSATZKOMPONENTE_KEINE_FAHRZEUGE').'</span>';
 		}
 echo '</ul></div></div>';
 }
@@ -163,7 +162,15 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 			<?php OsmHelper::callOsmMap($gmap_config->gmap_zoom_level,$gmap_latitude,$gmap_longitude); ?>
 			<?php OsmHelper::addMarkerOsmMap($gmap_latitude,$gmap_longitude); ?> 
 			<?php endif;?>
-			
+	
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('gmap_icon'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('gmap_icon'); ?></div>
+            </div>   
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('params'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('params'); ?></div>
+			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('state'); ?></div>
@@ -276,7 +283,7 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 				
         
         <input type="hidden" name="task" value="" />
-        <?php echo JHtml::_('form.token'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
         
     </div>
 </form>

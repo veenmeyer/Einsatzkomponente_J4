@@ -9,13 +9,16 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 
 jimport('joomla.application.component.view');
 
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
+class EinsatzkomponenteViewEinsatzarchiv extends HtmlView {
 
     protected $items;
     protected $pagination;
@@ -28,7 +31,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
      */
     public function display($tpl = null) {
 		require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         $this->state = $this->get('State');
         $this->items = $this->get('Items');
@@ -44,7 +47,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
 		if ($layout_detail) : $this->layout_detail_link = '&layout='.$layout_detail;  endif; // Detailbericht Layout 'default' ?
 
 		
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$menus	= $app->getMenu();
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself
@@ -68,7 +71,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
 			
 			// url link to article
 			// & used instead of &amp; as this is converted by feed creator
-			$link = JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht'.$this->layout_detail_link.'&id='.$item->id);
+			$link = Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht'.$this->layout_detail_link.'&id='.$item->id);
 
 			if ($item->auswahl_orga) :
 			$item->auswahl_orga = str_replace(",", " +++ ", $item->auswahl_orga);
@@ -90,7 +93,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends JViewLegacy {
 		// Set up the data to be sent in the response.
  
 // Get the document object.
-$document =JFactory::getDocument();
+$document =Factory::getDocument();
  
 // Set the MIME type for JSON output.
 $document->setMimeEncoding('application/json');

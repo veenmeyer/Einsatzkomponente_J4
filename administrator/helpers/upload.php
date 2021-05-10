@@ -9,28 +9,33 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Language\Text;
 
 
 
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 
-		$user	= JFactory::getUser();
+		$user	= Factory::getUser();
  
 		//this is the name of the field in the html form, filedata is the default name for swfupload
 		//so we will leave it as that
 		
 		ini_set('memory_limit', -1);
 		
-		$files        = JFactory::getApplication()->input->files->get('data', '', 'array');
+		$files        = Factory::getApplication()->input->files->get('data', '', 'array');
 
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		$count_data=count($files) ;  ######### count the data #####
 $count = 0;
 while($count < $count_data)
 {
 		$fileName = $files[$count]['name'];//echo $count.'= Name:'.$fileName.'<br/>';
-		$fileName = JFile::makeSafe($fileName);
+		$fileName = File::makeSafe($fileName);
 		$uploadedFileNameParts = explode('.',$fileName);
 		$uploadedFileExtension = array_pop($uploadedFileNameParts);
  
@@ -49,7 +54,7 @@ while($count < $count_data)
 					
 		$rep_id = $cid;   // Einsatz_ID holen für Zuordnung der Bilder in der Datenbank
 		if ($watermark_image == '') :
-		$watermark_image = JFactory::getApplication()->input->getVar('watermark_image', $params->get('watermark_image'));
+		$watermark_image = Factory::getApplication()->input->getVar('watermark_image', $params->get('watermark_image'));
 		endif;
 		
 		// Check ob Bilder in einen Unterordner (OrdnerName = ID-Nr.) abgespeichert werden sollen :
@@ -63,19 +68,19 @@ while($count < $count_data)
 		
 		
 		 // Check if dir already exists
-        if (!JFolder::exists(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').$rep_id_ordner)) 
-		{ JFolder::create(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').$rep_id_ordner);     }
+        if (!Folder::exists(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').$rep_id_ordner)) 
+		{ Folder::create(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').$rep_id_ordner);     }
 		else  {}
-        if (!JFolder::exists(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').'/thumbs'.$rep_id_ordner)) 
-		{ JFolder::create(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').'/thumbs'.$rep_id_ordner);  }
+        if (!Folder::exists(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').'/thumbs'.$rep_id_ordner)) 
+		{ Folder::create(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').'/thumbs'.$rep_id_ordner);  }
 		else  {}
 	    
 		$uploadPath  = JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').$rep_id_ordner.'/'.$fileName ;
 		$uploadPath_thumb  = JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').'/thumbs'.$rep_id_ordner.'/'.$fileName ;
  //echo $fileTemp.' xxxx '.$uploadPath;exit; 
-		if(!JFile::upload($fileTemp, $uploadPath)) 
+		if(!File::upload($fileTemp, $uploadPath)) 
 		{
-			echo JText::_( 'Bild konnte nicht verschoben werden' );
+			echo Text::_( 'Bild konnte nicht verschoben werden' );
 			return;
 		}
 		else
@@ -83,8 +88,8 @@ while($count < $count_data)
 			
 
 		 // Check if dir already exists
-        if (!JFolder::exists(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').'/thumbs')) 
-		{ JFolder::create(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').'/thumbs');        }
+        if (!Folder::exists(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').'/thumbs')) 
+		{ Folder::create(JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').'/thumbs');        }
 		else  {}
 		
 		
@@ -187,12 +192,19 @@ while($count < $count_data)
 			$custompath = $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder');
 			chmod($uploadPath, 0644);
 			chmod($uploadPath_thumb, 0644);
-			$db = JFactory::getDBO();
-			$query = 'INSERT INTO #__eiko_images SET report_id="'.$rep_id.'", image="'.$custompath.$rep_id_ordner.'/'.$fileName.'", thumb="'.$custompath.'/thumbs'.$rep_id_ordner.'/'.$fileName.'", state="1", created_by="'.$user->id.'"';
+			$db = Factory::getDBO();
+			$query = 'INSERT INTO #__eiko_images SET report_id="'.$rep_id.'", ordering="0", comment="", params="", image="'.$custompath.$rep_id_ordner.'/'.$fileName.'", thumb="'.$custompath.'/thumbs'.$rep_id_ordner.'/'.$fileName.'", state="1", created_by="'.$user->id.'"';
 			$db->setQuery($query);
-			$db->query();
+				try
+				{
+					$db->execute();
+				}
+				catch (RuntimeException $e)
+				{
+					throw new Exception($e->getMessage(), 500);
+				}
 			
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = 'SELECT image FROM #__eiko_einsatzberichte WHERE id ="'.$rep_id.'" ';
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
@@ -200,7 +212,7 @@ while($count < $count_data)
 
 		if ($params->get('titelbild_auto', '1')):
 		if ($check_image == ''):
-		$db		= JFactory::getDBO();
+		$db		= Factory::getDBO();
 		$query	= $db->getQuery(true);
 		$query->update('#__eiko_einsatzberichte');
 		//$query->set('image = "'.$custompath.$rep_id_ordner.'/'.$fileName.'" ');
@@ -219,7 +231,7 @@ while($count < $count_data)
 		endif;
 		endif;
 			
-			echo JText::_( 'Bild wurde hochgeladen' ).'<br/>';
+			echo Text::_( 'Bild wurde hochgeladen' ).'<br/>';
 			
 			
 $source = JPATH_SITE.'/'.$params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder').$rep_id_ordner.'/'.$fileName ; //the source file

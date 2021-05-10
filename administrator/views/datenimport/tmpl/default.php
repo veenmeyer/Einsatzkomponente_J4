@@ -8,10 +8,11 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
 jimport( 'joomla.filesystem.file' );
 jimport( 'joomla.filesystem.folder' );
 // Import CSS
-$document = JFactory::getDocument();
+$document = Factory::getDocument();
 $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 // try to set time limit
 @set_time_limit(0);
@@ -20,7 +21,7 @@ if ((int) ini_get('memory_limit') < 32) {
           @ini_set('memory_limit', '64M');
 		}
 // Versions-Nummer 
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $db->setQuery('SELECT manifest_cache FROM #__extensions WHERE name = "com_einsatzkomponente"');
 $params = json_decode( $db->loadResult(), true );
 	
@@ -54,7 +55,7 @@ $bug='0';
 //}
 //endif;
 // ---------------------------------------------------------------------------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports_data');
@@ -77,7 +78,7 @@ $i++;
 }
 $i = 0;
 while ($i <= $count) {
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $columns = array('id', 'asset_id', 'title', 'marker', 'beschr', 'icon', 'list_icon', 'ordering', 'state', 'created_by');
 $values = array($db->quote($reports_data_id[$i]), '0', $db->quote($reports_data_title[$i]), $db->quote($reports_data_marker[$i]), $db->quote($reports_data_beschr[$i]), $db->quote($reports_data_icon[$i]), $db->quote($reports_data_list_icon[$i]), $db->quote('0'), $db->quote($reports_data_published[$i]), $db->quote('')  );
@@ -98,7 +99,7 @@ $i++;
 endif;
 
 // -------------------------------------- #__reports to #__eiko_einsatzberichte------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports_images');
@@ -118,7 +119,7 @@ $i++;
 }
 $i = 0;
 while ($i <= $count) {
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $columns = array('id', 'asset_id', 'ordering', 'image', 'report_id', 'comment', 'thumb', 'state', 'created_by');
 $values = array($db->quote($reports_images_id[$i]), $db->quote('0'), $db->quote('0'), $db->quote($reports_images_image[$i]), $db->quote($reports_images_report_id[$i]), $db->quote(''), $db->quote($reports_images_image_thumb[$i]), $db->quote('1'), $db->quote('')  );
@@ -138,7 +139,7 @@ $i++;
 }
 endif;
 // ---------------------------------------------------------------------------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports');
@@ -153,7 +154,7 @@ while ($i <= $count) {
 $reports_id[$i] = $results[$i]->id;
 
 		$data_id = '';
-						$db = JFactory::getDbo();
+						$db = Factory::getDbo();
 						$query	= $db->getQuery(true);
 						$query
 							->select('id')
@@ -193,7 +194,7 @@ $i++;
 }
 $i = 0; // eingesetzte Organisationen 
 while ($i <= $count) {
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query
     ->select(array('a.id', 'a.name', 'b.report_id'))
@@ -208,7 +209,7 @@ $i++;
 }
 $i = 0; // eingesetzte Fahrzeuge
 while ($i <= $count) {
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query
     ->select(array('a.id', 'a.name', 'b.report_id'))
@@ -224,7 +225,7 @@ $i++;
 $i = 0;
 while ($i <= $count) {
 	
-$db =& JFactory::getDBO();
+$db =& Factory::getDBO();
 $query = 'SELECT thumb FROM #__eiko_images WHERE report_id='.$reports_id[$i];
 $db->setQuery($query);
 $bild = $db->loadObjectList();
@@ -232,7 +233,7 @@ $foto = $bild[0]->thumb;
 if (!$foto) :
 $foto = 'images/com_einsatzkomponente/einsatzbilder/thumbs/nopic.png';
 endif;
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $columns = array('id','asset_id','ordering','data1','image','address','date1','date2','date3','summary','boss','boss2','people','department','desc','alerting','gmap_report_latitude','gmap_report_longitude','counter','gmap','presse','presse2','presse3','updatedate','einsatzticker','notrufticker','tickerkat','auswahl_orga','vehicles','status','state','created_by');
 $values = array($reports_id[$i], '0', '0', $db->quote($reports_data1[$i]), $db->quote($foto), $db->quote($reports_address[$i]), $db->quote($reports_date1[$i]), $db->quote($reports_date2[$i]), $db->quote($reports_date3[$i]), $db->quote($reports_summary[$i]), $db->quote($reports_boss[$i]), $db->quote($reports_boss2[$i]), $db->quote($reports_people[$i]), $db->quote($reports_department[$i]), $db->quote($reports_desc[$i]), $db->quote($reports_alerting[$i]), $db->quote($reports_gmap_report_latitude[$i]), $db->quote($reports_gmap_report_longitude[$i]), $db->quote($reports_counter[$i]), $db->quote($reports_gmap[$i]), $db->quote($reports_presse[$i]), $db->quote($reports_presse2[$i]), $db->quote($reports_presse3[$i]), $db->quote($reports_updatedate[$i]),$db->quote($reports_einsatzticker[$i]), $db->quote($reports_notrufticker[$i]),$db->quote($reports_tickerKAT[$i]), $db->quote($auswahl_orga[$i]), $db->quote($vehicles[$i]), $db->quote($reports_status[$i]), $db->quote($reports_published[$i]), $db->quote($reports_updatename[$i]));
@@ -252,7 +253,7 @@ $i++;
 	
 endif;
 // ---------------------------------------------------------------------------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports_alerting');
@@ -272,7 +273,7 @@ $i++;
 }
 $i = 0;
 while ($i <= $count) {
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $columns = array('id', 'asset_id', 'ordering', 'title', 'image', 'state', 'created_by');
 $values = array($db->quote($reports_alerting_id[$i]),'0','0', $db->quote($reports_alerting_title[$i]), $db->quote($reports_alerting_image[$i]), $db->quote($reports_alerting_published[$i]),$db->quote('') );
@@ -292,7 +293,7 @@ $i++;
 }
 endif;
 // ---------------------------------------------------------------------------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports_config');
@@ -424,7 +425,7 @@ $i++;
 }
 endif;
 // ---------------------------------------------------------------------------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports_counter');
@@ -444,7 +445,7 @@ $i++;
 }
 endif;
 // ---------------------------------------------------------------------------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports_departments');
@@ -469,7 +470,7 @@ $i++;
 }
 $i = 0;
 while ($i <= $count) {
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $columns = array('id', 'asset_id', 'ordering', 'name', 'detail1', 'link', 'gmap_latitude', 'gmap_longitude', 'ffw', 'state', 'created_by');
 $values = array($db->quote($reports_departments_id[$i]), $db->quote('0'), $db->quote($reports_departments_ordering[$i]), $db->quote($reports_departments_name[$i]), $db->quote($reports_departments_detail1[$i]), $db->quote($reports_departments_link[$i]), $db->quote($reports_departments_gmap_latitude[$i]), $db->quote($reports_departments_gmap_longitude[$i]), $db->quote($reports_departments_ffw[$i]), $db->quote($reports_departments_published[$i]), $db->quote('') );
@@ -510,7 +511,7 @@ endif;
 //}
 //endif;
 // ---------------------------------------------------------------------------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports_display');
@@ -544,7 +545,7 @@ $i++;
 }
 endif;
 // ---------------------------------------------------------------------------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports_gmap');
@@ -574,7 +575,7 @@ $i++;
  
 $i = 0;
 while ($i <= $count) {
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->update("#__eiko_gmap_config");
 $query->set('asset_id = '.$db->quote('1'),'gmap_zoom_level = '.$db->quote($reports_gmap_gmap_zoom_level[$i]),'gmap_onload = '.$db->quote($reports_gmap_gmap_onload[$i]),'gmap_width = '.$db->quote($reports_gmap_gmap_width[$i]),'gmap_height = '.$db->quote($reports_gmap_gmap_height[$i]),'gmap_alarmarea = '.$db->quote($reports_gmap_gmap_alarmarea[$i]),'start_lat = '.$db->quote($reports_gmap_start_lat[$i]),'start_lang = '.$db->quote($reports_gmap_start_lang[$i]),'state = '.$db->quote('1'),'created_by = '.$db->quote('') );
@@ -612,7 +613,7 @@ endif;
 //}
 //endif;
 // ---------------------------------------------------------------------------------------------------------------
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
 $query->from('#__reports_vehicles');
@@ -638,7 +639,7 @@ $i++;
 }
 $i = 0;
 while ($i <= $count) {
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 $query = $db->getQuery(true);
 $columns = array('id', 'asset_id', 'ordering', 'name', 'detail1_label', 'detail1', 'detail2_label', 'detail2', 'detail3_label', 'detail3', 'detail4_label', 'detail4', 'detail5_label', 'detail5', 'detail6_label', 'detail6', 'detail7_label', 'detail7', 'department', 'link', 'image', 'desc', 'state', 'created_by');
 $values = array($db->quote($reports_vehicles_id[$i]), $db->quote('0'), $db->quote($reports_vehicles_ordering[$i]), $db->quote($reports_vehicles_name[$i]), $db->quote('Detail1'), $db->quote($reports_vehicles_detail1[$i]), $db->quote('Detail2'), $db->quote($reports_vehicles_detail2[$i]), $db->quote('Detail3'), $db->quote($reports_vehicles_detail3[$i]), $db->quote('Detail4'), $db->quote(''), $db->quote('Detail5'), $db->quote(''), $db->quote('Detail6'), $db->quote(''), $db->quote('Detail7'), $db->quote(''), $db->quote($reports_vehicles_department[$i]), $db->quote($reports_vehicles_link[$i]), $db->quote($reports_vehicles_image[$i]), $db->quote(''), $db->quote($reports_vehicles_published[$i]), $db->quote('') );

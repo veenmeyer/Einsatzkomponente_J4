@@ -8,12 +8,20 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\FormModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
+
 jimport('joomla.application.component.modelform');
 jimport('joomla.event.dispatcher');
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModelEinsatzberichtForm extends JModelForm
+class EinsatzkomponenteModelEinsatzberichtForm extends FormModel
 {
     
     var $_item = null;
@@ -30,17 +38,17 @@ class EinsatzkomponenteModelEinsatzberichtForm extends JModelForm
 	protected function populateState()
 	{
 		
-		$app = JFactory::getApplication('com_einsatzkomponente');
+		$app = Factory::getApplication('com_einsatzkomponente');
 		// Load state from the request userState on edit or from the passed variable on default
-        if (JFactory::getApplication()->input->get('layout') == 'edit') {
-            $id = JFactory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
+        if (Factory::getApplication()->input->get('layout') == 'edit') {
+            $id = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
         } else {
-            $id = JFactory::getApplication()->input->get('id');
-            JFactory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', $id);
+            $id = Factory::getApplication()->input->get('id');
+            Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', $id);
         }
-        if (JFactory::getApplication()->input->get('addlink') == '1') {
+        if (Factory::getApplication()->input->get('addlink') == '1') {
 			$id = '';
-            JFactory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', '');
+            Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', '');
 		}
 		
 		$this->setState('einsatzbericht.id', $id);
@@ -84,7 +92,7 @@ class EinsatzkomponenteModelEinsatzberichtForm extends JModelForm
 				}
 				// Convert the JTable to a clean JObject.
 				$properties = $table->getProperties(1);
-				$this->_item = JArrayHelper::toObject($properties, 'JObject');
+				$this->_item = ArrayHelper::toObject($properties, 'JObject');
 			} elseif ($error = $table->getError()) {
 				$this->setError($error);
 			}
@@ -95,7 +103,7 @@ class EinsatzkomponenteModelEinsatzberichtForm extends JModelForm
 	public function getTable($type = 'Einsatzbericht', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{   
         $this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
 	}     
     
 	/**
@@ -139,7 +147,7 @@ class EinsatzkomponenteModelEinsatzberichtForm extends JModelForm
 			// Initialise the table
 			$table = $this->getTable();
 			// Get the current user object.
-			$user = JFactory::getUser();
+			$user = Factory::getUser();
 			// Attempt to check the row out.
             if (method_exists($table, 'checkout')) {
                 if (!$table->checkout($user->get('id'), $id)) {
@@ -182,11 +190,11 @@ class EinsatzkomponenteModelEinsatzberichtForm extends JModelForm
         
 		//	$data->auswahl_orga = implode(',',$array);
 			if ($data->auswahl_orga == '') : // Vorbelegung Organisationen
-			$params = JComponentHelper::getParams('com_einsatzkomponente');
+			$params = ComponentHelper::getParams('com_einsatzkomponente');
 			$data->auswahl_orga = 	$params->get('pre_auswahl_orga','');
 			endif;
 		
-			$params = JComponentHelper::getParams('com_einsatzkomponente');
+			$params = ComponentHelper::getParams('com_einsatzkomponente');
 			$data->watermark_image = 	$params->get('watermark_image','');
 			
         return $data;
@@ -202,7 +210,7 @@ class EinsatzkomponenteModelEinsatzberichtForm extends JModelForm
 	{
 		$id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('einsatzbericht.id');
         $state = (!empty($data['state'])) ? 1 : 0;
-        $user = JFactory::getUser();
+        $user = Factory::getUser();
         if($id) {
             //Check the user can edit this item
             $authorised = $user->authorise('core.edit', 'com_einsatzkomponente.einsatzbericht'.$id) || $authorised = $user->authorise('core.edit.own', 'com_einsatzkomponente.einsatzbericht'.$id);
@@ -219,7 +227,7 @@ class EinsatzkomponenteModelEinsatzberichtForm extends JModelForm
             }
         }
         if ($authorised !== true) {
-			JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
             return false;
         }
         
@@ -235,8 +243,8 @@ class EinsatzkomponenteModelEinsatzberichtForm extends JModelForm
      function delete($data)
     {
         $id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('einsatzbericht.id');
-        if(JFactory::getUser()->authorise('core.delete', 'com_einsatzkomponente.einsatzbericht'.$id) !== true){
-			JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+        if(Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.einsatzbericht'.$id) !== true){
+			Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
             return false;
         }
         $table = $this->getTable();

@@ -9,8 +9,11 @@
 
 
 defined('JPATH_BASE') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
-$app = JFactory::getApplication();
+$app = Factory::getApplication();
 $params = $app->getParams('com_einsatzkomponente');
 
 
@@ -24,7 +27,7 @@ $data['options'] = !empty($data['options']) ? $data['options'] : array();
 // Set some basic options
 $customOptions = array(
     'filtersHidden' => isset($data['options']['filtersHidden']) ? $data['options']['filtersHidden'] : empty($data['view']->activeFilters),
-    'defaultLimit' => isset($data['options']['defaultLimit']) ? $data['options']['defaultLimit'] : JFactory::getApplication()->get('list_limit', 20),
+    'defaultLimit' => isset($data['options']['defaultLimit']) ? $data['options']['defaultLimit'] : Factory::getApplication()->get('list_limit', 20),
     'searchFieldSelector' => '#filter_search',
     'orderFieldSelector' => '#list_fullordering'
 );
@@ -63,11 +66,11 @@ JHtml::_('searchtools.form', $formSelector, $data['options']);
 		
 
 		<?php if ($params->get('show_filter_search','1')) : ?>
-            <!--<label for="filter_search" class="element-invisible" aria-invalid="false"><?php echo JText::_('COM_EINSATZKOMPONENTE_SUCHEN'); ?></label> -->
+            <!--<label for="filter_search" class="element-invisible" aria-invalid="false"><?php echo Text::_('COM_EINSATZKOMPONENTE_SUCHEN'); ?></label> -->
 
             <div class="btn-wrapper input-append">
                 <?php echo $filters['filter_search']->input; ?>
-                <button type="submit" class="btn " title="" data-original-title="<?php echo JText::_('COM_EINSATZKOMPONENTE_SUCHEN'); ?>">
+                <button type="submit" class="btn " title="" data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_SUCHEN'); ?>">
                     <i class="icon-search"></i>
                 </button>
             </div>
@@ -77,15 +80,15 @@ JHtml::_('searchtools.form', $formSelector, $data['options']);
             <!-- <div class="btn-wrapper hidden-phone"> -->
             	<div class="btn-wrapper"> 
                 <button type="button" class="btn  js-stools-btn-filter" title=""
-                        data-original-title="<?php echo JText::_('COM_EINSATZKOMPONENTE_FILTER_AUSWAEHLEN'); ?>">
-                    <?php echo JText::_('COM_EINSATZKOMPONENTE_FILTER_AUSWAEHLEN'); ?> <i class="caret"></i>
+                        data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_FILTER_AUSWAEHLEN'); ?>">
+                    <?php echo Text::_('COM_EINSATZKOMPONENTE_FILTER_AUSWAEHLEN'); ?> <i class="caret"></i>
                 </button>
             </div>
             <?php endif; ?>
             <!-- <div class="btn-wrapper hidden-phone"> -->
             	<div class="btn-wrapper"> 
-                <button type="button" class="btn  js-stools-btn-clear" title="" data-original-title="<?php echo JText::_('COM_EINSATZKOMPONENTE_ALLE_FILTER_ZURUECKSETZEN'); ?>">
-                    <?php echo JText::_('COM_EINSATZKOMPONENTE_ALLE_FILTER_ZURUECKSETZEN'); ?>
+                <button type="button" class="btn  js-stools-btn-clear" title="" data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_ALLE_FILTER_ZURUECKSETZEN'); ?>">
+                    <?php echo Text::_('COM_EINSATZKOMPONENTE_ALLE_FILTER_ZURUECKSETZEN'); ?>
                 </button>
             </div>
         </div>
@@ -146,12 +149,12 @@ JHtml::_('searchtools.form', $formSelector, $data['options']);
 						
 				<?php switch ($fieldName) 
 				 { 
-				 	case 'vehicles': $active_name .= '<span class="label label-info">'.JText::_('COM_EINSATZKOMPONENTE_FAHRZEUG').'</span> ';break; 
-				 	case 'alerting': $active_name .= '<span class="label label-info">'.JText::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSART').'</span> ';break; 
-				 	case 'data1': $active_name .= '<span class="label label-info">'.JText::_('COM_EINSATZKOMPONENTE_EINSATZART').'</span> ';break; 
-					case 'tickerkat': $active_name .= '<span class="label label-info">'.JText::_('COM_EINSATZKOMPONENTE_KATEGORIE').'</span> ';break; 
-				 	case 'auswahl_orga': $active_name .= '<span class="label label-info">'.JText::_('COM_EINSATZKOMPONENTE_ORGANISATION').'</span> ';break;
-				 	case 'year': $active_name .= '<span class="label label-info">'.JText::_('COM_EINSATZKOMPONENTE_JAHR').'</span> ';break; 
+				 	case 'vehicles': $active_name .= '<span class="label label-info">'.Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG').'</span> ';break; 
+				 	case 'alerting': $active_name .= '<span class="label label-info">'.Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSART').'</span> ';break; 
+				 	case 'data1': $active_name .= '<span class="label label-info">'.Text::_('COM_EINSATZKOMPONENTE_EINSATZART').'</span> ';break; 
+					case 'tickerkat': $active_name .= '<span class="label label-info">'.Text::_('COM_EINSATZKOMPONENTE_KATEGORIE').'</span> ';break; 
+				 	case 'auswahl_orga': $active_name .= '<span class="label label-info">'.Text::_('COM_EINSATZKOMPONENTE_ORGANISATION').'</span> ';break;
+				 	case 'year': $active_name .= '<span class="label label-info">'.Text::_('COM_EINSATZKOMPONENTE_JAHR').'</span> ';break; 
 				 	default: $active_name = '';break; 
 				}  ?>
 

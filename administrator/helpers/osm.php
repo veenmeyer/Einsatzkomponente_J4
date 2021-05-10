@@ -8,11 +8,11 @@
  */
 // No direct access
 defined('_JEXEC') or die;
-
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
 /**
@@ -26,41 +26,38 @@ class OsmHelper
 		
 		public static function installOsmMap()
 	{
-			$document = JFactory::getDocument();
-			$document->addStyleSheet('components/com_einsatzkomponente/assets/leaflet/leaflet.css'); 
-			$document->addScript('components/com_einsatzkomponente/assets/leaflet/leaflet.js');
-			$document->addScript('components/com_einsatzkomponente/assets/leaflet/geocode.js');
+			HTMLHelper::_('stylesheet','components/com_einsatzkomponente/assets/leaflet/leaflet.css');			
+			HTMLHelper::_('script','components/com_einsatzkomponente/assets/leaflet/leaflet.js');
+			HTMLHelper::_('script','components/com_einsatzkomponente/assets/leaflet/geocode.js');
+			
 			return;
 	}
 
 
 public static function callOsmMap($zoom='',$lat='53.26434271775887',$lon='7.5730027132448186')
 	{
-?>
-		<script type="text/javascript">
-					
-		var myOsmDe = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {attribution:  'Map data &copy; <a href="https://osm.org/copyright"> OpenStreetMap</a> | Lizenz: <a href="http://opendatacommons.org/licenses/odbl/"> Open Database License (ODbL)</a>'});
+	$script ="			
+		var myOsmDe = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {attribution:  'Map data &copy; <a href=\"https://osm.org/copyright\"> OpenStreetMap</a> | Lizenz: <a href=\"http://opendatacommons.org/licenses/odbl/\"> Open Database License (ODbL)</a>'});
 					
 		var map = L.map('map_canvas', {
 			doubleClickZoom: false,
-			center: [<?php echo $lat;?>, <?php echo $lon;?>],
+			center: [".$lat.", ".$lon."],
 			minZoom: 2,
 			maxZoom: 18,
-			zoom: <?php echo $zoom;?>,
+			zoom: ".$zoom.",
 			layers: [myOsmDe],
 			scrollWheelZoom: false
 			});
 		//var baseLayers = {
-		//	"OSM deutscher Style": myOsmDe
+		//	'OSM deutscher Style': myOsmDe
 		//	};
 		//	L.control.layers(baseLayers).addTo(map);
-
-
 		var osmGeocoder = new L.Control.OSMGeocoder();
-		map.addControl(osmGeocoder);
+	map.addControl(osmGeocoder);
+			";
 			
-		</script>
-		<?php
+		Factory::getDocument()->addScriptDeclaration($script);
+		
 		return;
 }
 
@@ -68,8 +65,7 @@ public static function callOsmMap($zoom='',$lat='53.26434271775887',$lon='7.5730
 
 		public static function addMarkerOsmMap($lat='53.26434271775887',$lon='7.5730027132448186')
 	{
-			?>
-			<script type="text/javascript">
+	$script ="			
 	function addMarker(e){	
 		map.removeLayer(marker2);
  
@@ -77,15 +73,15 @@ public static function callOsmMap($zoom='',$lat='53.26434271775887',$lon='7.5730
 	
 		// Koordinaten im Feld aktualisieren
 		var m = marker.getLatLng();
-		document.getElementById("jform_gmap_report_latitude").value=m.lat.toFixed(15);
-        document.getElementById("jform_gmap_report_longitude").value=m.lng.toFixed(15);
+		document.getElementById('jform_gmap_report_latitude').value=m.lat.toFixed(15);
+        document.getElementById('jform_gmap_report_longitude').value=m.lng.toFixed(15);
 		
-		marker.on("drag", function(e) {
+		marker.on('drag', function(e) {
 			var marker = e.target;
 			var m = marker.getLatLng();
 			//map.panTo(new L.LatLng(m.lat, m.lng));
-			document.getElementById("jform_gmap_report_latitude").value=m.lat.toFixed(15);
-			document.getElementById("jform_gmap_report_longitude").value=m.lng.toFixed(15);
+			document.getElementById('jform_gmap_report_latitude').value=m.lat.toFixed(15);
+			document.getElementById('jform_gmap_report_longitude').value=m.lng.toFixed(15);
 		});
 
 		// Marker bei Doppelklick löschen
@@ -101,17 +97,9 @@ public static function callOsmMap($zoom='',$lat='53.26434271775887',$lon='7.5730
 		function onclick() {
 			var ZoomLevel = map.getZoom();
 			var m = marker.getLatLng();
-			document.getElementById("jform_gmap_report_latitude").value=m.lat.toFixed(15);
-			document.getElementById("jform_gmap_report_longitude").value=m.lng.toFixed(15);
+			document.getElementById('jform_gmap_report_latitude').value=m.lat.toFixed(15);
+			document.getElementById('jform_gmap_report_longitude').value=m.lng.toFixed(15);
 			
-			//	marker._popup.setContent(
-			//	  "<h4>OSM-Link (url)</h4>" 
-			//	+ "www.openstreetmap.org/?mlat=" + m.lat.toFixed(6) + "&mlon=" +  m.lng.toFixed(6) 
-			//	+ "#map=" + ZoomLevel + "/" + m.lat.toFixed(6) + "/" + m.lng.toFixed(6) + "<br>" 
-			//	+ "<h4>Koordinaten</h4>" 
-			//	+ "Lat,Lon: " + m.lat.toFixed(6) + "," + m.lng.toFixed(6) + "<br>" 
-			//	+ "Lon,Lat: " + m.lng.toFixed(6) + "," + m.lat.toFixed(6)		
-			//	)
 		}  
 	
 		function ondblclick() 
@@ -137,21 +125,22 @@ var LeafIcon = L.Icon.extend({
 //*********************************************************************
 // Icons zuweisen
 
-var blueIcon   = new LeafIcon({iconUrl:'<?php echo Uri::base();?>/components/com_einsatzkomponente/assets/leaflet/pin48blue.png'});
+var blueIcon   = new LeafIcon({iconUrl:'".Uri::base()."/components/com_einsatzkomponente/assets/leaflet/pin48blue.png'});
 		
 		
-var marker2 = new L.marker([<?php echo $lat.','.$lon;?>],{draggable:'true',icon: blueIcon}).bindPopup().addTo(map);
+var marker2 = new L.marker([".$lat.','.$lon."],{draggable:'true',icon: blueIcon}).bindPopup().addTo(map);
 
-marker2.on("drag", function(e) {
+marker2.on('drag', function(e) {
     var marker2 = e.target;
     var m = marker2.getLatLng();
     //map.panTo(new L.LatLng(m.lat, m.lng));
-	document.getElementById("jform_gmap_report_latitude").value=m.lat.toFixed(15);
-    document.getElementById("jform_gmap_report_longitude").value=m.lng.toFixed(15);
+	document.getElementById('jform_gmap_report_latitude').value=m.lat.toFixed(15);
+    document.getElementById('jform_gmap_report_longitude').value=m.lng.toFixed(15);
 });
 
-</script>
-			<?php
+";
+			Factory::getDocument()->addScriptDeclaration($script);
+
 			return;
 }
 
@@ -162,12 +151,11 @@ marker2.on("drag", function(e) {
 			$app	= Factory::getApplication();
 			$params = $app->getParams('com_einsatzkomponente');
 
-			?>
-			<script type="text/javascript">
+	$script ="			
 	var geodaten =[];
 	var current;
-			icsize = '<?php echo $params->get('einsatzkarte_gmap_icon','18');?>';	
-			geodaten = <?php echo $json;?>;
+			icsize = '".$params->get('einsatzkarte_gmap_icon','18')."';	
+			geodaten = ".$json.";
 			
 			var LeafIcon = L.Icon.extend({
 						options: {
@@ -181,8 +169,8 @@ marker2.on("drag", function(e) {
 			for (var i = 0; i < geodaten.length; i++) {
 				
 				var current = geodaten[i];
-				var Icon   = new LeafIcon({iconUrl:"<?php echo Uri::base();?>"+current.icon});
-				var text = "<h2 class='eiko_h2_osm'>"+current.name+"</h2><a class='btn-home' href=<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' ); ?>"+current.id+"><?php echo JText::_('COM_EINSATZKOMPONENTE_DETAILS');?></a>"
+				var Icon   = new LeafIcon({iconUrl:'".Uri::base()."'+current.icon});
+				var text = '<h2 class='eiko_h2_osm'>'+current.name+'</h2><a class='btn-home' href=".Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' )."'+current.id+'>".Text::_('COM_EINSATZKOMPONENTE_DETAILS')."</a>'
 
 				L.marker(new L.LatLng([current.lat], [current.lon]),{icon : Icon},{title : current.name}).addTo(map)
 				.bindPopup(text);
@@ -191,8 +179,9 @@ marker2.on("drag", function(e) {
 			}
 
 
-			</script>
-			<?php
+";
+			Factory::getDocument()->addScriptDeclaration($script);
+			
 			return;
 }
 
@@ -201,20 +190,19 @@ marker2.on("drag", function(e) {
 			$app	= Factory::getApplication();
 			$params = $app->getParams('com_einsatzkomponente');
 
-			?>
-			<script type="text/javascript">
+	$script ="			
 
-			lat = <?php echo $lat;?>;
-			lon = <?php echo $lon;?>;
-			name = '<?php echo $name;?>';
-			icon = '<?php echo $icon;?>';
-			icsize = '<?php echo $params->get('einsatzkarte_gmap_icon','18');?>';
-			id = '<?php echo $id;?>';
-			popup = <?php echo $params->get('display_detail_popup','false');?>;
-			map.setView(new L.LatLng(lat,lon), <?php echo $params->get('detail_gmap_zoom_level','12');?>);
+			lat = ".$lat.";
+			lon = ".$lon.";
+			name = '".$name."';
+			icon = '".$icon."';
+			icsize = '".$params->get('einsatzkarte_gmap_icon','18')."';
+			id = '".$id."';
+			popup = ".$params->get('display_detail_popup','false').";
+			map.setView(new L.LatLng(lat,lon),".$params->get('detail_gmap_zoom_level','12').");
 			
-			//map.options.minZoom = <?php echo $params->get('detail_gmap_zoom_level','12');?>;
-			map.options.maxZoom = <?php echo $params->get('detail_gmap_zoom_level','12');?>;
+			//map.options.minZoom = ".$params->get('detail_gmap_zoom_level','12').";
+			map.options.maxZoom = ".$params->get('detail_gmap_zoom_level','12').";
 			
 			
 			var LeafIcon = L.Icon.extend({
@@ -227,10 +215,10 @@ marker2.on("drag", function(e) {
 
 
 				
-				var Icon   = new LeafIcon({iconUrl:"<?php echo Uri::base();?>"+icon});
+				var Icon   = new LeafIcon({iconUrl:'".Uri::base()."'+icon});
 				
 				if (name && popup) {
-				var text = "<h2 class='eiko_h2_osm'>"+name+"</h2>"
+				var text = '<h2 class='eiko_h2_osm'>'+name+'</h2>'
 				L.marker(new L.LatLng([lat], [lon]),{icon : Icon},{title : name}).addTo(map)
 				.bindPopup(text).openPopup();
 				}
@@ -241,8 +229,9 @@ marker2.on("drag", function(e) {
 				
 
 
-			</script>
-			<?php
+";
+			Factory::getDocument()->addScriptDeclaration($script);
+
 			return;
 }
 
@@ -251,12 +240,11 @@ marker2.on("drag", function(e) {
 			$app	= Factory::getApplication();
 			$params = $app->getParams('com_einsatzkomponente');
 		
-			?>
-			<script type="text/javascript">
+	$script ="			
 	var geodaten =[];
 	var current;
-	icsize = '<?php echo $params->get('einsatzkarte_gmap_icon_orga','18');?>';
-	geodaten = <?php echo $json;?>;
+	icsize = '".$params->get('einsatzkarte_gmap_icon_orga','18')."';
+	geodaten = ".$json.";
 			
 			var LeafIcon = L.Icon.extend({
 						options: {
@@ -270,8 +258,8 @@ marker2.on("drag", function(e) {
 			for (var i = 0; i < geodaten.length; i++) {
 				
 				var current = geodaten[i];
-				var Icon   = new LeafIcon({iconUrl:"<?php echo Uri::base();?>"+current.icon});
-				var text = "<h2 class='eiko_h2_osm'>"+current.name+"</h2>"
+				var Icon   = new LeafIcon({iconUrl:'".Uri::base()."'+current.icon});
+				var text = '<h2 class='eiko_h2_osm'>'+current.name+'</h2>'
 				L.marker(new L.LatLng([current.lat], [current.lon]),{icon : Icon},{title : current.name})
 				.bindPopup(text)
 				.addTo(map);
@@ -279,58 +267,58 @@ marker2.on("drag", function(e) {
 			}
 
 
-			</script>
-			<?php
+";
+			Factory::getDocument()->addScriptDeclaration($script);
+
 			return;
 }
 
 
 		public static function addPolygonMap($latlngs='[[0,0]]',$color='red')
 	{
-			?>
-			<script type="text/javascript">
-			var latlngs = <?php echo $latlngs;?>;
-			var polygon = L.polygon(latlngs, {color: '<?php echo $color;?>'}).addTo(map);
-			</script>
-			<?php
+	$script ="			
+			var latlngs = ".$latlngs.";
+			var polygon = L.polygon(latlngs, {color: '".$color."'}).addTo(map);
+";
+			Factory::getDocument()->addScriptDeclaration($script);
+
 			return;
 }
 
 		public static function addRightClickOsmMap()
 	{
-			?>
-			<script type="text/javascript">
+	$script ="			
 			
 			map.on('contextmenu', function(e) {
 				//alert(e.target);
 				var marker = new L.marker(e.latlng,{draggable:'true'}).addTo(map);
 				var m = marker.getLatLng();
 				map.panTo(new L.LatLng(m.lat, m.lng));
-				document.getElementById("jform_start_lat").value=m.lat.toFixed(15);
-				document.getElementById("jform_start_lang").value=m.lng.toFixed(15);
+				document.getElementById('jform_start_lat').value=m.lat.toFixed(15);
+				document.getElementById('jform_start_lang').value=m.lng.toFixed(15);
 			});
 			map.on('zoomstart',function(e){
 				  var currZoom = map.getZoom();
-				  document.getElementById("jform_gmap_zoom_level").value=currZoom;
+				  document.getElementById('jform_gmap_zoom_level').value=currZoom;
 				  });		
 			
-			</script>
-			<?php
+";
+			Factory::getDocument()->addScriptDeclaration($script);
+
 			return;
 }
 
 
 		public static function editPolygonMap($latlngs='[[0,0]]',$color='red')
 	{
-			$document = JFactory::getDocument();
-			$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css'); 
-			$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js');
+			$document = Factory::getDocument();
+			$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css'); 
+			$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js');
 
-			?>
-			<script type="text/javascript">
+	$script ="			
 			
-			var latlngs = <?php echo $latlngs;?>;
-			var polygon = L.polygon(latlngs, {color: '<?php echo $color;?>'}).addTo(map);
+			var latlngs = ".$latlngs.";
+			var polygon = L.polygon(latlngs, {color: '".$color."'}).addTo(map);
 			
 			// Initialise the FeatureGroup to store editable layers
 var editableLayers = new L.FeatureGroup();
@@ -340,6 +328,7 @@ map.addLayer(editableLayers);
 var drawPluginOptions = {
   position: 'topright',
   draw: {
+
     polygon: {
       allowIntersection: true, // Restricts shapes to simple polygons
       drawError: {
@@ -355,13 +344,16 @@ var drawPluginOptions = {
     circle: false, // Turns off this drawing tool
     rectangle: false,
     marker: false,
+	circlemarker: false,
     },
   edit: {
     featureGroup: editableLayers, //REQUIRED!!
-    remove: false
+    remove: false,
+	edit: false
   }
 };
 
+	 
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 var drawControl = new L.Control.Draw(drawPluginOptions);
 map.addControl(drawControl);
@@ -386,7 +378,7 @@ if (type === 'polygon') {
         latlngs = layer.getLatLngs()[0];
 
         for (var i = 0; i < latlngs.length; i++) {
-            coordinates= coordinates+latlngs[i].lat+","+latlngs[i].lng+"|";
+            coordinates= coordinates+latlngs[i].lat+','+latlngs[i].lng+'|';
         }
 
 		document.getElementById('jform_gmap_alarmarea').innerHTML = coordinates;
@@ -397,8 +389,9 @@ if (type === 'polygon') {
   editableLayers.addLayer(layer);
 });
 
-			</script>
-			<?php
+";
+			Factory::getDocument()->addScriptDeclaration($script);
+
 			return;
 }
 

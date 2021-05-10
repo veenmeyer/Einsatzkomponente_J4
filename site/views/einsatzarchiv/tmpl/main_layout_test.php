@@ -8,6 +8,9 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 //echo count ($this->items).' - '.count($this->all_items);
 //print_r ($this->all_items);
 ?>
@@ -27,9 +30,9 @@ defined('_JEXEC') or die;
 
 <?php echo '<span class="mobile_hide_320">'.$this->modulepos_2.'</span>';?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid='.$this->params->get('homelink','').''); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid='.$this->params->get('homelink','').''); ?>" method="post" name="adminForm" id="adminForm">
 
-    <?php echo JLayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__)); ?>
+    <?php echo LayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__)); ?>
 
 
 
@@ -79,11 +82,11 @@ defined('_JEXEC') or die;
 		   <p>
 		   <?php if ($item->image) : ?>
 					<?php if (isset($item->checked_out) && $item->checked_out) : ?>
-					<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
+					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
 					<?php endif; ?> 
 					
 					<?php if ($this->params->get('display_home_links_3','0')) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.(int) $item->id); ?>">
+					<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.(int) $item->id); ?>">
 					<?php endif; ?> 
 
 					<img  class="img-rounded eiko_img_einsatzbild_main_5" src="<?php echo JURI::Root();?><?php echo $item->image;?>"/>
@@ -94,11 +97,11 @@ defined('_JEXEC') or die;
            <?php endif;?>
 		   <?php if (!$item->image AND $this->params->get('display_home_image_nopic','0')) : ?>
 					<?php if (isset($item->checked_out) && $item->checked_out) : ?>
-					<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
+					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
 					<?php endif; ?> 
 					
 					<?php if ($this->params->get('display_home_links_3','0')) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.(int) $item->id); ?>">
+					<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.(int) $item->id); ?>">
 					<?php endif; ?> 
 
 					<img  class="img-rounded eiko_img_einsatzbild_main_5" src="<?php echo JURI::Root().'images/com_einsatzkomponente/einsatzbilder/nopic.png';?>"/>

@@ -9,6 +9,9 @@
  */
 defined('_JEXEC') or die;
 
+
+use \Joomla\CMS\Factory;
+
 class EinsatzkomponenteFrontendHelper {
 
   public static function hex2rgba($color, $opacity = false) {  // Farbe von HEX zu RGBA umwandeln
@@ -41,4 +44,8 @@ class EinsatzkomponenteFrontendHelper {
     //Return rgb(a) color string
     return $output;
   }
+  
+
+  
+  
 }

@@ -8,6 +8,9 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.modellist');
 
@@ -16,7 +19,7 @@ jimport('joomla.application.component.modellist');
  *
  * @since  1.6
  */
-class EinsatzkomponenteModelEinsatzfahrzeuge extends JModelList
+class EinsatzkomponenteModelEinsatzfahrzeuge extends ListModel
 {
 	/**
 	 * Constructor.
@@ -79,7 +82,7 @@ class EinsatzkomponenteModelEinsatzfahrzeuge extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		// List state information
 		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->get('list_limit'));
@@ -236,7 +239,7 @@ if (empty($list['direction']))
 		// Join over the created by field 'created_by'
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 		
-		if (!JFactory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente'))
+		if (!Factory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente'))
 		{
 			$query->where('(a.state = 1 or a.state = 2)');
 		}
@@ -258,7 +261,7 @@ if (empty($list['direction']))
 		
 
 		// Filtering department
-	    $app = JFactory::getApplication();
+	    $app = Factory::getApplication();
 		$params = $app->getParams('com_einsatzkomponente');
 		$array = array();
 		$filter_orga = $params->get('filter_orga');
@@ -285,7 +288,7 @@ if (empty($list['direction']))
 		}
 		
 		// Filter Menüparameter 
-			        $app = JFactory::getApplication();
+			        $app = Factory::getApplication();
 					$params = $app->getParams('com_einsatzkomponente');
 					$array = array();
 					$filter_fahrzeuge = $params->get('filter_fahrzeuge');
@@ -342,7 +345,7 @@ if (empty($list['direction']))
 
 				foreach ($values as $value)
 				{
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select($db->quoteName('name'))
@@ -370,7 +373,7 @@ if (empty($list['direction']))
 
 				foreach ($values as $value)
 				{
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query
 							->select($db->quoteName('name'))
@@ -400,7 +403,7 @@ if (empty($list['direction']))
 	 */
 	protected function loadFormData()
 	{
-		$app              = JFactory::getApplication();
+		$app              = Factory::getApplication();
 		$filters          = $app->getUserState($this->context . '.filter', array());
 		$error_dateformat = false;
 
@@ -415,7 +418,7 @@ if (empty($list['direction']))
 
 		if ($error_dateformat)
 		{
-			$app->enqueueMessage(JText::_("COM_EINSATZKOMPONENTE_SEARCH_FILTER_DATE_FORMAT"), "warning");
+			$app->enqueueMessage(Text::_("COM_EINSATZKOMPONENTE_SEARCH_FILTER_DATE_FORMAT"), "warning");
 			$app->setUserState($this->context . '.filter', $filters);
 		}
 

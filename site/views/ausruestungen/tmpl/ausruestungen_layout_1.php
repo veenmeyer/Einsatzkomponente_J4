@@ -8,9 +8,13 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
@@ -18,7 +22,7 @@ JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
 
-$user = JFactory::getUser();
+$user = Factory::getUser();
 $userId = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn = $this->state->get('list.direction');
@@ -36,22 +40,22 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 <?php endif;?>
 
 
-<form action="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestungen'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestungen'); ?>" method="post" name="adminForm" id="adminForm">
 
     <?php //echo JLayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__)); ?>
     <table class="table table-striped" id = "ausruestungList" >
         <thead >
             <tr >
 				<th class='left'>
-				<?php echo JText::_('COM_EINSATZKOMPONENTE_IMAGE');?>
+				<?php echo Text::_('COM_EINSATZKOMPONENTE_IMAGE');?>
 				</th>
     				<th class='left'>
-					<?php echo JText::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG');?>				
+					<?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG');?>				
 					</th>
 
     				<?php if ($canEdit || $canDelete): ?>
 					<th class="center">
-				<?php echo JText::_('COM_EINSATZKOMPONENTE_ADMIN_ACTION'); ?>
+				<?php echo Text::_('COM_EINSATZKOMPONENTE_ADMIN_ACTION'); ?>
 				</th>
 				<?php endif; ?>
 
@@ -75,7 +79,7 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
         <?php $canEdit = $user->authorise('core.edit', 'com_einsatzkomponente'); ?>
 
         				<?php if (!$canEdit && $user->authorise('core.edit.own', 'com_einsatzkomponente')): ?>
-					<?php $canEdit = JFactory::getUser()->id == $item->created_by; ?>
+					<?php $canEdit = Factory::getUser()->id == $item->created_by; ?>
 				<?php endif; ?>
 
         <tr class="row<?php echo $i % 2; ?>">
@@ -89,11 +93,11 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 				
             	<td>
 				<?php if (isset($item->checked_out) && $item->checked_out) : ?>
-					<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'ausruestungen.', $canCheckin); ?>
+					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'ausruestungen.', $canCheckin); ?>
 				<?php endif; ?>
 				
 				<?php if ($this->params->get('show_ausruestung_detail_link','1')) : ?>
-				<a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestung&id='.(int) $item->id); ?>">
+				<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestung&id='.(int) $item->id); ?>">
 				<?php echo '<span style="font-size:20px;font-weight:bold;">'.$this->escape($item->name).'</span>'; ?></a>
 				<?php endif; ?>
 				<?php if (!$this->params->get('show_ausruestung_detail_link','1')) : ?>
@@ -116,14 +120,14 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 					<?php echo $Desc; ?>
 				<?php endif; ?>
 				
-				<p><a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestung&id='.(int) $item->id); ?>" class="btn btn-primary" role="button"><?php echo JText::_('COM_EINSATZKOMPONENTE_DETAILS_2');?></a></p>
+				<p><a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestung&id='.(int) $item->id); ?>" class="btn btn-primary" role="button"><?php echo Text::_('COM_EINSATZKOMPONENTE_DETAILS_2');?></a></p>
 				</td>
 
 
             				<?php if ($canEdit || $canDelete): ?>
 					<td class="center">
 						<?php if ($canEdit): ?>
-							<a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=ausruestungform&id='.$item->id); ?>"  class="btn btn-mini" type="button"><i class="icon-edit" ></i></a>
+							<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&id='.$item->id); ?>"  class="btn btn-mini" type="button"><i class="icon-edit" ></i></a>
 						<?php endif; ?>
 						<?php if ($canDelete): ?>
 							<button data-item-id="<?php echo $item->id; ?>" class="btn btn-mini delete-button" type="button"><i class="icon-trash" ></i></button>
@@ -137,16 +141,16 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
     </table>
 
     <?php if ($canCreate): ?>
-        <a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=ausruestungform.edit&id=0', false, 2); ?>"
+        <a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestungform.edit&id=0', false, 2); ?>"
            class="btn btn-success btn-small"><i
-                class="icon-plus"></i> <?php echo JText::_('COM_EINSATZKOMPONENTE_ADD'); ?></a>
+                class="icon-plus"></i> <?php echo Text::_('COM_EINSATZKOMPONENTE_ADD'); ?></a>
     <?php endif; ?>
 
     <input type="hidden" name="task" value=""/>
     <input type="hidden" name="boxchecked" value="0"/>
     <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>"/>
     <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>"/>
-    <?php echo JHtml::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 <script type="text/javascript">
@@ -157,8 +161,8 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 
     function deleteItem() {
         var item_id = jQuery(this).attr('data-item-id');
-        if (confirm("<?php echo JText::_('COM_EINSATZKOMPONENTE_WIRKLICH_LOESCHEN'); ?>")) {
-            window.location.href = '<?php echo JRoute::_('index.php?option=com_einsatzkomponente&task=ausruestungform.remove&id=', false, 2) ?>' + item_id;
+        if (confirm("<?php echo Text::_('COM_EINSATZKOMPONENTE_WIRKLICH_LOESCHEN'); ?>")) {
+            window.location.href = '<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestungform.remove&id=', false, 2) ?>' + item_id;
         }
     }
 </script>

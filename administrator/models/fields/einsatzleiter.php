@@ -7,11 +7,13 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('JPATH_BASE') or die;
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormHelper;
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldEinsatzleiter extends JFormField
+class JFormFieldEinsatzleiter extends FormField
 {
 	/**
 	 * The form field type.
@@ -34,7 +36,7 @@ class JFormFieldEinsatzleiter extends JFormField
         
 
 
-$db = JFactory::getDBO();
+$db = Factory::getDBO();
 $query = 'SELECT id, boss as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY boss ORDER BY boss';
 $db->setQuery($query);
 $arrayDb = $db->loadObjectList();

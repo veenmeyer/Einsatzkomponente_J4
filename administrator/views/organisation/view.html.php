@@ -8,6 +8,11 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+
 jimport('joomla.application.component.view');
 JLoader::import('helpers.einsatzkomponente', JPATH_SITE.'/administrator/components/com_einsatzkomponente');
 JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatzkomponente'); 
@@ -15,7 +20,7 @@ JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatz
 /**
  * View to edit
  */
-class EinsatzkomponenteViewOrganisation extends JViewLegacy
+class EinsatzkomponenteViewOrganisation extends HtmlView
 {
 	protected $state;
 	protected $item;
@@ -45,8 +50,8 @@ class EinsatzkomponenteViewOrganisation extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		JFactory::getApplication()->input->set('hidemainmenu', true);
-		$user		= JFactory::getUser();
+		Factory::getApplication()->input->set('hidemainmenu', true);
+		$user		= Factory::getUser();
 		$isNew		= ($this->item->id == 0);
         if (isset($this->item->checked_out)) {
 		    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
@@ -54,25 +59,25 @@ class EinsatzkomponenteViewOrganisation extends JViewLegacy
             $checkedOut = false;
         }
 		$canDo		= EinsatzkomponenteHelper::getActions();
-		JToolBarHelper::title(JText::_('COM_EINSATZKOMPONENTE_TITLE_ORGANISATION'), 'organisation.png');
+		ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_ORGANISATION'), 'organisation.png');
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{
-			JToolBarHelper::apply('organisation.apply', 'JTOOLBAR_APPLY');
-			JToolBarHelper::save('organisation.save', 'JTOOLBAR_SAVE');
+			ToolbarHelper::apply('organisation.apply', 'JTOOLBAR_APPLY');
+			ToolbarHelper::save('organisation.save', 'JTOOLBAR_SAVE');
 		}
 		if (!$checkedOut && ($canDo->get('core.create'))){
-			JToolBarHelper::custom('organisation.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+			ToolbarHelper::custom('organisation.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
 		}
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')) {
-			JToolBarHelper::custom('organisation.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
+			ToolbarHelper::custom('organisation.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
 		}
 		if (empty($this->item->id)) {
-			JToolBarHelper::cancel('organisation.cancel', 'JTOOLBAR_CANCEL');
+			ToolbarHelper::cancel('organisation.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else {
-			JToolBarHelper::cancel('organisation.cancel', 'JTOOLBAR_CLOSE');
+			ToolbarHelper::cancel('organisation.cancel', 'JTOOLBAR_CLOSE');
 		}
 	}
 }

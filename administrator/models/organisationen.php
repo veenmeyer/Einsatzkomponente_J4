@@ -7,11 +7,14 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModelorganisationen extends JModelList
+class EinsatzkomponenteModelorganisationen extends ListModel
 {
     /**
      * Constructor.
@@ -62,7 +65,7 @@ class EinsatzkomponenteModelorganisationen extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = Factory::getApplication('administrator');
 		// Load the filter state.
 		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
@@ -72,7 +75,7 @@ class EinsatzkomponenteModelorganisationen extends JModelList
         
         
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		$this->setState('params', $params);
 		// List state information.
 		parent::populateState('a.ordering', 'asc');

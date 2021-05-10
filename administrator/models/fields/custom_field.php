@@ -7,12 +7,13 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('JPATH_BASE') or die;
+use Joomla\CMS\Form\FormField;
 jimport('joomla.html.html');
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormHelper;
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldCustom_field extends JFormField
+class JFormFieldCustom_field extends FormField
 {
 	/**
 	 * The form field type.

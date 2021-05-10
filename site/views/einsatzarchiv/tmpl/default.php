@@ -8,19 +8,22 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
-JHtml::_('formbehavior.chosen', '.multipleOrganisations', null, array('placeholder_text_multiple' => JText::_('COM_EINSATZKOMPONENTE_ORGANISATIONEN_AUSWAEHLEN')));
+JHtml::_('formbehavior.chosen', '.multipleOrganisations', null, array('placeholder_text_multiple' => Text::_('COM_EINSATZKOMPONENTE_ORGANISATIONEN_AUSWAEHLEN')));
 JHtml::_('formbehavior.chosen', 'select');
 
-$user = JFactory::getUser();
+$user = Factory::getUser();
 $userId = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn = $this->state->get('list.direction');

@@ -9,11 +9,15 @@
 
 // no direct access
 defined('_JEXEC') or die;  
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Plugin\PluginHelper;
 
 //JHtml::_('bootstrap.tooltip');
 
 //Load admin language file
-$lang = JFactory::getLanguage();
+$lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 
 $vehicles_images = '';
@@ -35,20 +39,20 @@ $vehicles_images = '';
 			
 			<?php if ($this->params->get('display_detail_tickerkat_icon','1') == '1') :?> 
             <?php if (isset($this->tickerKat->image)) :?>
-        	<img  class="eiko_img-rounded_2 eiko_list_icon_2 mobile_hide_320" src="<?php echo JURI::Root();?><?php echo $this->tickerKat->image;?>"  alt="" title="<?php echo JText::_($this->tickerKat->title); ?>"/>
+        	<img  class="eiko_img-rounded_2 eiko_list_icon_2 mobile_hide_320" src="<?php echo JURI::Root();?><?php echo $this->tickerKat->image;?>"  alt="" title="<?php echo Text::_($this->tickerKat->title); ?>"/>
             <?php endif;?>
             <?php endif;?>
 			
 			<?php if ($this->params->get('display_detail_einsatzart_icon','0') == '1') :?> 
             <?php if (isset($this->einsatzlogo->list_icon)) :?>
-        	<img  class="eiko_img-rounded_2 eiko_list_icon_3 mobile_hide_320" src="<?php echo JURI::Root();?><?php echo $this->einsatzlogo->list_icon;?>"  alt="eiko_list_icon" title="<?php echo JText::_($this->einsatzlogo->title); ?>"/>
+        	<img  class="eiko_img-rounded_2 eiko_list_icon_3 mobile_hide_320" src="<?php echo JURI::Root();?><?php echo $this->einsatzlogo->list_icon;?>"  alt="eiko_list_icon" title="<?php echo Text::_($this->einsatzlogo->title); ?>"/>
             <?php endif;?>
             <?php endif;?>
 			
 			<span class="eiko_kurzbericht_2"><?php echo $this->item->summary; ?></span>
 			
 			<?php if ($this->params->get('display_detail_einsatznummer','0') == '1') :?> 
-			 <small style="font-size:smaller;" class="text-muted eiko_detail_einsatznummer"><?php echo JText::_('</br>(Einsatz-Nr.'); ?> <?php echo $this->einsatznummer.')'; ?></small> 
+			 <small style="font-size:smaller;" class="text-muted eiko_detail_einsatznummer"><?php echo Text::_('</br>(Einsatz-Nr.'); ?> <?php echo $this->einsatznummer.')'; ?></small> 
             <?php endif;?>
 			
             </h1>
@@ -57,7 +61,7 @@ $vehicles_images = '';
             <!--Einsatzkategorie-->
 			<?php if ($this->params->get('display_detail_tickerkat','1') == '1') :?> 
             <?php if( $this->item->tickerkat ) : ?>
-        	<span class="eiko_einsatzkategorie_2"><!--<?php echo JText::_('COM_EINSATZKOMPONENTE_KATEGORIE'); ?> --><?php echo JText::_($this->tickerKat->title); ?></span>
+        	<span class="eiko_einsatzkategorie_2"><!--<?php echo Text::_('COM_EINSATZKOMPONENTE_KATEGORIE'); ?> --><?php echo Text::_($this->tickerKat->title); ?></span>
             <?php endif;?>
             <?php endif;?>
             <!--Einsatzkategorie ENDE-->
@@ -65,19 +69,19 @@ $vehicles_images = '';
             <!--Einsatzart-->
 			<?php if ($this->params->get('display_detail_einsatzart','0') == '1') :?> 
             <?php if( $this->item->data1 ) : ?>
-        	<br /><span class="eiko_einsatzart_2"><!--<?php echo JText::_('COM_EINSATZKOMPONENTE_EINSATZART'); ?> --><?php echo JText::_($this->einsatzlogo->title); ?></span>
+        	<br /><span class="eiko_einsatzart_2"><!--<?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZART'); ?> --><?php echo Text::_($this->einsatzlogo->title); ?></span>
             <?php endif;?>
             <?php endif;?>
             <!--Einsatzart ENDE-->
 
 			<?php if ($this->params->get('display_detail_hits','1')):?>
-            <br/><span class="badge small eiko_counter_detail"><?php echo JText::_('COM_EINSATZKOMPONENTE_ZUGRIFFE'); ?> <?php echo $this->item->counter; ?></span> 
+            <br/><span class="badge small eiko_counter_detail"><?php echo Text::_('COM_EINSATZKOMPONENTE_ZUGRIFFE'); ?> <?php echo $this->item->counter; ?></span> 
             <?php endif;?>
 			
             <div class="eiko_clearfix"></div>
 			
             <!--Einsatzkarte-->
-			<?php $user	= JFactory::getUser();?>
+			<?php $user	= Factory::getUser();?>
             <?php if( $this->item->gmap) : ?> 
             <?php if( $this->item->gmap_report_latitude != '0' ) : ?> 
             <?php if( $this->params->get('display_detail_map_for_only_user','0') == '1' || $user->id ) :?> 
@@ -121,7 +125,7 @@ $vehicles_images = '';
           <table class="eiko_table2_2">
             <tr>
               <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_einsatzort_label_2">
-			  <?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ADDRESS'); ?> 
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ADDRESS'); ?> 
               </span></td>
               <td class="eiko_td1_2">
 			  <?php echo '<span class="mobile_show_320"><b>Details</b><br/><br/></span>'; ?> 
@@ -135,14 +139,14 @@ $vehicles_images = '';
             </tr>
             <tr>
               <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_date1_label_2">
-			  <?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE'); ?> 
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE'); ?> 
               </span></td>
               <td class="eiko_td2_2"><span class="eiko_date1_value_2"><?php echo date("d.m.Y", strtotime($this->item->date1)).''; ?></span></td>
             </tr>
 				<?php if ($this->params->get('display_alertingtime','1')) : ?>
 				<tr>
               <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_date1_time_label_2">
-			  <?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE1'); ?> 
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE1'); ?> 
               </span></td>
               <td class="eiko_td1_2"><span class="eiko_date1_time_value_2"><?php echo date("H:i", strtotime($this->item->date1)).' Uhr'; ?></span></td>
             </tr>
@@ -150,7 +154,7 @@ $vehicles_images = '';
             <?php if( $this->item->date2>1) : ?>
             <tr class="mobile_hide_320">
               <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_date1_time_label_2">
-			  <?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMESTART'); ?>: 
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMESTART'); ?>: 
               </span></td>
               <td class="eiko_td1_2"><span class="eiko_date1_time_value_2"><?php echo date("H:i", strtotime($this->item->date2)).' Uhr'; ?></span></td>
             </tr>
@@ -158,7 +162,7 @@ $vehicles_images = '';
             <?php if( $this->item->date3>1) : ?>
             <tr class="mobile_hide_320">
               <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_date3_label_2">
-			  <?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMEEND'); ?> 
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMEEND'); ?> 
               </span></td>
               <td class="eiko_td2_2"><span class="eiko_date3_value_2"><?php echo date("H:i", strtotime($this->item->date3)).' Uhr'; ?></span></td>
             </tr>
@@ -168,7 +172,7 @@ $vehicles_images = '';
 				<tr class="mobile_hide_320">
 	              <td class="eiko_td1_2 mobile_hide_320">
 	              	<span class="eiko_einsatzdauer_label_2">
-				  		<?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZDAUER'); ?>
+				  		<?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZDAUER'); ?>
 	              	</span>
 	              </td>
 	              <td class="eiko_td1_2">
@@ -186,7 +190,7 @@ $vehicles_images = '';
             <?php if( $this->item->alerting) : ?>
             <tr class="mobile_hide_320">
               <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_alarmart_label_2">
-			  <?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING'); ?>
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING'); ?>
               </span></td>
               <td class="eiko_td1_2"><span class="eiko_alarmart_value_2"><?php echo $this->alarmierungsart->title;?></span></td>
             </tr>
@@ -194,7 +198,7 @@ $vehicles_images = '';
             <?php if( $this->item->boss2) : ?>
             <tr class="mobile_hide_320">
               <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_boss2_label_2">
-			  <?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2'); ?> 
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2'); ?> 
               </span></td>
               <td class="eiko_td2_2"><span class="eiko_boss2_value_2"><?php echo $this->item->boss2;?></span></td>
             </tr>
@@ -202,7 +206,7 @@ $vehicles_images = '';
             <?php if( $this->item->boss) : ?>
             <tr class="mobile_hide_320">
               <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_boss_label_2">
-			  <?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS'); ?> 
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS'); ?> 
               </span></td>
               <td class="eiko_td1_2"><span class="eiko_boss_value_2"><?php echo $this->item->boss;?></span></td>
             </tr>
@@ -210,7 +214,7 @@ $vehicles_images = '';
             <?php if( $this->item->people) : ?>
             <tr class="mobile_hide_320">
               <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_people_label_2">
-			  <?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PEOPLE'); ?> 
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PEOPLE'); ?> 
               </span></td>
               <td class="eiko_td2_2"><span class="eiko_people_value_2"><?php echo $this->item->people;?></span></td>
             </tr>
@@ -218,7 +222,7 @@ $vehicles_images = '';
           </table>
         </td>
         
-        <td class="eiko_td_spalte2_2"><?php echo '<b>'.JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ORGAS').'</b>'; ?>
+        <td class="eiko_td_spalte2_2"><?php echo '<b>'.Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ORGAS').'</b>'; ?>
         <table class="eiko_table3_2"> 
         <tr><td class="eiko_td3_2"> <br/>
         
@@ -233,7 +237,7 @@ $vehicles_images = '';
 				endforeach;
 				$data = array();
 				foreach($array as $value):
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query	= $db->getQuery(true);
 					$query
 						->select('*')
@@ -245,7 +249,7 @@ $vehicles_images = '';
 					if ($this->params->get('display_detail_orga_links','1')) :
 					if (!$results[0]->link) :
 					?>
-					<a target="_self" href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=organisation&Itemid='.$this->params->get('orgalink','').'&id=' . $results[0]->id); ?>"><?php echo $results[0]->name; ?></a><br/> 
+					<a target="_self" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=organisation&Itemid='.$this->params->get('orgalink','').'&id=' . $results[0]->id); ?>"><?php echo $results[0]->name; ?></a><br/> 
 					<?php	
 					else :
 					?>
@@ -287,8 +291,8 @@ $vehicles_images = '';
 						
 						if (!$value->link) : ?>
                         
-						<a title ="<?php echo $value->detail2;?>" target="_self" href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $value->id); ?>"><?php echo $value->name; ?></a>
-						<?php $vehicles_images .= '<a href="'.JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $value->id).'" target="_self">&nbsp;&nbsp;<img class="eiko_img-rounded eiko_image_fahrzeugaufgebot" src="'.JURI::Root().$value->image.'"  alt="'.$value->name.'" title="'.$value->name.'   '.$value->detail2.'"/></a>';?>
+						<a title ="<?php echo $value->detail2;?>" target="_self" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $value->id); ?>"><?php echo $value->name; ?></a>
+						<?php $vehicles_images .= '<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $value->id).'" target="_self">&nbsp;&nbsp;<img class="eiko_img-rounded eiko_image_fahrzeugaufgebot" src="'.JURI::Root().$value->image.'"  alt="'.$value->name.'" title="'.$value->name.'   '.$value->detail2.'"/></a>';?>
                         
                         <?php else: ?>
 						<a title ="<?php echo $value->detail2;?>" target="_blank" href="<?php echo $value->link; ?>"><?php echo $value->name; ?></a>
@@ -331,7 +335,7 @@ $vehicles_images = '';
 				<?php if ($this->params->get('display_detail_fhz_images','1') and $this->item->vehicles) :?>
                 <tr class="mobile_hide_320">
                 <td class="eiko_fahrzeugaufgebot_2" style="margin-bottom:10px;padding-bottom:10px;" colspan="2">
-				<?php echo '<span class="mobile_hide_320">'.JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLE').' </span>'; ?> 
+				<?php echo '<span class="mobile_hide_320">'.Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLE').' </span>'; ?> 
                 <?php echo $vehicles_images ;?>
                 </td>
                 </tr>
@@ -359,7 +363,7 @@ $vehicles_images = '';
 <?php jimport('joomla.html.content'); ?>  
 <?php $Desc = JHTML::_('content.prepare', $this->item->desc); ?>
 <div class="eiko_einsatzbericht_2">
-<h3 class="einsatzbericht-title"><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DESC'); ?></h3>
+<h3 class="einsatzbericht-title"><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DESC'); ?></h3>
 <?php echo $Desc;?>
 </div>
 <?php endif;?>
@@ -368,7 +372,7 @@ $vehicles_images = '';
 
 <!-- Plugin-Support "MyShariff" -->  
 		<?php
-			$plugin = JPluginHelper::getPlugin('content', 'myshariff') ;
+			$plugin = PluginHelper::getPlugin('content', 'myshariff') ;
 			if ($plugin) : 	echo JHTML::_('content.prepare', '{myshariff}');endif;
 			?>
 <!-- Plugin-Support "MyShariff"  ENDE -->  
@@ -386,7 +390,7 @@ $vehicles_images = '';
 				endforeach;
 				$data = array();
 				foreach($array as $value):
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query	= $db->getQuery(true);
 					$query
 						->select('*')
@@ -409,8 +413,8 @@ $vehicles_images = '';
 <!--Einsatzbilder Galerie -->           
 			<?php if ($this->images) : ?>
   			<div class="eiko_distance100_2">&nbsp;</div>
-   			<h2 class="eiko_sonstige_info_2"><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_INFO'); ?></h2>
-      		<h3 class="eiko_einsatzbilder_headline_2"><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GALERY'); ?></h3> 
+   			<h2 class="eiko_sonstige_info_2"><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_INFO'); ?></h2>
+      		<h3 class="eiko_einsatzbilder_headline_2"><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GALERY'); ?></h3> 
             <div class="row-fluid">
             <ul class="thumbnails eiko_thumbnails_2">
             <?php
@@ -454,7 +458,7 @@ $vehicles_images = '';
 <!-- Presselinks -->           
 <?php if( $this->item->presse or $this->item->presse2 or $this->item->presse3) : ?>
  <div class="eiko_distance100_2">&nbsp;</div> 
- <h3 class="eiko_presselinks_headeline_2"><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_QUELLE'); ?></h3>
+ <h3 class="eiko_presselinks_headeline_2"><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_QUELLE'); ?></h3>
            <table class="eiko_table_presselinks_2">
            <tr>
            <td class="eiko_td_presselinks_2">
@@ -476,7 +480,7 @@ $vehicles_images = '';
 
 <?php else:?>
 <div class="eiko_distance20_2">&nbsp;</div>
-<h3 class="eiko_keine_daten_2"><?php echo JText::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_NO_DATA'); ?></h3>
+<h3 class="eiko_keine_daten_2"><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_NO_DATA'); ?></h3>
 <?php endif;?>
 
 

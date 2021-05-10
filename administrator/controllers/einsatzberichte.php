@@ -8,18 +8,26 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\Utilities\ArrayHelper;
+
 jimport('joomla.application.component.controlleradmin');
 
 /**
  * Einsatzberichte list controller class.
  */
-class EinsatzkomponenteControllerEinsatzberichte extends JControllerAdmin
+class EinsatzkomponenteControllerEinsatzberichte extends AdminController
 {
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function getModel($name = 'einsatzbericht', $prefix = 'EinsatzkomponenteModel')
+	public function getModel($name = 'einsatzbericht', $prefix = 'EinsatzkomponenteModel', $config = [])
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
@@ -36,12 +44,12 @@ class EinsatzkomponenteControllerEinsatzberichte extends JControllerAdmin
 	public function saveOrderAjax()
 	{
 		// Get the input
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$pks = $input->post->get('cid', array(), 'array');
 		$order = $input->post->get('order', array(), 'array');
 		// Sanitize the input
-		JArrayHelper::toInteger($pks);
-		JArrayHelper::toInteger($order);
+		ArrayHelper::toInteger($pks);
+		ArrayHelper::toInteger($order);
 		// Get the model
 		$model = $this->getModel();
 		// Save the ordering
@@ -51,22 +59,22 @@ class EinsatzkomponenteControllerEinsatzberichte extends JControllerAdmin
 			echo "1";
 		}
 		// Close the application
-		JFactory::getApplication()->close();
+		Factory::getApplication()->close();
 	}
 	
 	
 	public function delete()
 	{
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to remove from the request.
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'array');
+		$cid = Factory::getApplication()->input->get('cid', array(), 'array');
 		
 
 		if (!is_array($cid) || count($cid) < 1)
 		{
-			JFactory::getApplication()->enqueueMessage(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
+			Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
 		}
 		else
 		{
@@ -74,14 +82,14 @@ class EinsatzkomponenteControllerEinsatzberichte extends JControllerAdmin
 			$model = $this->getModel();
 			// Make sure the item ids are integers
 			jimport('joomla.utilities.arrayhelper');
-			JArrayHelper::toInteger($cid);
+			ArrayHelper::toInteger($cid);
 
 			// Remove the items.
 			if ($model->delete($cid))
 			{
 					// Einsatzbilder in DB und auf Server löschen , wenn im Bericht vorhanden !!
 					foreach ($cid as $key => $val) {
-					$db = JFactory::getDBO();
+					$db = Factory::getDBO();
 					$query = 'SELECT id, image, thumb FROM #__eiko_images WHERE report_id="'.$val.'"';
 					$db->setQuery($query);
 					$images = $db->loadObjectList();
@@ -93,15 +101,15 @@ class EinsatzkomponenteControllerEinsatzberichte extends JControllerAdmin
 					}
 					}
 					foreach ($cid as $key => $val) {
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query->delete($db->quoteName('#__eiko_images'));
 					$query->where($db->quoteName('report_id') . '='.$val.'');
 					$db->setQuery($query);
-					$result = $db->query(); 			
+					$result = $db->execute(); 			
 					}
 				
-			$this->setMessage(JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
+			$this->setMessage(Text::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
 			}
 			else
 			{
@@ -110,30 +118,30 @@ class EinsatzkomponenteControllerEinsatzberichte extends JControllerAdmin
 		}
 				$this->postDeleteHook($model, $cid);
 
-		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
 	}
 	
     public function sendMail() {
 
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 		require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 
 		// Get items to remove from the request.
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'array');
+		$cid = Factory::getApplication()->input->get('cid', array(), 'array');
 		
 
 		if (!is_array($cid) || count($cid) < 1)
 		{
-			JFactory::getApplication()->enqueueMessage(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
+			Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
 		}
 		else
 		{
 		//$model = $this->getModel();
-		$params = JComponentHelper::getParams('com_einsatzkomponente');
+		$params = ComponentHelper::getParams('com_einsatzkomponente');
 			// Make sure the item ids are integers
 			jimport('joomla.utilities.arrayhelper');
-			JArrayHelper::toInteger($cid);
+			ArrayHelper::toInteger($cid);
 			$msg = EinsatzkomponenteHelper::sendMail($cid);
         $this->setRedirect('index.php?option=com_einsatzkomponente&view=einsatzberichte', $msg); 
     }
@@ -143,23 +151,23 @@ class EinsatzkomponenteControllerEinsatzberichte extends JControllerAdmin
 
 	
 	// Check for request forgeries
-	JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+	Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 	require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 	
 	// Get items to remove from the request.
-	$cid = JFactory::getApplication()->input->get('cid', array(), 'array');
+	$cid = Factory::getApplication()->input->get('cid', array(), 'array');
 	
 	
 	if (!is_array($cid) || count($cid) < 1)
 	{
-	    JFactory::getApplication()->enqueueMessage(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
+	    Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
 	}
 	else
 	{
-	    $params = JComponentHelper::getParams('com_einsatzkomponente');
+	    $params = ComponentHelper::getParams('com_einsatzkomponente');
 	    // Make sure the item ids are integers
 	    jimport('joomla.utilities.arrayhelper');
-	    JArrayHelper::toInteger($cid);
+	    ArrayHelper::toInteger($cid);
 		require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/article.php'; // Helper-class laden
 		$msg    = count($cid).' Artikel erstellt';
 	    $this->setRedirect('index.php?option=com_einsatzkomponente&view=einsatzberichte', $msg); 
@@ -167,15 +175,15 @@ class EinsatzkomponenteControllerEinsatzberichte extends JControllerAdmin
     }
     public function pdf() {
     	// Check for request forgeries
-	JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+	Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 	require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 	
 	// Get items to remove from the request.
-	$cid = JFactory::getApplication()->input->get('cid', array(), 'array');
+	$cid = Factory::getApplication()->input->get('cid', array(), 'array');
 	
 	if (!is_array($cid) || count($cid) < 1)
 	{
-	    JFactory::getApplication()->enqueueMessage(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
+	    Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
 	}
 	else
 	{

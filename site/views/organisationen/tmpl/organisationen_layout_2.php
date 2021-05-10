@@ -8,6 +8,7 @@
  */
 // no direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\Router\Route;
 require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 
 ?>
@@ -34,7 +35,7 @@ require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers
     <td>    
  	<?php if ($this->params->get('display_orga_links','1')) :?>
            
-		<a href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=organisation&id=' . (int)$item->id); ?>"><?php echo $item->name; ?></a>
+		<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=organisation&id=' . (int)$item->id); ?>"><?php echo $item->name; ?></a>
 		<br/><?php echo $item->detail1; ?>
 		<?php else: ?>	
     	<?php echo $item->name; ?>
@@ -56,7 +57,7 @@ require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers
 				<li>
 		<?php if ($this->params->get('display_orga_fhz_links','1')) :?>
 					<?php if (!$value->link) :?>
-					<a title ="<?php echo $value->detail2;?>" target="_self" href="<?php echo JRoute::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $value->id); ?>"><?php echo $value->name; ?></a>
+					<a title ="<?php echo $value->detail2;?>" target="_self" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $value->id); ?>"><?php echo $value->name; ?></a>
 					<?php else :?>
 					<a title ="<?php echo $value->detail2;?>" target="_blank" href="<?php echo $value->link; ?>"><?php echo $value->name; ?></a>
 					<?php endif; ?>		

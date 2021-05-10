@@ -7,11 +7,14 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('JPATH_BASE') or die;
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Form\FormHelper;
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldEinsatzort extends JFormField
+class JFormFieldEinsatzort extends FormField
 {
 	/**
 	 * The form field type.
@@ -32,15 +35,15 @@ class JFormFieldEinsatzort extends JFormField
 		$html = array();
 		$address = array();
         
-$id = JFactory::getApplication()->input->getVar('id', 0);
+$id = Factory::getApplication()->input->getVar('id', 0);
 
 
-$db = JFactory::getDBO();
+$db = Factory::getDBO();
 $query = 'SELECT id, address as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY address ORDER BY address';
 $db->setQuery($query);
 $addressDb = $db->loadObjectList();
 
-$params = JComponentHelper::getParams('com_einsatzkomponente');
+$params = ComponentHelper::getParams('com_einsatzkomponente');
 
 
 //$db = JFactory::getDBO();

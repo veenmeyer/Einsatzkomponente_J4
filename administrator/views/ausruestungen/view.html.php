@@ -9,13 +9,16 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.view');
 
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewAusruestungen extends JViewLegacy {
+class EinsatzkomponenteViewAusruestungen extends HtmlView {
 
     protected $items;
     protected $pagination;
@@ -53,7 +56,7 @@ class EinsatzkomponenteViewAusruestungen extends JViewLegacy {
         $state = $this->get('State');
         $canDo = EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
 
-        JToolBarHelper::title(JText::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNGEN'), 'ausruestungen.png');
+        JToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNGEN'), 'ausruestungen.png');
 
         //Check if the form exists before showing the add/edit buttons
         $formPath = JPATH_COMPONENT_ADMINISTRATOR . '/views/ausruestung';
@@ -110,11 +113,11 @@ class EinsatzkomponenteViewAusruestungen extends JViewLegacy {
         
 		JHtmlSidebar::addFilter(
 
-			JText::_('JOPTION_SELECT_PUBLISHED'),
+			Text::_('JOPTION_SELECT_PUBLISHED'),
 
 			'filter_published',
 
-			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), "value", "text", $this->state->get('filter.state'), true)
+			HTMLHelper::_('select.options', HTMLHelper::_('jgrid.publishedOptions'), "value", "text", $this->state->get('filter.state'), true)
 
 		);
 
@@ -123,10 +126,10 @@ class EinsatzkomponenteViewAusruestungen extends JViewLegacy {
 	protected function getSortFields()
 	{
 		return array(
-		'a.id' => JText::_('JGRID_HEADING_ID'),
-		'a.name' => JText::_('COM_EINSATZKOMPONENTE_AUSRUESTUNGEN_NAME'),
-		'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
-		'a.state' => JText::_('JSTATUS'),
+		'a.id' => Text::_('JGRID_HEADING_ID'),
+		'a.name' => Text::_('COM_EINSATZKOMPONENTE_AUSRUESTUNGEN_NAME'),
+		'a.ordering' => Text::_('JGRID_HEADING_ORDERING'),
+		'a.state' => Text::_('JSTATUS'),
 		);
 	}
 

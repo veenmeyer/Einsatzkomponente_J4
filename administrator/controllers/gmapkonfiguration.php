@@ -9,13 +9,16 @@
 
 // No direct access
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 
 jimport('joomla.application.component.controllerform');
 
 /**
  * Gmapkonfiguration controller class.
  */
-class EinsatzkomponenteControllerGmapkonfiguration extends JControllerForm
+class EinsatzkomponenteControllerGmapkonfiguration extends FormController
 {
 
     function __construct() {
@@ -40,16 +43,35 @@ class EinsatzkomponenteControllerGmapkonfiguration extends JControllerForm
 		$reports_gmap_gmap_zoom_level_home = '12';
 		$reports_gmap_gmap_max_zoom = '14';
 		
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->update("#__eiko_gmap_config");
-		$query->set('gmap_zoom_level = "'.$reports_gmap_gmap_zoom_level.'",gmap_onload = "'.$reports_gmap_gmap_onload.'",gmap_width = "'.$reports_gmap_gmap_width.'",gmap_height = "'.$$reports_gmap_gmap_height.'",gmap_alarmarea = "'.$reports_gmap_gmap_alarmarea.'",start_lat = "'.$reports_gmap_start_lat.'",start_lang = "'.$reports_gmap_start_lang.'",state = "1",created_by ="" ' );
+		
+		$query->set('
+		gmap_zoom_level = "'.$reports_gmap_gmap_zoom_level.'",
+		gmap_onload = "'.$reports_gmap_gmap_onload.'",
+		gmap_width = "'.$reports_gmap_gmap_width.'",
+		gmap_height = "'.$reports_gmap_gmap_height.'",
+		gmap_alarmarea = "'.$reports_gmap_gmap_alarmarea.'",
+		start_lat = "'.$reports_gmap_start_lat.'",
+		start_lang = "'.$reports_gmap_start_lang.'",
+		state = "1",
+		created_by ="1" ' );
+		
 		$query->where('id = "1" ');
+		//var_dump((string) $query);exit;
 		$db->setQuery($query);
-		$db->execute();
+		try
+		{
+			$db->execute();
+		}
+		catch (RuntimeException $e)
+		{
+			throw new Exception($e->getMessage(), 500);
+		}
 	
 		$this->setMessage('Alle GMAP-Daten wurden auf Anfangseinstellungen zurückgesetzt');
-		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view.'&layout=edit&id=1', false));
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view.'&layout=edit&id=1', false));
     }	
 
 

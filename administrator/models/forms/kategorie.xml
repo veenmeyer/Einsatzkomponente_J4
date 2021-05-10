@@ -11,6 +11,7 @@
               filter="safehtml"
               size="100"
               maxlength="100" /> 
+			  
        <field name="image" type="media"
               label="COM_EINSATZKOMPONENTE_FORM_LBL_KATEGORIE_IMAGE"
               description="COM_EINSATZKOMPONENTE_FORM_DESC_KATEGORIE_IMAGE" 
@@ -32,6 +33,12 @@
         <option value="1">JPUBLISHED</option>
         <option value="0">JUNPUBLISHED</option>
     </field> 
+
+
+       <field name="beschreibung" type="hidden" filter="safehtml" default="" /> 
+       <field name="checked_out" type="hidden" default="0" /> 
+       <field name="params" type="hidden" filter="safehtml" default="" /> 
+	
  </fieldset> 
  <fieldset 
                         name="accesscontrol">

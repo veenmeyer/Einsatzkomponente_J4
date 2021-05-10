@@ -7,11 +7,14 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 defined('JPATH_BASE') or die;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Language\Text;
 jimport('joomla.form.formfield');
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldTimeupdated extends JFormField
+class FormFieldTimeupdated extends FormField
 {
 	/**
 	 * The form field type.
@@ -36,8 +39,8 @@ class JFormFieldTimeupdated extends JFormField
         if (!$old_time_updated) {
             $html[] = '-';
         } else {
-            $jdate = new JDate($old_time_updated);
-            $pretty_date = $jdate->format(JText::_('DATE_FORMAT_LC2'));
+            $jdate = new Date($old_time_updated);
+            $pretty_date = $jdate->format(Text::_('DATE_FORMAT_LC2'));
             $html[] = "<div>".$pretty_date."</div>";
         }
         $time_updated = date("Y-m-d H:i:s");

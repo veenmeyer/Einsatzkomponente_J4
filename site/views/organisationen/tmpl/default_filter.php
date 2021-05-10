@@ -9,6 +9,9 @@
  */
 
 defined('JPATH_BASE') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $data = $displayData;
 
@@ -53,7 +56,7 @@ $options = $data['options'];
 // Set some basic options
 $customOptions = array(
 	'filtersHidden'       => isset($options['filtersHidden']) ? $options['filtersHidden'] : empty($data['view']->activeFilters) && !$filtered,
-	'defaultLimit'        => isset($options['defaultLimit']) ? $options['defaultLimit'] : JFactory::getApplication()->get('list_limit', 20),
+	'defaultLimit'        => isset($options['defaultLimit']) ? $options['defaultLimit'] : Factory::getApplication()->get('list_limit', 20),
 	'searchFieldSelector' => '#filter_search',
 	'orderFieldSelector'  => '#list_fullordering'
 );
@@ -70,29 +73,29 @@ JHtml::_('searchtools.form', $formSelector, $data['options']);
 	<div class="clearfix">
 		<div class="js-stools-container-bar">
 			<label for="filter_search" class="element-invisible"
-				   aria-invalid="false"><?php echo JText::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'); ?></label>
+				   aria-invalid="false"><?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'); ?></label>
 
 			<div class="btn-wrapper input-append">
 				<?php echo $filters['filter_search']->input; ?>
 				<button type="submit" class="btn hasTooltip" title=""
-						data-original-title="<?php echo JText::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'); ?>">
+						data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'); ?>">
 					<i class="icon-search"></i>
 				</button>
 			</div>
 			<?php if ($filters): ?>
 				<div class="btn-wrapper hidden-phone">
 					<button type="button" class="btn hasTooltip js-stools-btn-filter" title=""
-							data-original-title="<?php echo JText::_('COM_EINSATZKOMPONENTE_SEARCH_TOOLS_DESC'); ?>">
-						<?php echo JText::_('COM_EINSATZKOMPONENTE_SEARCH_TOOLS'); ?> <i class="caret"></i>
+							data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_TOOLS_DESC'); ?>">
+						<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_TOOLS'); ?> <i class="caret"></i>
 					</button>
 				</div>
 			<?php endif; ?>
 
 			<div class="btn-wrapper">
 				<button type="button" class="btn hasTooltip js-stools-btn-clear" title=""
-						data-original-title="<?php echo JText::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_CLEAR'); ?>"
+						data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_CLEAR'); ?>"
 						onclick="jQuery(this).closest('form').find('input').val('');">
-					<?php echo JText::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_CLEAR'); ?>
+					<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_CLEAR'); ?>
 				</button>
 			</div>
 		</div>
