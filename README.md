@@ -1,8 +1,8 @@
 # Einsatzkomponente
-Component for Joomla3.X
+Component for Joomla4.X
 
 
-<b>Einsatzkomponente für das Joomla-CMS V3.x</b>
+<b>Einsatzkomponente für das Joomla-CMS V4.x</b>
 
 BETA-Version !! Bitte vor dem Installieren ein Backup des Webspace und der Datenbank machen !
 ---------------------------------------------------------------------------------------------
