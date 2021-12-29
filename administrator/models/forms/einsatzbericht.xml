@@ -266,6 +266,7 @@
 			key_field="id"       		
 			value_field="name"
 			multiple="multiple"
+			layout="joomla.form.field.list-fancy-select"
          /> 
 
        <field name="filter_auswahl_orga" type="sql" class="inputbox"
@@ -274,7 +275,9 @@
              /> 
 
 
-			 <field name="vehicles" type="optgroup" class="inputbox"
+		<field name="vehicles" 
+			type="optgroup" 
+			class="inputbox"
             label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLES"
             description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_VEHICLES" 
          /> 
@@ -287,6 +290,7 @@
 			key_field="id"       		
 			value_field="name"
 			multiple="multiple"
+			layout="joomla.form.field.list-fancy-select"
          /> 
 
        <field name="ausruestung" type="sql" class="inputbox"
