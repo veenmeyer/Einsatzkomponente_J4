@@ -22,17 +22,6 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
 ?>
-<script type="text/javascript">
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'alarmierungsart.cancel' || document.formvalidator.isValid(document.id('alarmierungsart-form'))) {
-			Joomla.submitform(task, document.getElementById('alarmierungsart-form'));
-		}
-		else {
-			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-		}
-	}
-</script>
 <form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="alarmierungsart-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">

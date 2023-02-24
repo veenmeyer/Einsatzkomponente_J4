@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" method="upgrade">
     <name>com_einsatzkomponente</name>
-    <creationDate>2021-03-27</creationDate>
-    <copyright>Copyright (C) 2021 by Ralf Meyer. All rights reserved.</copyright>
+    <creationDate>2023-02-19</creationDate>
+    <copyright>Copyright (C) 2023 by Ralf Meyer. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later</license>
     <author>Ralf Meyer</author>
     <authorEmail>ralf.meyer@mail.de</authorEmail>
     <authorUrl>https://einsatzkomponente.de</authorUrl>
-    <version>4.0.03</version> 
+    <version>4.0.04</version> 
 	
     <description>
             <![CDATA[
 			<h1>Einsatzkomponente</h1><h3>für das Joomla-CMS</h3>
 			<div style="clear: both;"></div>
-			<p>Copyright (C) 2021 Ralf Meyer</p>
+			<p>Copyright (C) 2023 Ralf Meyer</p>
 			<p>Website: <a href='https://www.einsatzkomponente.de'>www.einsatzkomponente.de</a></p>
 			<p><a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HDFKVJSKSEFY"><span style="float:right;">Dieses Projekt jetzt unterstützen: <img border=0  src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" /></span></a>
 <p><small><span style="float:left;"></br>Alternativ können Sie die Kontodaten per <a href="mailto:validate@einsatzkomponente.de?Subject=Spende%20Einsatzkomponente%20J3.x" target="_top">Email </a>anfordern.</span></small></p>
@@ -212,20 +212,20 @@
 		
     </administration>
 	
-		<api>
-				<files folder="api/components/com_einsatzkomponente">
-					<folder>src</folder>
+	<api>
+				<files folder="api">
+					<folder>components</folder>
 				</files>
-			</api>
+			</api> 
 			
-	<changelogurl>https://www.w3schools.com/xml/note.xml</changelogurl>			
+	<changelogurl>https://einsatzkomponente.joomla100.com/update/com_einsatzkomponente-changelog.xml</changelogurl>			
 	
-<!-- UPDATESERVER DEFINITION -->
+ UPDATESERVER DEFINITION -->
 	<updateservers>
 		<!-- Note: No spaces or linebreaks allowed between the server tags -->
 		<server type="extension" priority="1" name="Einsatzkomponente">https://einsatzkomponente.joomla100.com/update/com_einsatzkomponente-update.xml</server>
 	</updateservers>
 	
-	<dlid prefix="key=" suffix="einsatzkomponente.zip" />
+	<dlid prefix="key=" suffix="&amp;file=einsatzkomponente.zip" />
 
 </extension>

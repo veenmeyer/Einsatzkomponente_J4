@@ -62,7 +62,7 @@ class EinsatzkomponenteRulesLegacy implements RulesInterface
     public function build(&$query, &$segments)
     {
 		
-		JLoader::import('helpers.einsatzkomponente', JPATH_ADMINISTROR.'/components/com_einsatzkomponente');
+		JLoader::import('helpers.einsatzkomponente', JPATH_ADMINISTRATOR.'/components/com_einsatzkomponente');
         
 		$segments = array();
         $view     = null;

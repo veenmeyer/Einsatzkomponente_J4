@@ -23,25 +23,6 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 ?>
 
-<script type="text/javascript">
-
-    Joomla.submitbutton = function(task)
-    {
-        if (task == 'ausruestung.cancel') {
-            Joomla.submitform(task, document.getElementById('ausruestung-form'));
-        }
-        else {
-            
-            if (task != 'ausruestung.cancel' && document.formvalidator.isValid(document.id('ausruestung-form'))) {
-                
-                Joomla.submitform(task, document.getElementById('ausruestung-form'));
-            }
-            else {
-                alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
-            }
-        }
-    }
-</script>
 
 <form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="ausruestung-form" class="form-validate">
 

@@ -25,17 +25,6 @@ HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/asset
 $params = ComponentHelper::getParams('com_einsatzkomponente');
 
 ?>
-<script type="text/javascript">
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'einsatzfahrzeug.cancel' || document.formvalidator.isValid(document.id('einsatzfahrzeug-form'))) {
-			Joomla.submitform(task, document.getElementById('einsatzfahrzeug-form'));
-		}
-		else {
-			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-		}
-	}
-</script>
 <form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzfahrzeug-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">

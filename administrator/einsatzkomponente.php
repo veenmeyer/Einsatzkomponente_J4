@@ -20,6 +20,14 @@ if (!Factory::getUser()->authorise('core.manage', 'com_einsatzkomponente'))
 	throw new Exception(Text::_('ALERTNOAUTHOR'));
 }
 
+
+/** require helper file */
+if (!class_exists('EinsatzkomponenteHelper'))
+{
+	JLoader::register('EinsatzkomponenteHelper', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'einsatzkomponente.php');
+}
+
+
 // Require specific controller if requested
 if($controller = Factory::getApplication()->input->getWord('controller')) {
     $classname	= 'EinsatzkomponenteController'.$controller;

@@ -75,7 +75,17 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends AdminModel
 				endif;
 			endforeach;
 			$data->ausruestung = implode(',',$array);
-            
+
+			//Support for multiple or not foreign key field: vehicles
+			$array = array();
+			foreach((array)$data->params as $value): 
+				if(!is_array($value)):
+					$array[] = $value;
+				endif;
+			endforeach;
+			$data->params = implode(',',$array);
+
+       
 		}
 		return $data;
 	}

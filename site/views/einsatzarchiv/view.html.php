@@ -48,7 +48,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView {
 		
         $this->pagination = $this->get('Pagination');
 		// Flag indicates to not add limitstart=0 to URL
-		$pagination->hideEmptyLimitstart = true;
+		$this->pagination->hideEmptyLimitstart = true;
 
         $this->params = $app->getParams('com_einsatzkomponente');
         $this->filterForm = $this->get('FilterForm');

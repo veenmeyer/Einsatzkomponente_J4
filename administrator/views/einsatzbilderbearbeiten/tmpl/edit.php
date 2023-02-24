@@ -22,17 +22,6 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
 ?>
-<script type="text/javascript">
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'einsatzbilderbearbeiten.cancel' || document.formvalidator.isValid(document.id('einsatzbilderbearbeiten-form'))) {
-			Joomla.submitform(task, document.getElementById('einsatzbilderbearbeiten-form'));
-		}
-		else {
-			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-		}
-	}
-</script>
 <form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzbilderbearbeiten-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
@@ -64,6 +53,11 @@ HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/asset
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
+			</div>
+
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('params'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('params'); ?></div>
 			</div>
 				
             </fieldset>

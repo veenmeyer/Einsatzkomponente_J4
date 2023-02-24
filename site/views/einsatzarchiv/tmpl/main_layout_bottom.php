@@ -24,7 +24,7 @@ use Joomla\CMS\Factory;
   <?php if (!$this->params->get('eiko')) : ?>
     <tr><!-- Bitte das Copyright nicht entfernen. Danke. -->
       <td colspan="<?php echo $eiko_col; ?>">
-        <span class="copyright">Einsatzkomponente V<?php echo $this->version; ?>  (C) 2020 by Ralf Meyer ( <a class="copyright_link" href="https://einsatzkomponente.de" target="_blank">www.einsatzkomponente.de</a> )</span>
+        <span class="copyright">Einsatzkomponente V<?php echo $this->version; ?>  (C) 2023 by Ralf Meyer ( <a class="copyright_link" href="https://einsatzkomponente.de" target="_blank">www.einsatzkomponente.de</a> )</span>
       </td>
     </tr>
   <?php endif; ?>

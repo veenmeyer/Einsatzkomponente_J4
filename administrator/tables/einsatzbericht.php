@@ -77,7 +77,20 @@ class EinsatzkomponenteTableeinsatzbericht extends Table {
 			}
 			else {
 				$array['ausruestung'] = ''; }
-			
+
+		//Support for multiple or not foreign key field: ausruestung
+			if(isset($array['params'])){
+				if(is_array($array['params'])){
+					$array['params'] = implode(',',$array['params']);
+				}
+				else if(strrpos($array['params'], ',') != false){
+					$array['params'] = explode(',',$array['params']);
+				}
+			}
+			else {
+				$array['params'] = ''; }
+
+		
 		if(!Factory::getUser()->authorise('core.edit.state','com_einsatzkomponente.einsatzbericht.'.$array['id']) && $array['state'] == 1){
 			$array['state'] = 0;
 		}

@@ -8,6 +8,7 @@
               label="COM_EINSATZKOMPONENTE_FORM_LBL_KATEGORIE_TITLE"
               description="COM_EINSATZKOMPONENTE_FORM_DESC_KATEGORIE_TITLE" 
               class="eiko_kategorien_title"
+			  required="true" 
               filter="safehtml"
               size="100"
               maxlength="100" /> 

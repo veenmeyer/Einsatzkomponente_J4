@@ -27,20 +27,9 @@ $params = ComponentHelper::getParams('com_einsatzkomponente');
 
 <?php $gmap_latitude = $this->item->gmap_latitude; ?>
 <?php $gmap_longitude = $this->item->gmap_longitude; ?>
-<?php if ($gmap_latitude < '1') $gmap_latitude = $this->gmap_config->start_lat; ?>
+<?php if ($gmap_latitude < '1')  $gmap_latitude = $this->gmap_config->start_lat; ?>
 <?php if ($gmap_longitude < '1') $gmap_longitude = $this->gmap_config->start_lang; ?>
 
-<script type="text/javascript">
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'organisation.cancel' || document.formvalidator.isValid(document.id('organisation-form'))) {
-			Joomla.submitform(task, document.getElementById('organisation-form'));
-		}
-		else {
-			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-		}
-	}
-</script>
 <form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
@@ -183,7 +172,9 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 
               <!-- Javascript für GMap-Anzeige -->
 			  
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $params->get ('gmapkey','AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E') ;?>"></script> 
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $params->get ('gmapkey','AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E') ;?>&callback=initMap&v=weekly"
+      async
+    ></script>
 
               <script type="text/javascript"> 
                     var map = null;
@@ -235,7 +226,7 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
               function updateInfoWindow () {
               }
                
-              function initialize() {
+              function initMap() {
                 // create the map
                 geocoder = new google.maps.Geocoder();
                 var myOptions = {
@@ -276,7 +267,7 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
               }
                   
               // Onload handler to fire off the app.
-              google.maps.event.addDomListener(window, 'load', initialize);
+              window.initMap = initMap;
               </script>
               <!-- Javascript für GMap-Anzeige ENDE -->
   <?php  endif; ?>

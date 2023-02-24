@@ -112,7 +112,15 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
 		$this->setState('list.start', $limitstart);
 
 
-		$params = $this->state->params;
+		
+		// Behebt Fehler : 
+		// Notice: Undefined property: Joomla\CMS\Object\CMSObject::$params in /home/site/models/einsatzarchiv.php on line 115
+		if (isset($this->state->params))
+		{
+			$params = $this->state->params;
+		}		
+		
+		
 
 		if ($menu = $app->getMenu()->getActive())
 		{

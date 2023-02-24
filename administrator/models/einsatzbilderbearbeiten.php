@@ -66,6 +66,15 @@ class EinsatzkomponenteModeleinsatzbilderbearbeiten extends AdminModel
 		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbilderbearbeiten.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
+
+			//Support for multiple or not foreign key field: vehicles
+			$array = array();
+			foreach((array)$data->params as $value): 
+				if(!is_array($value)):
+					$array[] = $value;
+				endif;
+			endforeach;
+			$data->params = implode(',',$array);
             
 		}
 		return $data;

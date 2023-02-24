@@ -8,6 +8,7 @@
               label="COM_EINSATZKOMPONENTE_FORM_LBL_ALARMIERUNGSART_TITLE"
               description="COM_EINSATZKOMPONENTE_FORM_DESC_ALARMIERUNGSART_TITLE" 
               class="eiko_alarmierungsarten_title"
+			  required="true" 
               filter="safehtml"
               size="100"
               maxlength="100" /> 

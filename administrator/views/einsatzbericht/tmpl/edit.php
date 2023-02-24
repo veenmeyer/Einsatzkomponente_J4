@@ -13,11 +13,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Layout\LayoutHelper;
 
-?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-<?php
 $params = ComponentHelper::getParams('com_einsatzkomponente');
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
@@ -45,17 +41,6 @@ if (!$this->item->id == 0)
 <?php if ($gmap_longitude < '1') $gmap_longitude = $this->gmap_config->start_lang; ?>
 
 
-<script type="text/javascript">
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'einsatzbericht.cancel' || document.formvalidator.isValid(document.id('einsatzbericht-form'))) {
-			Joomla.submitform(task, document.getElementById('einsatzbericht-form'));
-		}
-		else {
-			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
-		}
-	}
-</script>
 
 <form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzbericht-form" class="form-validate">
 	<div class="row-fluid">
@@ -431,15 +416,6 @@ displayVals();
 			
     	</div>
 		
-   <!-- 		<div class="fltlft well" style="width:80%;">
-
-			<div class="control-group">
-		<?php $this->ignore_fieldsets = array('general', 'info', 'detail', 'jmetadata', 'item_associations','accesscontrol'); ?>
-    <?php echo LayoutHelper::render('joomla.edit.params', $this); ?>
-			</div>
-    
-    	</div>
- -->
 
 
 
@@ -459,7 +435,9 @@ displayVals();
 
 <!-- Javascript für GMap-Anzeige -->
 
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $params->get ('gmapkey','AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E') ;?>"></script> 
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $params->get ('gmapkey','AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E') ;?>&callback=initMap&v=weekly"
+      async
+    ></script>
 
 <script type="text/javascript"> 
       var map = null;
@@ -527,7 +505,7 @@ function codeAddress2() {
  function updateInfoWindow () {
  }
  
- function initialize() {
+ function initMap() {
  // create the map
    geocoder = new google.maps.Geocoder();
    var myOptions = {
@@ -569,7 +547,7 @@ var marker2 = new google.maps.Marker({
  }
     
 // Onload handler to fire off the app.
-google.maps.event.addDomListener(window, 'load', initialize);
+   window.initMap = initMap;
 </script>
 <!-- Javascript für GMap-Anzeige ENDE -->
 
