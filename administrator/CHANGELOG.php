@@ -3,6 +3,13 @@
 <?php defined('_JEXEC') or die(); ?>
 <h1>Einsatzkomponente für das Joomla-CMS</h1>
 
+<h3>Changelog <small>Version 4.00.05</small></h3>
+<ul>
+# Supportcode 119 hinzugefügt (DB-Eintrag auswahlorga löschen)
+# diverse kleinere Bugfixes
+</ul>
+
+
 <h3>Changelog <small>Version 3.50</small></h3>
 <ul>
 # Filtersortierung im Front-und Backend nach Reihenfolge bzw. Namen

@@ -1,3 +1,11 @@
+
+/*CSS-Anpassungen für J4.X*/
+a:not([class]) {
+	text-decoration: none;
+}
+/*CSS-Anpassungen für J4.X  ENDE*/
+
+
 /*CSS-Anpassungen für J2.5*/
 #jformauswahlorga, #jform_vehicles {
 	height:300px !important; 
