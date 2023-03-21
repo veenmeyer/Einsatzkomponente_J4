@@ -3,8 +3,9 @@
 <?php defined('_JEXEC') or die(); ?>
 <h1>Einsatzkomponente für das Joomla-CMS</h1>
 
-<h3>Changelog <small>Version 4.00.05</small></h3>
+<h3>Changelog <small>Version 4.00.06</small></h3>
 <ul>
+# Downloadkey-Funktion für Updateserver 
 # Supportcode 119 hinzugefügt (DB-Eintrag auswahlorga löschen)
 # diverse kleinere Bugfixes
 </ul>
