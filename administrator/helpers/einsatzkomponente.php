@@ -753,7 +753,15 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 		$version = new Version;
 		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		$response = @file("https://einsatzkomponente.joomla100.com/gateway/validation.php?validation=".$params->get('validation_key','0')."&domain=".$_SERVER['SERVER_NAME']."&version=".$version->getShortVersion()."&eikoversion=".$eikoversion); // Request absetzen
-		@$response_code = intval($response[1]); // Rückgabewert auslesen
+		
+if (isset($response[1])) {
+    @$response_code = intval($response[1]);
+    // Hier kannst du mit $response_code weiterarbeiten
+} else {
+    // Behandle den Fall, dass der Index 1 nicht existiert
+    @$response_code = intval($response[0]);
+}		
+
 if ($response_code=='12') :	
 $params->set('eiko', '1');
 $db = Factory::getDBO();

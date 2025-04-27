@@ -3,6 +3,13 @@
 <?php defined('_JEXEC') or die(); ?>
 <h1>Einsatzkomponente für das Joomla-CMS</h1>
 
+
+<h3>Changelog <small>Version 4.00.07</small></h3>
+<ul>
+# Fehlerhafte Prüfung des Validationschlüssels behoben
+</ul>
+
+
 <h3>Changelog <small>Version 4.00.06</small></h3>
 <ul>
 # Downloadkey-Funktion für Updateserver 
